@@ -36,10 +36,7 @@
 	    	   
 	       }
 		   
-	    $('#navi-button').click(function(e) {
-	    	window.location.href = "index2.html" ;
-	    })
-	  
+	    
 	    
 	});
 	
@@ -50,6 +47,7 @@
    
   	<div id="test" class="container-fluid">
   		<h1 class="page-header" style="text-align:center;">一.	您所感兴趣的活动</h1>
+  		<form action="<%=request.getContextPath()%>/holland/step1.do" onsubmit="return validateFirstForm(this) ;">
 		<div id="part1" class="container">
 		 	<div class="row">
 		 	   下面列举了若干种活动，请就这些活动判断你的好恶。喜欢的，请在“是”栏里打√，反之，在“否”栏里打“×”请按顺序回答全部问题。
@@ -81,8 +79,9 @@
 	 	    </div>
 	 	</div>
 	 	<div class="container">
-	    	<button id="navi-button" type="button" class="btn btn-primary btn-lg active">下一步</button>
+	    	<input id="navi-button" type="submit" class="btn btn-primary btn-lg active" value="下一步"/>
 	 	</div>
+	 	</form>
 	 </div>
 	 	
 	 

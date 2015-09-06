@@ -1,5 +1,8 @@
-function createTrueFalseQuestion(subitemObj , questions ){
+function createTrueFalseQuestion(subitemObj , questions  , defaultValue){
 	 var len = questions.length ;
+	 if(!defaultValue){
+		 defaultValue = "true" ;
+	 }
 	 for( var i=0 ; i<len ;i++){
 		 var q = questions[i] ;
 		 var questionObj=$('<div class="container"></div>');
@@ -11,8 +14,14 @@ function createTrueFalseQuestion(subitemObj , questions ){
 		 var optionStr = '<div class="row">' ;
 		 for(var j=0 ; j<options.length ;j++){
 			 var option = options[j] ;
-			 optionStr +='<div class="col-xs-1"><input type="radio" value="' + option.value + '" name="' + q.qid +'"/>'+ option.text +'</div>' ;
-		     
+			 var inputStr = "" ;
+			
+		     if( defaultValue == option.value	){
+		    	 inputStr = '<input type="radio"  checked required="required" value="' + option.value + '" name="' + q.qid +'"/>' ;
+		     }else{
+		    	 inputStr = '<input type="radio"   required="required" value="' + option.value + '" name="' + q.qid +'"/>' ;
+		     }
+		     optionStr +='<div class="col-xs-1">' + inputStr + option.text +'</div>' ;
 		 }
 		 optionStr += '</div>' ;
 		 var optionObj=$(optionStr) ;
@@ -22,3 +31,4 @@ function createTrueFalseQuestion(subitemObj , questions ){
 	 }
 	 
 }
+

@@ -62,3 +62,6 @@ questions6 = [{qid:"h_r6_1",index:"1.",context:"整理好桌面和房间",option
 			 ];
 
 
+function validateFirstForm( formObject){
+		//return false ;
+}
