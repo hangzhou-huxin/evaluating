@@ -7,7 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet">
 <script type="text/javascript" src="<%=request.getContextPath()%>/jquery/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/testpaper2.js" charset="UTF-8"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/holland/step2.js" charset="UTF-8"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/question.js" charset="UTF-8"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		
@@ -38,12 +39,8 @@
 	    	   
 	       }
 		   
-	       $('#navi-button2').click(function(e) {
-	    	    window.location.href = "index3.html" ;
-		    }) ;
-	       
-	       $('#navi-button1').click(function(e) {
-	    	    window.location.href = "index1.html" ;
+	      $('#navi-button1').click(function(e) {
+	    	    window.location.href = "main.do" ;
 		    })
 	  
 	  
@@ -57,6 +54,7 @@
    
   	<div id="test" class="container-fluid">
   		<h1 class="page-header" style="text-align:center;">二.	您所擅长获胜的活动</h1>
+  		<form action="<%=request.getContextPath()%>/holland/step3.do" method="post" onsubmit="">
 		<div id="part1" class="container">
 		 	<div class="row">
 		 	   下面列举了若干种活动，请就这些活动判断你的好恶。喜欢的，请在“是”栏里打√，反之，在“否”栏里打“×”请按顺序回答全部问题。
@@ -92,9 +90,9 @@
 	 
 	 <div class="container">
 	 	<button type="button" class="btn btn-default btn-lg active"  id="navi-button1">上一步</button>
-	    <button type="button" class="btn btn-primary btn-lg active"  id="navi-button2">下一步</button>
+	    <input type="submit" class="btn btn-primary btn-lg active"  id="navi-button2" value="下一步"/>
 	 </div>
-	 	 
+	 </form>	 
 	
 	 
 	

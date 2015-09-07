@@ -20,15 +20,33 @@ public class EvaluationController {
 		
 		String evaluationId = java.util.UUID.randomUUID().toString() ;
 		
-		ModelAndView mv = new ModelAndView( "holland/first" ) ;
+		ModelAndView mv = new ModelAndView( "holland/step1" ) ;
 		mv.addObject("evId", evaluationId) ;
 		return  mv ;
 	}
 	
-	@RequestMapping("/step1")
-	public ModelAndView dofirst(){
-		System.out.println("-----h_r6_1=" + request.getParameter("h_r6_1")) ;
+	@RequestMapping("/step2")
+	public ModelAndView toStep2(){
+		//System.out.println("-----h_r6_1=" + request.getParameter("h_r6_1")) ;
 		ModelAndView mv = new ModelAndView( "holland/step2" ) ;
+		//mv.addObject("evId", evaluationId) ;
+		return mv ;
+	}
+	
+	
+	@RequestMapping("/step3")
+	public ModelAndView toStep3(){
+		//System.out.println("-----h_r6_1=" + request.getParameter("h_r6_1")) ;
+		ModelAndView mv = new ModelAndView( "holland/step3" ) ;
+		//mv.addObject("evId", evaluationId) ;
+		return mv ;
+	}
+	
+	
+	@RequestMapping("/step4")
+	public ModelAndView toStep4(){
+		//System.out.println("-----h_r6_1=" + request.getParameter("h_r6_1")) ;
+		ModelAndView mv = new ModelAndView( "holland/step4" ) ;
 		//mv.addObject("evId", evaluationId) ;
 		return mv ;
 	}
