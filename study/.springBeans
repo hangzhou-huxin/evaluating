@@ -9,6 +9,7 @@
 	<configs>
 		<config>src/main/resources/applicationContext-redis.xml</config>
 		<config>src/main/webapp/WEB-INF/study-servlet.xml</config>
+		<config>src/main/resources/applicationContext-eval.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

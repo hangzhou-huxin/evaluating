@@ -15,7 +15,7 @@
  		<property name="connectionFactory" ref="jedisConnectionFactory"/>
  	</bean>
  	
- 	<bean id="stringOperations" class="org.huxin.utils.redis.StringOperationsDao">
+ 	<bean id="stringOperations" class="org.huxin.utils.redis.RedisOperationsDao">
  		<property name="redisTemplate" ref="redisTemplate"/>
  	</bean>
 

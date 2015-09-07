@@ -3,7 +3,7 @@ package cn.itcast.application.study.evaluation.holland.dto;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FirstForm {
+public class HollandForm {
 
 	private Map questions1 ;
 	
