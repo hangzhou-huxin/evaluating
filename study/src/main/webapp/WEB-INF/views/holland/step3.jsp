@@ -45,7 +45,7 @@
 	       
 	       
 	       $('#navi-button1').click(function(e) {
-	    	    window.location.href = "step2.do" ;
+	    	    window.location.href = "step2.do?evId=${evId}" ;
 		    })
 	   
 	  
@@ -60,6 +60,7 @@
   	<div id="test" class="container-fluid">
   		<h1 class="page-header" style="text-align:center;">三.	你所喜欢的职业</h1>
   		<form action="step4.do" method="post" onsubmit="">
+		<input type="hidden" name="evId" value="${evId}"/>
 		<div id="part1" class="container">
 		 	<div class="row">
 		 	  下面列举了多种职业，请逐一认真地看，如果是你有兴趣的工作，请在“是”栏里打√；如果你不太喜欢、不关心的工作，请在“否”栏里打×。请回答全部问题。
@@ -99,9 +100,6 @@
 	 </form>
 	
 	 
-	
-  
-<script src="bootstrap/js/bootstrap.js"></script>
 
 </body>
 </html>

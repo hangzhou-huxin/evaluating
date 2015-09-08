@@ -14,44 +14,30 @@ import cn.itcast.application.study.evaluation.holland.dto.HollandForm;
 
 public class EvaluationUtils {
 	
-	protected static RedisOperationsDao stringOperationDao ;
+	protected static RedisOperationsDao redisDao ;
 	
 	
 	public static Boolean validateEvalId(String evalId){
-		return stringOperationDao.find(evalId) == null  ;
+		return redisDao.isExist(evalId);
 	}
 	
-	public static void  saveStepData( final String evalId , final String step ,final Map data){
-	    final StringRedisTemplate redisTemplate =  stringOperationDao.getRedisTemplate() ;
-	    redisTemplate.execute(new RedisCallback<Object>(){
-
-			public Object doInRedis(RedisConnection connection) throws DataAccessException {
-				BoundHashOperations<String,String,Map> boundHashOperations = redisTemplate.boundHashOps( evalId) ;
-				Map<String, Map> stepData = new HashMap<String, Map>();  
-				stepData.put(step, data); 
-	            boundHashOperations.putAll(stepData); 
-				return null;
-			}
-	    	
-	    }) ;
+	public static void  saveStepDataToCache( final String evalId , final Map<String,String> data){
+	    Map<String,String> cache = redisDao.getMap( evalId ) ;
+	    if( cache == null){
+	    	cache = new HashMap<String,String>() ;
+	    }
+	    
+	    cache.putAll(data);
+	    redisDao.addMap(evalId, cache);
 	}
 	
-	public static Map getStepData(final String evalId , final String step ){
-		final StringRedisTemplate redisTemplate =  stringOperationDao.getRedisTemplate() ;
-	    return  (Map)redisTemplate.execute(new RedisCallback<Object>(){
-
-			public Object doInRedis(RedisConnection connection)
-					throws DataAccessException {
-				BoundHashOperations<String,String,Map> boundHashOperations = redisTemplate.boundHashOps( evalId) ;
-				Map<String, Map> data = boundHashOperations.entries();  
-				if( data != null){
-					return data.get(step) ;
-				}else{
-					return null;
-				}
-			}
-	    	
-	    });
+	public static Map getCacheData(final String evalId ){
+		return redisDao.getMap( evalId ) ;
+	}
+	
+	public static void putEvalId(String evalId){
+	    redisDao.addMap(evalId, new HashMap<String,String>());
+	    redisDao.setExpireTime(evalId, Constant.EXPIRE_MINUTES);
 	}
 
 }

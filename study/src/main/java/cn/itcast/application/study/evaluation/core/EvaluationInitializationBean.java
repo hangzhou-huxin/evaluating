@@ -10,7 +10,7 @@ public class EvaluationInitializationBean implements InitializingBean,Applicatio
 
 	private ApplicationContext context ;
 	public void afterPropertiesSet() throws Exception {
-		EvaluationUtils.stringOperationDao = (RedisOperationsDao)context.getBean("stringOperations") ;
+		EvaluationUtils.redisDao = (RedisOperationsDao)context.getBean("stringOperations") ;
 	}
 
 	public void setApplicationContext(ApplicationContext context)

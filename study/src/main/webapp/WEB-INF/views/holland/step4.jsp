@@ -42,7 +42,7 @@
 	       
 
 	       $('#navi-button1').click(function(e) {
-	    	    window.location.href = "step3.do" ;
+	    	    window.location.href = "step3.do?evId=${evId}" ;
 		    }) ;
 	       
 	      
@@ -54,7 +54,8 @@
 </script>
 </head>
 <body style="margin:0 auto;width: 75%;">
-   
+   <form action="finish.do" method="post">
+    <input type="hidden" name="evId" value="${evId}"/>
   	<div id="test" class="container-fluid">
   		<h1 class="page-header" style="text-align:center;">四.	 以下这些描述有多少符合你的想法：</h1>
 		<div id="part1" class="container">
@@ -91,14 +92,11 @@
 	 <div class="row">
 	    <button type="button" class="btn btn-default btn-lg active"  id="navi-button1">上一步</button>
 	    
-	    <button id="navi-button2" type="button" class="btn btn-primary btn-lg active">完 成</button>
+	    <input  type="submit"  value="完成" class="btn btn-primary btn-lg active"/>
 	 </div>
-	 	 
+	</form> 	 
 	
 	 
-	
-  
-<script src="bootstrap/js/bootstrap.js"></script>
 
 </body>
 </html>

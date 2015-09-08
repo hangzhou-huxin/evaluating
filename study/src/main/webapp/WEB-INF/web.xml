@@ -21,7 +21,9 @@
 
 	<context-param>
  		<param-name>contextConfigLocation</param-name>
- 		<param-value>classpath*:applicationContext-redis.xml</param-value>
+ 		<param-value>classpath*:applicationContext-redis.xml
+ 					 classpath*:applicationContext-eval.xml
+ 		</param-value>
  	</context-param>
  
 	<servlet>
@@ -37,6 +39,11 @@
 	<listener>
  		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
  	</listener>
+ 	
+ 	<error-page>
+ 		<error-code>400</error-code>
+ 		<location>/error.jsp</location>
+ 	</error-page>
 
 </web-app>
 

@@ -1,5 +1,7 @@
 package cn.itcast.application.study.evaluation.holland.web;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.itcast.application.study.evaluation.core.Constant;
 import cn.itcast.application.study.evaluation.core.EvaluationUtils;
+import cn.itcast.application.study.evaluation.utils.WebUtil;
 
 @Controller
 @RequestMapping("/holland")
@@ -20,19 +23,11 @@ public class EvaluationController {
 	private  HttpServletRequest request;
 	
 	@RequestMapping("/main")
-	public ModelAndView init(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evalId ){
-		//判断是否携带测试编号
-		if(StringUtils.isEmpty(evalId)){
-			//产生一个测试编号
-			evalId = java.util.UUID.randomUUID().toString() ;
-			
-		}else{
-			//校验测试编号
-			if(!EvaluationUtils.validateEvalId(evalId)) {
-				evalId = java.util.UUID.randomUUID().toString() ;
-			}
-		}
+	public ModelAndView init(){
+		//进入测试页面，产生测试编号
+		String evalId = java.util.UUID.randomUUID().toString() ;
 		
+		EvaluationUtils.putEvalId(evalId);
 		
 		ModelAndView mv = new ModelAndView( "holland/step1" ) ;
 		mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evalId) ;
@@ -44,34 +39,78 @@ public class EvaluationController {
 		//System.out.println("-----h_r6_1=" + request.getParameter("h_r6_1")) ;
 		String view = "holland/step2" ;
 		String errMsg = "" ;
+		
 		if(StringUtils.isEmpty(evalId) || !EvaluationUtils.validateEvalId(evalId)){
-			//中止测试
-			view = "holland/step1" ;
+			//中止测试,
+			view = "holland/error" ;
+			errMsg = "测试超时，请重新进行测试" ;
+			
 		}else{
 			//取出第一步所提交题的结果存入redis
+			Map params = WebUtil.getParamsToMap(request);
+			System.out.println("params=" + params);
+			EvaluationUtils.saveStepDataToCache(evalId, params);
+			
 		}
+		
 		ModelAndView mv = new ModelAndView( view ) ;
-		if(!StringUtils.isEmpty(errMsg))
-			mv.addObject( "errMsg", errMsg) ;
-		//mv.addObject("evId", evaluationId) ;
+		mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evalId) ;
+		mv.addObject( "errMsg", errMsg) ;
 		return mv ;
 	}
 	
 	
 	@RequestMapping("/step3")
-	public ModelAndView toStep3(){
-		//System.out.println("-----h_r6_1=" + request.getParameter("h_r6_1")) ;
-		ModelAndView mv = new ModelAndView( "holland/step3" ) ;
-		//mv.addObject("evId", evaluationId) ;
+	public ModelAndView toStep3(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evalId){
+		String view = "holland/step3" ;
+		String errMsg = "" ;
+		ModelAndView mv = new ModelAndView( view ) ;
+		if(StringUtils.isEmpty(evalId) || !EvaluationUtils.validateEvalId(evalId)){
+			//中止测试,
+			view = "holland/error" ;
+			errMsg = "测试超时，请重新进行测试" ;
+			mv.addObject( "errMsg", errMsg) ;
+		}else{
+			//取出第一步所提交题的结果存入redis
+			Map params = WebUtil.getParamsToMap(request);
+			EvaluationUtils.saveStepDataToCache(evalId, params);
+			mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evalId) ;
+		}
+		
 		return mv ;
 	}
 	
 	
 	@RequestMapping("/step4")
-	public ModelAndView toStep4(){
-		//System.out.println("-----h_r6_1=" + request.getParameter("h_r6_1")) ;
-		ModelAndView mv = new ModelAndView( "holland/step4" ) ;
-		//mv.addObject("evId", evaluationId) ;
+	public ModelAndView toStep4(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evalId){
+		String view = "holland/step4" ;
+		String errMsg = "" ;
+		ModelAndView mv = new ModelAndView( view ) ;
+		if(StringUtils.isEmpty(evalId) || !EvaluationUtils.validateEvalId(evalId)){
+			//中止测试,
+			view = "/error" ;
+			errMsg = "测试超时，请重新进行测试" ;
+			mv.addObject( "errMsg", errMsg) ;
+		}else{
+			//取出第一步所提交题的结果存入redis
+			Map params = WebUtil.getParamsToMap(request);
+			EvaluationUtils.saveStepDataToCache(evalId, params);
+			mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evalId) ;
+			//EvaluationUtils.
+		}
+		
+		return mv ;
+	}
+	
+	
+	@RequestMapping("/finish")
+	public ModelAndView finish(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evalId){
+		String view = "holland/report" ;
+		ModelAndView mv = new ModelAndView( view ) ;
+		Map params =  WebUtil.getParamsToMap(request);
+		EvaluationUtils.saveStepDataToCache(evalId, params);
+		
+		mv.addObject( "params", EvaluationUtils.getCacheData(evalId) ) ;
 		return mv ;
 	}
 

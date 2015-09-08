@@ -40,7 +40,7 @@
 	       }
 		   
 	      $('#navi-button1').click(function(e) {
-	    	    window.location.href = "main.do" ;
+	    	    window.location.href = "main.do?evId=${evId}" ;
 		    })
 	  
 	  
@@ -55,6 +55,7 @@
   	<div id="test" class="container-fluid">
   		<h1 class="page-header" style="text-align:center;">二.	您所擅长获胜的活动</h1>
   		<form action="<%=request.getContextPath()%>/holland/step3.do" method="post" onsubmit="">
+		<input type="hidden" name="evId" value="${evId}"/>
 		<div id="part1" class="container">
 		 	<div class="row">
 		 	   下面列举了若干种活动，请就这些活动判断你的好恶。喜欢的，请在“是”栏里打√，反之，在“否”栏里打“×”请按顺序回答全部问题。
@@ -94,10 +95,7 @@
 	 </div>
 	 </form>	 
 	
-	 
-	
-  
-<script src="bootstrap/js/bootstrap.js"></script>
+
 
 </body>
 </html>
