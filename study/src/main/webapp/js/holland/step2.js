@@ -1,5 +1,5 @@
 
-questions1 = [{qid:"h_r2_1",index:"1.",context:"能使用电锯、电钻和锉刀等工具",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
+questions7 = [{qid:"h_r2_1",index:"1.",context:"能使用电锯、电钻和锉刀等工具",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
                   {qid:"h_r2_2",index:"2.",context:"能够修理自行车或其他机械",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
                   {qid:"h_r2_3",index:"3.",context:"能给家具和木制品刷漆",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
                   {qid:"h_r2_4",index:"4.",context:"能看建筑设计图",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
@@ -9,7 +9,7 @@ questions1 = [{qid:"h_r2_1",index:"1.",context:"能使用电锯、电钻和锉�
                   {qid:"h_r2_8",index:"8.",context:"能简单地修理水管",options:[{text:"是",value:"true"},{text:"否",value:"false"}]}
                   ] ;
 
-questions2 = [{qid:"h_a2_1",index:"1.",context:"能演奏乐器",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
+questions8 = [{qid:"h_a2_1",index:"1.",context:"能演奏乐器",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_a2_2",index:"2.",context:"扮演剧中角色",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_a2_3",index:"3.",context:"能创作简单的乐曲",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_a2_4",index:"4.",context:"会跳舞",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
@@ -19,7 +19,7 @@ questions2 = [{qid:"h_a2_1",index:"1.",context:"能演奏乐器",options:[{text:
               {qid:"h_a2_8",index:"8.",context:"写得一手好文章",options:[{text:"是",value:"true"},{text:"否",value:"false"}]} 
 			 ];
 
-questions3 = [{qid:"h_i2_1",index:"1.",context:"懂得真空管或晶体管的作用",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
+questions9 = [{qid:"h_i2_1",index:"1.",context:"懂得真空管或晶体管的作用",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_i2_2",index:"2.",context:"能够列举三种蛋白质多的食品",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_i2_3",index:"3.",context:"理解铀的裂变",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_i2_4",index:"4.",context:"能用计算尺、计算器、对数表",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
@@ -29,7 +29,7 @@ questions3 = [{qid:"h_i2_1",index:"1.",context:"懂得真空管或晶体管的�
               {qid:"h_i2_8",index:"8.",context:"能解释简单的化学",options:[{text:"是",value:"true"},{text:"否",value:"false"}]} 
 			 ];
 
-questions4 = [{qid:"h_s2_1",index:"1.",context:"有向各种人说明解释的能力",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
+questions10 = [{qid:"h_s2_1",index:"1.",context:"有向各种人说明解释的能力",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_s2_2",index:"2.",context:"常参加社会福利活动",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_s2_3",index:"3.",context:"能和大家一起友好相处地工作",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_s2_4",index:"4.",context:"善于与年长者相处",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
@@ -39,7 +39,7 @@ questions4 = [{qid:"h_s2_1",index:"1.",context:"有向各种人说明解释的�
               {qid:"h_s2_8",index:"8.",context:"帮助护理病人和伤员",options:[{text:"是",value:"true"},{text:"否",value:"false"}]} 
 			 ];
 
-questions5 = [{qid:"h_e2_1",index:"1.",context:"担任过学生干部并且干得不错",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
+questions11 = [{qid:"h_e2_1",index:"1.",context:"担任过学生干部并且干得不错",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_e2_2",index:"2.",context:"工作上能指导和监督他人",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_e2_3",index:"3.",context:"做事充满活力和热情",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_e2_4",index:"4.",context:"有效利用自身的做法调动他人",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
@@ -49,7 +49,7 @@ questions5 = [{qid:"h_e2_1",index:"1.",context:"担任过学生干部并且干�
               {qid:"h_e2_8",index:"8.",context:"健谈善辩",options:[{text:"是",value:"true"},{text:"否",value:"false"}]} 
 			 ];
 
-questions6 = [{qid:"h_c2_1",index:"1.",context:"会熟练的打印中文",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
+questions12 = [{qid:"h_c2_1",index:"1.",context:"会熟练的打印中文",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_c2_2",index:"2.",context:"会用外文打字机或复印机",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_c2_3",index:"3.",context:"能快速记笔记和抄写文章",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_c2_4",index:"4.",context:"善于整理保管文件和资料",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},

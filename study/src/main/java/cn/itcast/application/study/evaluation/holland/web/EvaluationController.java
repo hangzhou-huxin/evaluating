@@ -111,6 +111,12 @@ public class EvaluationController {
 		EvaluationUtils.saveStepDataToCache(evalId, params);
 		
 		mv.addObject( "params", EvaluationUtils.getCacheData(evalId) ) ;
+		
+		//开始计算得分
+		Map<String,String> data = EvaluationUtils.getCacheData(evalId) ;
+		Map<String,Integer> result = EvaluationUtils.getHollandEvaluationResult(data) ;
+		mv.addObject( "result"	, result) ;
+		System.out.println(result);
 		return mv ;
 	}
 
