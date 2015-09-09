@@ -8,9 +8,7 @@
 <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet">
 <script type="text/javascript" src="<%=request.getContextPath()%>/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/holland/step1.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/holland/step2.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/holland/step3.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/holland/step4.js" charset="UTF-8"></script>
+
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/question.js" charset="UTF-8"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -21,24 +19,6 @@
 	   createTrueFalseQuestion($('#questions4') , questions4 ) ;
 	   createTrueFalseQuestion($('#questions5') , questions5 ) ;
 	   createTrueFalseQuestion($('#questions6') , questions6 ) ;
-	   createTrueFalseQuestion($('#questions7') , questions7 );
-	   createTrueFalseQuestion($('#questions8') , questions8 ) ;
-	   createTrueFalseQuestion($('#questions9') , questions9 ) ;
-	   createTrueFalseQuestion($('#questions10') , questions10 ) ;
-	   createTrueFalseQuestion($('#questions11') , questions11 ) ;
-	   createTrueFalseQuestion($('#questions12') , questions12 ) ;
-	   createTrueFalseQuestion($('#questions13') , questions13 );
-	   createTrueFalseQuestion($('#questions14') , questions14 ) ;
-	   createTrueFalseQuestion($('#questions15') , questions15 ) ;
-	   createTrueFalseQuestion($('#questions16') , questions16 ) ;
-	   createTrueFalseQuestion($('#questions17') , questions17 ) ;
-	   createTrueFalseQuestion($('#questions18') , questions18 ) ;
-	   createTrueFalseQuestion($('#questions19') , questions19 );
-	   createTrueFalseQuestion($('#questions20') , questions20 ) ;
-	   createTrueFalseQuestion($('#questions21') , questions21 ) ;
-	   createTrueFalseQuestion($('#questions22') , questions22 ) ;
-	   createTrueFalseQuestion($('#questions23') , questions23 ) ;
-	   createTrueFalseQuestion($('#questions24') , questions24 ) ;
 	       
 	   for(var i=1; i<=24 ;i++){
 	    	   $('#subitem'+i).click(function(e) {
@@ -139,7 +119,7 @@
 	 		<br/>
 	 	    <div class="container">
 	 	       <p id="subitem7" class="bg-primary">R：实际型活动</p>
-			   <div id="questions7" class="row" style=""></div>
+			   <div id="questions7" class="row" style="display:none;"></div>
 	 	    </div>
 	 	    <div class="container">
 	 	       <p id="subitem8" class="bg-primary">A：艺术型活动</p>
@@ -171,7 +151,7 @@
 	 		<br/>
 	 	    <div class="container">
 	 	       <p id="subitem13" class="bg-primary">R：实际型活动</p>
-			   <div id="questions13" class="row" style=""></div>
+			   <div id="questions13" class="row" style="display:none;"></div>
 	 	    </div>
 	 	    <div class="container">
 	 	       <p id="subitem14" class="bg-primary">A：艺术型活动</p>
@@ -203,7 +183,7 @@
 	 		<br/>
 	 	    <div class="container">
 	 	       <p id="subitem19" class="bg-primary">R：实际型活动</p>
-			   <div id="questions19" class="row" style=""></div>
+			   <div id="questions19" class="row" style="display:none;"></div>
 	 	    </div>
 	 	    <div class="container">
 	 	       <p id="subitem20" class="bg-primary">A：艺术型活动</p>
@@ -228,9 +208,9 @@
 	 	</div>
 	 	
 	 	<div class="container">
-	 	    <button id="navi-last-button" type="button" class="btn btn-default btn-lg active"  >上一步</button>
-	    	<input id="navi-next-button" type="button" class="btn btn-primary btn-lg active" value="下一步" />
-	    	<input  id="submit-button" type="submit"  value="完成" class="btn btn-primary btn-lg active" style="display:none;"/>
+	 		<button id="navi-last-button" type="button" class="btn btn-default btn-lg active"  >上一步</button>
+	 		<input id="navi-next-button" type="button" class="btn btn-primary btn-lg active" value="下一步" />
+	 	    
 	 	</div>
 	 	</form>
 	 </div>
