@@ -63,11 +63,11 @@
 		<input type="hidden" name="evId" value="${evId}"/>
 		<div id="part1" class="container">
 		 	<div class="row">
-		 	  下面列举了多种职业，请逐一认真地看，如果是你有兴趣的工作，请在“是”栏里打√；如果你不太喜欢、不关心的工作，请在“否”栏里打×。请回答全部问题。
+				下面列举了多种职业，请逐一认真地看，如果是你有兴趣的工作，请选“是”；如果你不太喜欢、不关心的工作，请选“否”。请回答全部问题。		 	  
 		 	</div>
 	 		<br/>
 	 	    <div class="container">
-	 	       <p id="subitem1" class="bg-primary">R：实际型活动</p>
+	 	       <p id="subitem1" class="bg-primary">R：实际型职业</p>
 			   <div id="questions1" class="row" style=""></div>
 	 	    </div>
 	 	    <div class="container">
@@ -83,7 +83,7 @@
 			   <div id="questions4" class="row" style="display:none;"></div>
 	 	    </div>
 	 	    <div class="container">
-	 	       <p id="subitem5" class="bg-primary">A艺术型职业</p>
+	 	       <p id="subitem5" class="bg-primary">A：艺术型职业</p>
 			   <div id="questions5" class="row" style="display:none;"></div>
 	 	    </div>
 	 		<div class="container">

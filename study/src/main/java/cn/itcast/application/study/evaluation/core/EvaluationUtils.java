@@ -21,6 +21,11 @@ public class EvaluationUtils {
 		return redisDao.isExist(evalId);
 	}
 	
+	/**
+	 * 保存测试过程中产生的数据到缓存中
+	 * @param evalId
+	 * @param data
+	 */
 	public static void  saveStepDataToCache( final String evalId , final Map<String,String> data){
 	    Map<String,String> cache = redisDao.getMap( evalId ) ;
 	    if( cache == null){
@@ -33,6 +38,16 @@ public class EvaluationUtils {
 	
 	public static Map getCacheData(final String evalId ){
 		return redisDao.getMap( evalId ) ;
+	}
+	
+	
+	public static String CachemapToJson(Map<String,String> data){
+		//{'':''}
+		StringBuilder buffer = new StringBuilder() ;
+		String prefix = "h_" ;
+		
+		
+		return buffer.toString() ;
 	}
 	
 	public static void putEvalId(String evalId){

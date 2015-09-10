@@ -58,7 +58,7 @@
 		<input type="hidden" name="evId" value="${evId}"/>
 		<div id="part1" class="container">
 		 	<div class="row">
-		 	   下面列举了若干种活动，请就这些活动判断你的好恶。喜欢的，请在“是”栏里打√，反之，在“否”栏里打“×”请按顺序回答全部问题。
+		 	   下面列举了若干种活动，其中你能做或大概能做的事，请选“是”；反之，请选“否”。请按顺序回答全部问题。
 		 	</div>
 	 		<br/>
 	 	    <div class="container">
@@ -66,23 +66,23 @@
 			   <div id="questions1" class="row" style=""></div>
 	 	    </div>
 	 	    <div class="container">
-	 	       <p id="subitem2" class="bg-primary">A：艺术型能力</p>
+	 	       <p id="subitem2" class="bg-primary">A：艺术型活动</p>
 			   <div id="questions2" class="row" style="display:none;"></div>
 	 	    </div>
 	 	    <div class="container">
-	 	       <p id="subitem3" class="bg-primary">I：调研型能力</p>
+	 	       <p id="subitem3" class="bg-primary">I：调研型活动</p>
 			   <div id="questions3" class="row" style="display:none;"></div>
 	 	    </div>
 	 	    <div class="container">
-	 	       <p id="subitem4" class="bg-primary">S：社会型能力</p>
+	 	       <p id="subitem4" class="bg-primary">S：社会型活动</p>
 			   <div id="questions4" class="row" style="display:none;"></div>
 	 	    </div>
 	 	    <div class="container">
-	 	       <p id="subitem5" class="bg-primary">E：事业型能力</p>
+	 	       <p id="subitem5" class="bg-primary">E：事业型活动</p>
 			   <div id="questions5" class="row" style="display:none;"></div>
 	 	    </div>
 	 		<div class="container">
-	 	       <p id="subitem6" class="bg-primary">C常规型能力</p>
+	 	       <p id="subitem6" class="bg-primary">C：常规型活动</p>
 			   <div id="questions6" class="row" style="display:none;"></div>
 	 	    </div>
 	 	</div>

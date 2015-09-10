@@ -62,27 +62,27 @@
 		 	
 	 		<br/>
 	 	    <div class="container">
-	 	       <p id="subitem1" class="bg-primary">实际型</p>
+	 	       <p id="subitem1" class="bg-primary">R：实际型</p>
 			   <div id="questions1" class="row" style=""></div>
 	 	    </div>
 	 	    <div class="container">
-	 	       <p id="subitem2" class="bg-primary">事业型</p>
+	 	       <p id="subitem2" class="bg-primary">E：事业型</p>
 			   <div id="questions2" class="row" style="display:none;"></div>
 	 	    </div>
 	 	    <div class="container">
-	 	       <p id="subitem3" class="bg-primary">常规型</p>
+	 	       <p id="subitem3" class="bg-primary">C：常规型</p>
 			   <div id="questions3" class="row" style="display:none;"></div>
 	 	    </div>
 	 	    <div class="container">
-	 	       <p id="subitem4" class="bg-primary">社会型</p>
+	 	       <p id="subitem4" class="bg-primary">S：社会型</p>
 			   <div id="questions4" class="row" style="display:none;"></div>
 	 	    </div>
 	 	    <div class="container">
-	 	       <p id="subitem5" class="bg-primary">调研型</p>
+	 	       <p id="subitem5" class="bg-primary">I：调研型</p>
 			   <div id="questions5" class="row" style="display:none;"></div>
 	 	    </div>
 	 		<div class="container">
-	 	       <p id="subitem6" class="bg-primary">艺术型</p>
+	 	       <p id="subitem6" class="bg-primary">A：艺术型</p>
 			   <div id="questions6" class="row" style="display:none;"></div>
 	 	    </div>
 	 	</div>

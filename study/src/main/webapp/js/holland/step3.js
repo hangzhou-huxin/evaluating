@@ -1,5 +1,5 @@
 
-questions13 = [{qid:"h_r3_1",index:"1.",context:" 飞机机械师",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
+questions1 = [{qid:"h_r3_1",index:"1.",context:" 飞机机械师",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
                   {qid:"h_r3_2",index:"2.",context:"野生动物专家",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
                   {qid:"h_r3_3",index:"3.",context:"设备维修专家",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
                   {qid:"h_r3_4",index:"4.",context:"测量工程师",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
@@ -9,7 +9,7 @@ questions13 = [{qid:"h_r3_1",index:"1.",context:" 飞机机械师",options:[{tex
                   {qid:"h_r3_8",index:"8.",context:"电气工程师",options:[{text:"是",value:"true"},{text:"否",value:"false"}]}
                   ] ;
 
-questions14 = [{qid:"h_s3_1",index:"1.",context:"街道、工会干部",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
+questions2 = [{qid:"h_s3_1",index:"1.",context:"街道、工会干部",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_s3_2",index:"2.",context:"小学、中学教师",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_s3_3",index:"3.",context:"精神病医生",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_s3_4",index:"4.",context:"体育教练",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
@@ -19,7 +19,7 @@ questions14 = [{qid:"h_s3_1",index:"1.",context:"街道、工会干部",options:
               {qid:"h_s3_8",index:"8.",context:"国家机关工作人员",options:[{text:"是",value:"true"},{text:"否",value:"false"}]} 
 			 ];
 
-questions15 = [{qid:"h_i3_1",index:"1.",context:"气象学或天文学者",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
+questions3 = [{qid:"h_i3_1",index:"1.",context:"气象学或天文学者",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_i3_2",index:"2.",context:"生物学者",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_i3_3",index:"3.",context:"医学实验室的技术人员",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_i3_4",index:"4.",context:"动物学者",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
@@ -29,7 +29,7 @@ questions15 = [{qid:"h_i3_1",index:"1.",context:"气象学或天文学者",optio
               {qid:"h_i3_8",index:"8.",context:"物理学者",options:[{text:"是",value:"true"},{text:"否",value:"false"}]} 
 			 ];
 
-questions16 = [{qid:"h_e3_1",index:"1.",context:"厂长",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
+questions4 = [{qid:"h_e3_1",index:"1.",context:"厂长",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_e3_2",index:"2.",context:"电视片编制人",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_e3_3",index:"3.",context:"公司经理",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_e3_4",index:"4.",context:"广告部长",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
@@ -39,7 +39,7 @@ questions16 = [{qid:"h_e3_1",index:"1.",context:"厂长",options:[{text:"是",va
               {qid:"h_e3_8",index:"8.",context:"企业管理咨询人员",options:[{text:"是",value:"true"},{text:"否",value:"false"}]} 
 			 ];
 
-questions17 = [{qid:"h_a3_1",index:"1.",context:"乐队指挥",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
+questions5 = [{qid:"h_a3_1",index:"1.",context:"乐队指挥",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_a3_2",index:"2.",context:"演奏家",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_a3_3",index:"3.",context:"作家",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_a3_4",index:"4.",context:"摄影家",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
@@ -49,7 +49,7 @@ questions17 = [{qid:"h_a3_1",index:"1.",context:"乐队指挥",options:[{text:"�
               {qid:"h_a3_8",index:"8.",context:"电影电视演员",options:[{text:"是",value:"true"},{text:"否",value:"false"}]} 
 			 ];
 
-questions18 = [{qid:"h_c3_1",index:"1.",context:"会计师",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
+questions6 = [{qid:"h_c3_1",index:"1.",context:"会计师",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_c3_2",index:"2.",context:"银行出纳员",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_c3_3",index:"3.",context:"税收管理员",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},
               {qid:"h_c3_4",index:"4.",context:"计算机操作员",options:[{text:"是",value:"true"},{text:"否",value:"false"}]},

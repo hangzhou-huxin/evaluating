@@ -1,5 +1,6 @@
 package cn.itcast.application.study.evaluation.holland.web;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,14 +24,23 @@ public class EvaluationController {
 	private  HttpServletRequest request;
 	
 	@RequestMapping("/main")
-	public ModelAndView init(){
+	public ModelAndView init(@RequestParam("username") String username , @RequestParam("qq") String qq ){
 		//进入测试页面，产生测试编号
 		String evalId = java.util.UUID.randomUUID().toString() ;
 		
 		EvaluationUtils.putEvalId(evalId);
+		Map<String,String> data = new HashMap<String,String>() ;
+		data.put("username", username) ;
+		data.put("password", qq) ;
+		EvaluationUtils.saveStepDataToCache(evalId, data);
 		
+		//获取缓存中的测试数据
+		Map<String,String> cacheMap = EvaluationUtils.getCacheData(evalId) ;
+		//转测试数据为json
+		String cacheJson = "";
 		ModelAndView mv = new ModelAndView( "holland/step1" ) ;
 		mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evalId) ;
+		mv.addObject("cache",cacheJson) ;
 		return  mv ;
 	}
 	
@@ -117,6 +127,14 @@ public class EvaluationController {
 		Map<String,Integer> result = EvaluationUtils.getHollandEvaluationResult(data) ;
 		mv.addObject( "result"	, result) ;
 		System.out.println(result);
+		return mv ;
+	}
+	
+	
+	@RequestMapping("/apply")
+	public ModelAndView apply(){
+		String view = "holland/apply" ;
+		ModelAndView mv = new ModelAndView( view ) ;
 		return mv ;
 	}
 
