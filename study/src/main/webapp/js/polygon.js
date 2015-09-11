@@ -1,3 +1,0 @@
-function draw(canvas , points){
-	
-}

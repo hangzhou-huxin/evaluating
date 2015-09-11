@@ -30,3 +30,52 @@ function createTrueFalseQuestion(subitemObj , questions  , cacheData){
 	 
 }
 
+function validateForm( ){
+	
+}
+
+function validateQuestions(questions ,formObj){
+	var len = questions.length ;
+	 var flag = true ;
+	 for( var i=0 ; i<=len ;i++){
+		 var q = questions[i] ;
+		 var obj = formObj["'" + q.qid + "'"] ;
+		// alert(q.qid + ":" + formObj["'" + q.qid + "'"].val() );
+		if( formObj["'" + q.qid + "'"].val() ){
+			alert(q.qid + "已答" + $(":input[name='" + q.qid + "']").val()) ;
+			flag = false ;
+			break;
+		} else{
+			alert(q.qid + "未答") ;
+		}
+	 }
+	 return flag ;
+}
+
+function setSubitemClickEvent(  ){
+	for(var i=1; i<7 ;i++){
+ 	   $('#subitem'+i).click(function(e) {
+ 		   var id = $(this).attr('id').replace("subitem","") ;
+ 		   $('#questions1').hide() ;
+ 		   $('#questions2').hide() ;
+ 		   $('#questions3').hide() ;
+ 		   $('#questions4').hide() ;
+ 		   $('#questions5').hide() ;
+ 		   $('#questions6').hide() ;
+ 		   $('#questions' +id).show(); 
+ 		   
+ 	   }) ;
+ 	   
+    } 
+}
+
+function showSubitem(  index ){
+	$('#questions1').hide() ;
+	$('#questions2').hide() ;
+ 	$('#questions3').hide() ;
+ 	$('#questions4').hide() ;
+ 	$('#questions5').hide() ;
+ 	$('#questions6').hide() ;
+ 	$('#questions' + index).show(); 
+}
+
