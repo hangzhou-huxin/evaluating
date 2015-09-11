@@ -12,12 +12,16 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-	   createTrueFalseQuestion($('#questions1') , questions1 );
-	   createTrueFalseQuestion($('#questions2') , questions2 ) ;
-	   createTrueFalseQuestion($('#questions3') , questions3 ) ;
-	   createTrueFalseQuestion($('#questions4') , questions4 ) ;
-	   createTrueFalseQuestion($('#questions5') , questions5 ) ;
-	   createTrueFalseQuestion($('#questions6') , questions6 ) ;
+	   var cache = ${cache} ;
+	   if( !cache){
+		   cache = {} ;
+	   }
+	   createTrueFalseQuestion($('#questions1') , questions1 ,cache);
+	   createTrueFalseQuestion($('#questions2') , questions2 ,cache) ;
+	   createTrueFalseQuestion($('#questions3') , questions3 ,cache) ;
+	   createTrueFalseQuestion($('#questions4') , questions4 ,cache) ;
+	   createTrueFalseQuestion($('#questions5') , questions5 ,cache) ;
+	   createTrueFalseQuestion($('#questions6') , questions6 ,cache) ;
 	   
 	   
 	       for(var i=1; i<7 ;i++){

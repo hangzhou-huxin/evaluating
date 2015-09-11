@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,8 +36,10 @@
 </head>
 <body style="margin:0 auto;width: 75%;">
  <h1 class="page-header" style="text-align:center;">霍兰德职业倾向测试量表</h1>
+  <p>${errMsg}</p>
   <div id="test" class="container-fluid">
-	 <form class="form-horizontal" action="main.do" method="post">
+	 <form class="form-horizontal" action="step1.do" method="post">
+	 <input type="hidden" name="evId" value="${evId}"/>
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">姓名</label>
     <div class="col-sm-10">

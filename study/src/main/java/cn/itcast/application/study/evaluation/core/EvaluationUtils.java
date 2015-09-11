@@ -51,7 +51,9 @@ public class EvaluationUtils {
 	}
 	
 	public static void putEvalId(String evalId){
-	    redisDao.addMap(evalId, new HashMap<String,String>());
+		Map<String,String> data = new HashMap<String,String>() ;
+		data.put( Constant.EVALUATION_ID_PARAM_NAME, evalId)  ;
+	    redisDao.addMap(evalId, data);
 	    redisDao.setExpireTime(evalId, Constant.EXPIRE_MINUTES);
 	}
 	
@@ -103,6 +105,20 @@ public class EvaluationUtils {
 		}
 		
 		return result ;
+	}
+	
+	
+	public static String cacheDataToJSON(Map<String,String> cache){
+		
+		StringBuilder buffer = new StringBuilder("{") ;
+		for (Map.Entry<String, String> entry : cache.entrySet()) {
+			   buffer.append("'").append( entry.getKey()).append("':'").append(entry.getValue()).append("',") ;
+		}
+		
+		int length = buffer.length() ;
+		buffer.delete(length-1, length) ;
+		buffer.append("}") ;
+		return buffer.toString() ;
 	}
 
 }

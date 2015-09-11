@@ -12,12 +12,16 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-	   createTrueFalseQuestion($('#questions1') , questions1 );
-	   createTrueFalseQuestion($('#questions2') , questions2 ) ;
-	   createTrueFalseQuestion($('#questions3') , questions3 ) ;
-	   createTrueFalseQuestion($('#questions4') , questions4 ) ;
-	   createTrueFalseQuestion($('#questions5') , questions5 ) ;
-	   createTrueFalseQuestion($('#questions6') , questions6 ) ;
+		var cache = ${cache} ;
+		   if( !cache){
+			   cache = {} ;
+		   }
+			createTrueFalseQuestion($('#questions1') , questions1 ,cache);
+		   createTrueFalseQuestion($('#questions2') , questions2 ,cache) ;
+		   createTrueFalseQuestion($('#questions3') , questions3 ,cache) ;
+		   createTrueFalseQuestion($('#questions4') , questions4 ,cache) ;
+		   createTrueFalseQuestion($('#questions5') , questions5 ,cache) ;
+		   createTrueFalseQuestion($('#questions6') , questions6 ,cache) ;
 	   
 	   
 	   
@@ -33,18 +37,13 @@
 	    		   $('#questions5').hide() ;
 	    		   $('#questions6').hide() ;
 	    		   $('#questions' +id).show(); 
-	    		   $('#questions' +id).animate({scrollTop:$('#questions' +id).offset().top}, 500);
-	    	       
+	    		   
 	    	   }) ;
 	    	   
 	       }
 		   
 	       
 
-	       $('#navi-button1').click(function(e) {
-	    	    window.location.href = "step3.do?evId=${evId}" ;
-		    }) ;
-	       
 	      
 	  
 	    
@@ -90,9 +89,9 @@
 	 	
 	 
 	 <div class="row">
-	    <button type="button" class="btn btn-default btn-lg active"  id="navi-button1">上一步</button>
+	    <input type="submit" value="上一步" name="previous" class="btn btn-default btn-lg active"  id="navi-button1"/>
 	    
-	    <input  type="submit"  value="完成" class="btn btn-primary btn-lg active"/>
+	    <input  type="submit"  value="完成" name="next" class="btn btn-primary btn-lg active"/>
 	 </div>
 	</form> 	 
 	
