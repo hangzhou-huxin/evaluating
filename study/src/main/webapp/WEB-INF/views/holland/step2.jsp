@@ -23,23 +23,30 @@
 		   createTrueFalseQuestion($('#questions5') , questions5 ,cache) ;
 		   createTrueFalseQuestion($('#questions6') , questions6 ,cache) ;
 	   
-	   
-       for(var i=1; i<7 ;i++){
-    	   $('#subitem'+i).click(function(e) {
-    		   var id = $(this).attr('id').replace("subitem","") ;
-    		   $('#questions1').hide() ;
-    		   $('#questions2').hide() ;
-    		   $('#questions3').hide() ;
-    		   $('#questions4').hide() ;
-    		   $('#questions5').hide() ;
-    		   $('#questions6').hide() ;
-    		   $('#questions' +id).show(); 
-    		   $('#questions' +id).animate({scrollTop:$('#questions' +id).offset().top}, 500);
-    	       
-    	   }) ;
-    	   
-       }
-		   
+		   setSubitemClickEvent(); 
+	        
+		    $('#navi-next-button,#navi-previous-button').click(function(){
+		    	if(!validateQuestions(questions1)){
+		    		showSubitem(1) ;
+		    		return  ;
+		    	}
+		    	if(!validateQuestions(questions2)){
+		    		showSubitem(2) ;
+		    		return  ;
+		    	}if(!validateQuestions(questions3)){
+		    		showSubitem(3) ;
+		    		return  ;
+		    	}if(!validateQuestions(questions4)){
+		    		showSubitem(4) ;
+		    		return  ;
+		    	}if(!validateQuestions(questions5)){
+		    		showSubitem(5) ;
+		    		return  ;
+		    	}if(!validateQuestions(questions6)){
+		    		showSubitem(6) ;
+		    		return  ;
+		    	}
+		    }) ;
        
 	  
 	    
@@ -88,8 +95,8 @@
 	 	
 	 
 	 <div class="container">
-	 	<input type="submit" value="上一步" name="previous" class="btn btn-default btn-lg active"  id="navi-button1"/>
-	    <input type="submit" name="next" class="btn btn-primary btn-lg active"  id="navi-button2" value="下一步"/>
+	 	<input type="submit" value="上一步" id="navi-previous-button" name="previous" class="btn btn-default btn-lg active"  id="navi-button1"/>
+	    <input type="submit" name="next"   id="navi-next-button" class="btn btn-primary btn-lg active"  id="navi-button2" value="下一步"/>
 	 </div>
 	 </form>	 
 	

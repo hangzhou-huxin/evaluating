@@ -15,9 +15,9 @@ function createTrueFalseQuestion(subitemObj , questions  , cacheData){
 			 var inputStr = "" ;
 			 var cacheValue = cacheData[q.qid] ;
 		     if( cacheValue && cacheValue == option.value	){
-		    	 inputStr = '<input type="radio"  checked required="required" value="' + option.value + '" name="' + q.qid +'"/>' ;
+		    	 inputStr = '<input type="radio"  checked required="required" value="' + option.value + '" name="' + q.qid +'" id="' + q.id + '"/>';
 		     }else{
-		    	 inputStr = '<input type="radio"   required="required" value="' + option.value + '" name="' + q.qid +'"/>' ;
+		    	 inputStr = '<input type="radio"   required="required" value="' + option.value + '" name="' + q.qid +'" id="' + q.id + '"/>';
 		     }
 		     optionStr +='<div class="col-xs-1">' + inputStr + option.text +'</div>' ;
 		 }
@@ -34,21 +34,18 @@ function validateForm( ){
 	
 }
 
-function validateQuestions(questions ,formObj){
+function validateQuestions(questions ){
 	var len = questions.length ;
 	 var flag = true ;
-	 for( var i=0 ; i<=len ;i++){
+	 for( var i=0 ; i<len ;i++){
 		 var q = questions[i] ;
-		 var obj = formObj["'" + q.qid + "'"] ;
-		// alert(q.qid + ":" + formObj["'" + q.qid + "'"].val() );
-		if( formObj["'" + q.qid + "'"].val() ){
-			alert(q.qid + "已答" + $(":input[name='" + q.qid + "']").val()) ;
-			flag = false ;
-			break;
-		} else{
-			alert(q.qid + "未答") ;
-		}
+		 var obj = $("input[name='" +q.qid + "']:checked") ;
+		 if(!obj.val()){
+			flag = false ; 
+			break ;
+		 }
 	 }
+	// alert(flag) ;
 	 return flag ;
 }
 

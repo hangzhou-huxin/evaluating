@@ -24,28 +24,25 @@
 	   createTrueFalseQuestion($('#questions6') , questions6 ,cache) ;
 	   
 	   setSubitemClickEvent(); 
-	       
-	   //showSubitem(3) ;   
-	    
+	        
 	    $('#navi-next-button').click(function(){
-	    	alert($('#form')) ;
-	    	if(!validateQuestions(questions1,$('#form'))){
+	    	if(!validateQuestions(questions1)){
 	    		showSubitem(1) ;
 	    		return  ;
 	    	}
-	    	if(!validateQuestions(questions2,2)){
+	    	if(!validateQuestions(questions2)){
 	    		showSubitem(2) ;
 	    		return  ;
-	    	}if(!validateQuestions(questions3,3)){
+	    	}if(!validateQuestions(questions3)){
 	    		showSubitem(3) ;
 	    		return  ;
-	    	}if(!validateQuestions(questions4,4)){
+	    	}if(!validateQuestions(questions4)){
 	    		showSubitem(4) ;
 	    		return  ;
-	    	}if(!validateQuestions(questions5,5)){
+	    	}if(!validateQuestions(questions5)){
 	    		showSubitem(5) ;
 	    		return  ;
-	    	}if(!validateQuestions(questions6,6)){
+	    	}if(!validateQuestions(questions6)){
 	    		showSubitem(6) ;
 	    		return  ;
 	    	}

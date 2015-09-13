@@ -26,11 +26,8 @@ public class EvaluationController {
 	
 	@RequestMapping("/main")
 	public ModelAndView init(){
-		//进入测试页面，产生测试编号
-		String evalId = java.util.UUID.randomUUID().toString() ;
-		EvaluationUtils.putEvalId(evalId);
 		ModelAndView mv = new ModelAndView( "holland/main" ) ;
-		mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evalId) ;
+		//mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evalId) ;
 		return  mv ;
 	}
 	
@@ -154,6 +151,7 @@ public class EvaluationController {
 			//开始计算得分
 			Map<String,String> data = EvaluationUtils.getCacheData(evalId) ;
 			Map<String,Integer> result = EvaluationUtils.getHollandEvaluationResult(data) ;
+			//result.
 			mv.addObject( "result"	, result) ;
 		}
 		mv.setViewName(view);
