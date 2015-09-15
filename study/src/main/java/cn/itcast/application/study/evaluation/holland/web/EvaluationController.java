@@ -2,7 +2,9 @@ package cn.itcast.application.study.evaluation.holland.web;
 
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -152,18 +154,18 @@ public class EvaluationController {
 			Map<String,String> data = EvaluationUtils.getCacheData(evalId) ;
 			Map<String,Integer> result = EvaluationUtils.getHollandEvaluationResult(data) ;
 			//result.
+			//对评分结果进行排序
+			String newResult = EvaluationUtils.getOrderedResult(result) ;
+			mv.addObject("orderedResult", newResult) ;
 			mv.addObject( "result"	, result) ;
 		}
+		
 		mv.setViewName(view);
+		mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evalId) ;
 		return mv ;
 	}
 	
 	
-	@RequestMapping("/apply")
-	public ModelAndView apply(){
-		String view = "holland/apply" ;
-		ModelAndView mv = new ModelAndView( view ) ;
-		return mv ;
-	}
+	
 
 }

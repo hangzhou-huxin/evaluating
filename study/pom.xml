@@ -70,6 +70,21 @@
 			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
 			<version>1.2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.4.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>2.4.5</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>study</finalName>
@@ -86,7 +101,7 @@
 					<webApp>
 						<defaultsDescriptor>src/test/resources/webdefault.xml</defaultsDescriptor>
 					</webApp>
-					
+
 				</configuration>
 			</plugin>
 		</plugins>

@@ -15,7 +15,10 @@ public class EvaluationInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		String evid = (String)request.getParameter(Constant.EVALUATION_ID_PARAM_NAME) ;
-		if( StringUtils.isEmpty(evid) || EvaluationUtils.validateEvalId(evid)){
+		if(StringUtils.isEmpty(evid)){
+			evid = (String)request.getAttribute(Constant.EVALUATION_ID_PARAM_NAME) ;
+		} 
+		if( StringUtils.isEmpty(evid) ||!EvaluationUtils.validateEvalId(evid)){
 			//进入测试页面，产生测试编号
 			String evalId = java.util.UUID.randomUUID().toString() ;
 			System.out.println("evalId=" +evalId);

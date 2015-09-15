@@ -1,14 +1,23 @@
 package cn.itcast.application.study.evaluation.core;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import org.apache.commons.collections.OrderedMap;
+import org.apache.commons.collections.map.LinkedMap;
 import org.huxin.utils.redis.RedisOperationsDao;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.util.StringUtils;
 
 import cn.itcast.application.study.evaluation.holland.dto.HollandForm;
 
@@ -18,6 +27,9 @@ public class EvaluationUtils {
 	
 	
 	public static Boolean validateEvalId(String evalId){
+		if(StringUtils.isEmpty(evalId)){
+			return false ;
+		}
 		return redisDao.isExist(evalId);
 	}
 	
@@ -119,6 +131,43 @@ public class EvaluationUtils {
 		buffer.delete(length-1, length) ;
 		buffer.append("}") ;
 		return buffer.toString() ;
+	}
+	
+	/**
+	 * 按照分数高低返回评分的类型字符串
+	 * @param result
+	 * @return
+	 */
+	public static String getOrderedResult(Map<String,Integer> result){
+		
+
+		List<Map.Entry<String, Integer>> newResult =
+		    new ArrayList<Map.Entry<String, Integer>>(result.entrySet());
+
+		
+
+		//排序
+		Collections.sort(newResult, new Comparator<Map.Entry<String, Integer>>() {   
+		    public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {      
+		    	if( o2.getValue() - o1.getValue() != 0){
+		    		return o2.getValue().intValue() - o1.getValue().intValue() ;
+		    	}else{
+		    		return o1.getKey().compareTo(o2.getKey())  ;
+		    	}
+		    }
+		}); 
+		
+		
+		StringBuilder orderedResult = new StringBuilder() ;
+		
+		int size = newResult.size() ;
+		for(int i=0;i<3;i++){
+			orderedResult.append(newResult.get(i).getKey()).append("-") ;
+		}
+		
+		int len = orderedResult.length() ;
+		orderedResult.delete(len-1, len) ;
+		return orderedResult.toString().toUpperCase() ;
 	}
 
 }

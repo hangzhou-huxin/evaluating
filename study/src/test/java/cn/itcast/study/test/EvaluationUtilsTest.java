@@ -42,5 +42,20 @@ public class EvaluationUtilsTest {
 		Boolean flag = EvaluationUtils.validateEvalId(id) ;
 		System.out.println(flag);
 	}
+	
+	@Test
+	public void testGetOrderedResult(){
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"applicationContext-redis.xml","applicationContext-eval.xml"}) ;
+		Map<String,Integer> map = new HashMap<String,Integer>() ;
+		map.put("R", 34) ;
+		map.put("E", 34) ;
+		map.put("S", 342) ;
+		map.put("C", 78) ;
+		map.put("I", 34) ;
+		map.put("A", 78) ;
+		String result = EvaluationUtils.getOrderedResult(map) ;
+		
+		System.out.println(result);
+	}
 
 }
