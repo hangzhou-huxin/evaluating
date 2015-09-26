@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<title>Test Ext</title>
+	   <script type="text/javascript" src="Ext.js"></script>
+	   
+	   <script type="text/javascript">
+
+		    Class1=function(){
+			    this.name1='class1' ;
+		    }
+
+		    function Class2(){
+			    this.name1='class2' ;
+		    }
+
+		    function Class3(){
+			    this.name1='class3' ;
+		    }
+
+		    var child = function Child(){} ;
+
+		   Child = function(app){
+				this.app = app;
+				this.init();
+			}
+
+ 			function  test1()
+	   		{
+		   		//Ext.extend(child,Class1) ;
+		   		//alert(child.name1) ;
+ 				Ext.extend( Child,Class1) ;
+	   		}
+	   </script>
+		
+		
+</head>
+<body>
+    <input type="button" value="test1" onclick="test1();"/>
+</body>
+</html>

@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div>
-		<form action="finish.do" method="post">
+		<form action="" method="post">
 		  <div class="form-group">
 		    <div class="highlight">
 				<p> 提交基本信息，稍后会有老师为您一对一深入解读（请与测试时填写的信息保持一致） </p>

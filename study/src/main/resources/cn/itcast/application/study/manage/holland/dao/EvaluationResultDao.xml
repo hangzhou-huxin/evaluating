@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.application.study.manage.holland.dao.EvaluationResultDao">
+	
+	<resultMap type="evaluationResult" id="evaluationResultMap">
+		<id property="id" column="id"/>
+		<result property="evaluationId" column="eval_id"/>
+		<result property="name" column="eval_name"/>
+		<result property="qq" column="eval_qq"/>
+		<result property="createDate" column="create_date"/>
+	</resultMap>
+	<insert id="add" parameterType="evaluationResult">
+		insert into holland_result(eval_id,eval_name,eval_qq,eval_content,eval_type)
+			values(#{evaluationId},#{name},#{qq},#{content},#{type})
+	</insert>
+	
+	<select id="findAllForPage" parameterType="cn.itcast.application.study.utils.Page" resultMap="evaluationResultMap">
+		select id,eval_id,eval_name,eval_qq,eval_content,eval_type
+			from holland_result limit #{pageNo},#{pageSize}
+	</select>
+	
+	<select id="findAllCount" resultType="int">
+		select count(id) from holland_result
+	</select>
+</mapper>

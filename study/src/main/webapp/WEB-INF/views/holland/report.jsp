@@ -32,7 +32,7 @@ $(document).ready(function(){
         },
 
         xAxis: {
-            categories: ['实际型', '调查型', '艺术型', '社会型', '事业型', '常规型'],
+            categories: ['R实际型', 'I调查型', 'A艺术型', 'S社会型', 'E事业型', 'C常规型'],
             tickmarkPlacement: 'on',
             lineWidth: 0
         },

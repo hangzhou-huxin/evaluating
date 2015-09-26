@@ -85,6 +85,11 @@
 			<artifactId>jackson-dataformat-xml</artifactId>
 			<version>2.4.5</version>
 		</dependency>
+		<dependency>
+			<groupId>org.huxin.common</groupId>
+			<artifactId>datasource-config-mybatis</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>study</finalName>

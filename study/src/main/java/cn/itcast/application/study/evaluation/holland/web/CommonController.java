@@ -13,7 +13,6 @@ import cn.itcast.application.study.evaluation.core.Constant;
 import cn.itcast.application.study.evaluation.core.EvaluationUtils;
 
 @Controller
-@RequestMapping("/common")
 public class CommonController {
 	
 	@Autowired

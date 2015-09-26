@@ -23,6 +23,8 @@
  		<param-name>contextConfigLocation</param-name>
  		<param-value>classpath*:applicationContext-redis.xml
  					 classpath*:applicationContext-eval.xml
+ 					 classpath*:applicationContext-manage.xml
+ 					 classpath*:applicationContext.xml
  		</param-value>
  	</context-param>
  
@@ -33,7 +35,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>study</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 	
 	<listener>

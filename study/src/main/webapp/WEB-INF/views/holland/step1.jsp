@@ -15,6 +15,7 @@
 	   var cache = ${cache} ;
 	   if( !cache){
 		   cache = {} ;
+		   
 	   }
 	   createTrueFalseQuestion($('#questions1') , questions1 ,cache);
 	   createTrueFalseQuestion($('#questions2') , questions2 ,cache) ;
