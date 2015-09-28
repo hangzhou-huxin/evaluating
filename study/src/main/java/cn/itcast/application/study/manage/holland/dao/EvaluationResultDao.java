@@ -14,5 +14,8 @@ public interface EvaluationResultDao {
 	
 	public Integer findAllCount() ;
 	
+	
+	public EvaluationResult findByEvalId(String evalId) ;
+	
 
 }

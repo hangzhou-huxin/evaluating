@@ -18,13 +18,19 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.itcast.application.study.evaluation.core.Constant;
 import cn.itcast.application.study.evaluation.core.EvaluationUtils;
 import cn.itcast.application.study.evaluation.utils.WebUtil;
+import cn.itcast.application.study.manage.holland.dao.EvaluationResultDao;
+import cn.itcast.application.study.manage.holland.domain.EvaluationResult;
+import cn.itcast.application.study.manage.holland.service.HollandManageService;
 
 @Controller
 @RequestMapping("/holland")
 public class EvaluationController {
 	
 	@Autowired  
-	private  HttpServletRequest request;
+	private	HttpServletRequest	request;
+	
+	@Autowired 
+	private	HollandManageService	hollandManageService ;
 	
 	@RequestMapping("/main")
 	public ModelAndView init(){
@@ -35,20 +41,20 @@ public class EvaluationController {
 	
 	@RequestMapping("/step1")
 	public ModelAndView step1(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evalId,
-							  @RequestParam(value="username",required=false) String username,
-							  @RequestParam(value="qq",required=false) String qq){
+							  @RequestParam(value=Constant.USER_NAME_PARAM_NAME,required=false) String username,
+							  @RequestParam(value=Constant.QQ_PARAM_NAME,required=false) String qq){
 		//缓存数据
 		Map<String,String> data = new HashMap<String,String>() ;
 		//第一次进入页面
 		if(!StringUtils.isEmpty(username) && !StringUtils.isEmpty(qq)){
-			data.put("username", username) ;
-			data.put("password", qq) ;
+			data.put(Constant.USER_NAME_PARAM_NAME, username) ;
+			data.put(Constant.QQ_PARAM_NAME, qq) ;
 			EvaluationUtils.saveStepDataToCache(evalId, data);
 		}
 		
 		//获取缓存中的测试数据,转测试数据为json
 		Map<String,String> cache = EvaluationUtils.getCacheData(evalId) ;
-		String cacheJson = EvaluationUtils.cacheDataToJSON(cache) ;
+		String cacheJson = EvaluationUtils.cacheDataToJSON(cache , null) ;
 		
 		//渲染页面
 		ModelAndView mv = new ModelAndView( "holland/step1" ) ;
@@ -70,7 +76,7 @@ public class EvaluationController {
 		
 		//获取缓存中的测试数据,转测试数据为json
 		Map<String,String> cache = EvaluationUtils.getCacheData(evalId) ;
-		String cacheJson = EvaluationUtils.cacheDataToJSON(cache) ;
+		String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,null) ;
 		mv.addObject("cache",cacheJson) ;
 		
 		
@@ -96,7 +102,7 @@ public class EvaluationController {
 		
 		//获取缓存中的测试数据,转测试数据为json
 		Map<String,String> cache = EvaluationUtils.getCacheData(evalId) ;
-		String cacheJson = EvaluationUtils.cacheDataToJSON(cache) ;
+		String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,null) ;
 		mv.addObject("cache",cacheJson) ;
 		
 		if( !StringUtils.isEmpty(previous)){
@@ -119,7 +125,7 @@ public class EvaluationController {
 		EvaluationUtils.saveStepDataToCache(evalId, params);
 		//取出缓存的数据发送到页面
 		Map<String,String> cache = EvaluationUtils.getCacheData(evalId) ;
-		String cacheJson = EvaluationUtils.cacheDataToJSON(cache) ;
+		String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,null) ;
 		mv.addObject("cache",cacheJson) ;
 		mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evalId) ;
 		
@@ -141,24 +147,51 @@ public class EvaluationController {
 		
 		Map params =  WebUtil.getParamsToMap(request);
 		EvaluationUtils.saveStepDataToCache(evalId, params);
-		//System.out.println(params);
-		//mv.addObject( "params", EvaluationUtils.getCacheData(evalId) ) ;
 		
+		//取出更新后的缓存数据
+		Map<String,String> cache = EvaluationUtils.getCacheData(evalId) ;
 		if( !StringUtils.isEmpty(previous)){
-			Map<String,String> cache = EvaluationUtils.getCacheData(evalId) ;
-			String cacheJson = EvaluationUtils.cacheDataToJSON(cache) ;
+			//通过缓存数据展示页面
+			String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,null) ;
 			mv.addObject("cache",cacheJson) ;
 			view = "holland/step3" ;   //返回上一步
 		}else{
-			//开始计算得分
-			Map<String,String> data = EvaluationUtils.getCacheData(evalId) ;
-			Map<String,Integer> result = EvaluationUtils.getHollandEvaluationResult(data) ;
-			//result.
+			//通过缓存数据开始计算得分
+			Map<String,Integer> result = EvaluationUtils.getHollandEvaluationResult(cache) ;
 			//对评分结果进行排序
 			String newResult = EvaluationUtils.getOrderedResult(result) ;
 			mv.addObject("orderedResult", newResult) ;
 			mv.addObject( "result"	, result) ;
+			
+			//保存评分数据
+			Map<String,String> filter = new HashMap<String,String>() ;
+			
+			EvaluationResult evaluationResult = new EvaluationResult(); 
+			evaluationResult.setrValue(result.get("r"));
+			evaluationResult.setiValue(result.get("i"));
+			evaluationResult.setsValue(result.get("s"));
+			evaluationResult.setaValue(result.get("a"));
+			evaluationResult.setcValue(result.get("c"));
+			evaluationResult.seteValue(result.get("e"));
+			
+			evaluationResult.setEvaluationId(cache.get(Constant.EVALUATION_ID_PARAM_NAME));
+			filter.put(Constant.EVALUATION_ID_PARAM_NAME, "") ;
+			
+			evaluationResult.setName(cache.get(Constant.USER_NAME_PARAM_NAME));
+			filter.put(Constant.USER_NAME_PARAM_NAME, "") ;
+			
+			evaluationResult.setQq(cache.get(Constant.QQ_PARAM_NAME));
+			filter.put(Constant.QQ_PARAM_NAME, "") ;
+			filter.put(Constant.NEXT_STEP_PARAM_NAME, "") ;
+			filter.put(Constant.PREVIOUS_STEP_PARAM_NAME, "") ;
+			
+			evaluationResult.setTalentsType(newResult);
+			
+			String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,filter) ;
+			evaluationResult.setContent(cacheJson);
+			hollandManageService.saveResult(evaluationResult);
 		}
+
 		
 		mv.setViewName(view);
 		mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evalId) ;

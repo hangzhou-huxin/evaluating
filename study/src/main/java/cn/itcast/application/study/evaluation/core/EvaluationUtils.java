@@ -120,11 +120,17 @@ public class EvaluationUtils {
 	}
 	
 	
-	public static String cacheDataToJSON(Map<String,String> cache){
-		
+	public static String cacheDataToJSON(Map<String,String> cache ,Map<String,String> filter){
+		if( filter == null){
+			filter = new HashMap<String,String>() ;
+		}
 		StringBuilder buffer = new StringBuilder("{") ;
 		for (Map.Entry<String, String> entry : cache.entrySet()) {
-			   buffer.append("'").append( entry.getKey()).append("':'").append(entry.getValue()).append("',") ;
+			String key = entry.getKey() ;
+			String value = entry.getValue() ;
+			if( filter.get(key) == null){
+				buffer.append("'").append( key).append("':'").append(value).append("',") ;
+			} 
 		}
 		
 		int length = buffer.length() ;
@@ -161,12 +167,12 @@ public class EvaluationUtils {
 		StringBuilder orderedResult = new StringBuilder() ;
 		
 		int size = newResult.size() ;
-		for(int i=0;i<3;i++){
-			orderedResult.append(newResult.get(i).getKey()).append("-") ;
+		for(int i=0;i<1;i++){
+			orderedResult.append(newResult.get(i).getKey()) ;
 		}
 		
-		int len = orderedResult.length() ;
-		orderedResult.delete(len-1, len) ;
+		//int len = orderedResult.length() ;
+		//orderedResult.delete(len-1, len) ;
 		return orderedResult.toString().toUpperCase() ;
 	}
 

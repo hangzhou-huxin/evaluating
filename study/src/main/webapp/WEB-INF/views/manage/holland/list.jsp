@@ -18,13 +18,13 @@
    
    
     var renderReport = function(value,cellmeta,record,rowIndex,columnIndex,store){
-    	var s = "<a  href='<%=request.getContextPath()%>/estimate/teaching/viewResult.do?deployId=" + record.data['id'] +"' target='_blank' onclick=''>查看</a>";
+    	var s = "<a  href='<%=request.getContextPath()%>/manage/holland/viewReport.do?evId=" + record.data['evaluationId'] +"' target='_blank' onclick=''>查看</a>";
         return s;
     }; 
     
     var renderDetail = function(value,cellmeta,record,rowIndex,columnIndex,store){
     	//alert(Ext.util.Format.date(new Date(parseInt(record.data.deployDate)),'Y-m-d')) ;
-        var s = "<a  href='javascript:showSelStrategyWin(\""+rowIndex+"\")' onclick=''>查看</a>";
+        var s = "<a  href='<%=request.getContextPath()%>/manage/holland/gotoStep.do?step=1&evId=" + record.data['evaluationId'] +"' target='_blank' onclick=''>查看</a>";
          return s;
     }; 
     
@@ -94,6 +94,7 @@
      	    lazyRender:false,
      	    fieldLabel:'是否申请',
      	    mode: 'local',
+     	    width:50,
      	    store: new Ext.data.ArrayStore({
      	        id: 0,
      	        fields: [
@@ -134,6 +135,7 @@
 					    fieldLabel: '起始时间',
 					    labelWidth:65,
 					    name: 'name',
+					    width:50,
 					    value:'',
 					    allowBlank:true,
 					    anchor:'95%'

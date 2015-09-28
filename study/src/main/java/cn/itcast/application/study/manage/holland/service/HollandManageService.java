@@ -23,5 +23,14 @@ public class HollandManageService {
 		PageResult<EvaluationResult> result = new PageResult<EvaluationResult>(list,totalCount) ;
 		return result ; 
 	}
+	
+	
+	public void saveResult( EvaluationResult result ){
+		evaluationResultDao.add(result);
+	}
+	
+	public EvaluationResult findByEvalId( String evalId	){
+		return evaluationResultDao.findByEvalId(evalId) ;
+	}
 
 }

@@ -13,9 +13,23 @@ public class EvaluationResult {
 	
 	private String	content ;
 	
-	private String	type ;
+	private String	talentsType ;
 	
 	private String	qq	 ;
+	
+	private Integer rValue ;
+	
+	private Integer sValue ;
+	
+	private Integer iValue ;
+	
+	private Integer eValue ;
+	
+	private Integer aValue ;
+	
+	private Integer cValue ;
+	
+	
 	
 	private String	createDate ;
 
@@ -51,12 +65,14 @@ public class EvaluationResult {
 		this.content = content;
 	}
 
-	public String getType() {
-		return type;
+	
+
+	public String getTalentsType() {
+		return talentsType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setTalentsType(String talentsType) {
+		this.talentsType = talentsType;
 	}
 
 	public String getQq() {
@@ -73,6 +89,54 @@ public class EvaluationResult {
 
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
+	}
+
+	public Integer getrValue() {
+		return rValue;
+	}
+
+	public void setrValue(Integer rValue) {
+		this.rValue = rValue;
+	}
+
+	public Integer getsValue() {
+		return sValue;
+	}
+
+	public void setsValue(Integer sValue) {
+		this.sValue = sValue;
+	}
+
+	public Integer getiValue() {
+		return iValue;
+	}
+
+	public void setiValue(Integer iValue) {
+		this.iValue = iValue;
+	}
+
+	public Integer geteValue() {
+		return eValue;
+	}
+
+	public void seteValue(Integer eValue) {
+		this.eValue = eValue;
+	}
+
+	public Integer getaValue() {
+		return aValue;
+	}
+
+	public void setaValue(Integer aValue) {
+		this.aValue = aValue;
+	}
+
+	public Integer getcValue() {
+		return cValue;
+	}
+
+	public void setcValue(Integer cValue) {
+		this.cValue = cValue;
 	}
 	
 	
