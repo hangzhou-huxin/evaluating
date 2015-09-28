@@ -16,7 +16,7 @@ public class EvaluationResultDaoTest {
 		result.setName("胡欣");
 		result.setQq("33324324");
 		result.setEvaluationId("ddddd");
-		result.setType("holland");
+		//result.setType("holland");
 		result.setContent("dddddddddddddddd");
 		EvaluationResultDao dao = context.getBean(EvaluationResultDao.class) ;
 		dao.add(result);
