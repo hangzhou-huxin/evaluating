@@ -142,6 +142,7 @@ public class EvaluationController {
 	public ModelAndView finish(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evalId,
 								@RequestParam(value=Constant.PREVIOUS_STEP_PARAM_NAME,required=false) String previous,
 								@RequestParam(value=Constant.NEXT_STEP_PARAM_NAME,required=false) String next){
+		String ip = request.getRemoteAddr() ;
 		String view = "holland/report" ;
 		ModelAndView mv = new ModelAndView( ) ;
 		
@@ -173,6 +174,8 @@ public class EvaluationController {
 			evaluationResult.setaValue(result.get("a"));
 			evaluationResult.setcValue(result.get("c"));
 			evaluationResult.seteValue(result.get("e"));
+			
+			evaluationResult.setIp(ip);
 			
 			evaluationResult.setEvaluationId(cache.get(Constant.EVALUATION_ID_PARAM_NAME));
 			filter.put(Constant.EVALUATION_ID_PARAM_NAME, "") ;

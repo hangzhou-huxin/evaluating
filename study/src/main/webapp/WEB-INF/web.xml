@@ -25,6 +25,7 @@
  					 classpath*:applicationContext-eval.xml
  					 classpath*:applicationContext-manage.xml
  					 classpath*:applicationContext.xml
+ 					 classpath*:applicationContext-apply.xml
  		</param-value>
  	</context-param>
  

@@ -86,7 +86,7 @@ $(document).ready(function(){
 		</pre>
 	</div>
 	<div class="container">
-		<button type="button" class="btn btn-primary btn-lg active"><a href="<%=request.getContextPath()%>/apply.do"><span style="color:black;">申请深入解读戳这里</span></a></button>
+		<button type="button" class="btn btn-primary btn-lg active"><a href="<%=request.getContextPath()%>/common/apply.do?evId=${evId}"><span style="color:black;">申请深入解读戳这里</span></a></button>
 	</div>
    
 </body>

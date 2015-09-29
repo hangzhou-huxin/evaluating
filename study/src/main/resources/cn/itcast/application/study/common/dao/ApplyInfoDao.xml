@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.application.study.common.dao.ApplyInfoDao">
+	
+	<resultMap type="applyInfo" id="applyInfoMap">
+		<id property="id" column="id"/>
+		
+	</resultMap>
+	
+	<insert id="add" parameterType="applyInfo">
+		insert into eval_apply(eval_id,name,qq,profession,school_year,career,education,ip,memo)
+			values(#{evId},#{name},#{qq},#{profession},#{schoolYear},#{career},#{educationId},#{ip},#{memo})
+	</insert>
+	
+	
+	<delete id="delete" parameterType="int">
+		delete from eval_apply where id=#{id}
+	</delete>
+</mapper>

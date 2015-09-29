@@ -29,6 +29,7 @@ public class EvaluationResult {
 	
 	private Integer cValue ;
 	
+	private String ip ;
 	
 	
 	private String	createDate ;
@@ -137,6 +138,14 @@ public class EvaluationResult {
 
 	public void setcValue(Integer cValue) {
 		this.cValue = cValue;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 	
 	

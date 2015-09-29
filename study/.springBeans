@@ -11,6 +11,7 @@
 		<config>src/main/webapp/WEB-INF/study-servlet.xml</config>
 		<config>src/main/resources/applicationContext-eval.xml</config>
 		<config>src/main/resources/applicationContext-manage.xml</config>
+		<config>src/main/resources/applicationContext-apply.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

@@ -35,7 +35,36 @@
     }; 
     
   
-		
+
+    var renderEdit = function(value,cellmeta,record,rowIndex,columnIndex,store){
+    	//alert(Ext.util.Format.date(new Date(parseInt(record.data.deployDate)),'Y-m-d')) ;
+        var s =  "  <a  href='javascript:genResultDelete(\""+record.data['id'] +"\")' onclick=''>删除</a>";
+         return s;
+    }; 
+    
+    genResultDelete = function(id){
+   		Ext.Msg.confirm('','确定删除吗?',function(button){
+  			if(button == "yes"){
+  				Ext.Ajax.request({
+  				   url: '<%=request.getContextPath()%>/manage/holland/delete.do',
+  				   success: function(response,options){
+			 			var msg = Ext.decode(response.responseText) ;
+			   			Ext.Msg.alert('',msg.msg) ;
+			   			grid.getStore().reload(); ;
+					},
+				   failure: function(){
+					 	Ext.Msg.alert('','通信错误') ;
+				   },
+  				   headers: {
+  				   },
+  				   params: { id: id }
+  				});
+  			}
+  			else{
+  				
+  			}
+  		});
+    }	
   
    
    	var cm = new Ext.grid.ColumnModel([ //new Ext.grid.RowNumberer(),
@@ -43,11 +72,12 @@
    	      										{header:'评测编号',dataIndex:'evaluationId',sortable:false},
    	      										{header:'姓名',dataIndex:'name',sortable:false },
    	      										{header:'qq',dataIndex:'qq',sortable:false},
+   	      										{header:'ip地址',dataIndex:'ip',sortable:false},
    	      										{header:'评测时间',dataIndex:'createDate',sortable:false},
    	      										{header:'评测报告',dataIndex:'id',renderer:renderReport,sortable:false},
    	      										{header:'评测明细',dataIndex:'id',renderer:renderDetail,sortable:false},
-   	      										{header:'处理时间',dataIndex:'createDate',sortable:false},
-   	      										{header:'处理意见',dataIndex:'id',renderer:renderDetail,sortable:false}
+   	      										{header:'处理意见',dataIndex:'id',renderer:renderDetail,sortable:false},
+   	      										{header:'常规操作',dataIndex:'id',renderer:renderEdit,sortable:false}
    	      										]);
    	
       
@@ -62,7 +92,8 @@
           		{name:'evaluationId'},
           		{name:'name'},
           		{name:'qq'},
-          		{name:'createDate'}
+          		{name:'createDate'},
+          		{name:'ip'}
           	  ]),
       	  remoteSort:true
       });
@@ -88,7 +119,7 @@
       })  ;
       
       var applyCombo = new Ext.form.ComboBox({ 
-    	    id:'id' ,
+    	    id:'apply' ,
      	    typeAhead: true,
      	    triggerAction: 'all',
      	    lazyRender:false,
@@ -130,22 +161,22 @@
     			   layout:'form',
     			   items:[
     			    {
-					    xtype:'textfield',
-					    id:'name1',
-					    fieldLabel: '起始时间',
+    			    	name: 'startdt',
+    			        id: 'startdt',
+    			        xtype: 'textfield',
+    			        fieldLabel: '起始时间',
+    			        blankText:'yyyy-mm-dd',
+    			        maxLengthText:10,
 					    labelWidth:65,
-					    name: 'name',
-					    width:50,
-					    value:'',
 					    allowBlank:true,
 					    anchor:'95%'
 					},
 					{
-  					    xtype:'textfield',
-  					    id:'name2',
-  					    fieldLabel: '结束时间',
-  					    name: 'name',
-  					    value:'',
+						name: 'enddt',
+				        id: 'enddt',
+				        xtype: 'textfield',
+				        fieldLabel: '结束时间',
+				        blankText:'yyyy-mm-dd',
   					    allowBlank:true,
   					    anchor:'95%'
   					}]
@@ -169,7 +200,7 @@
 					    xtype:'textfield',
 					    id:'qq',
 					    fieldLabel: 'qq',
-					    name: 'name',
+					    name: 'qq',
 					    value:'',
 					    allowBlank:true,
 					    anchor:'95%'
@@ -184,7 +215,7 @@
 							    xtype:'textfield',
 							    id:'eval_id',
 							    fieldLabel: '评测编号',
-							    name: 'name',
+							    name: 'evalId',
 							    value:'',
 							    allowBlank:true,
 							    anchor:'95%'
@@ -201,10 +232,13 @@
     			   				text:' 查 询  ',
     			   				width:70,
     			   				handler:function(){
-    			   					var adviserName = Ext.getCmp('name').getValue()  ;
-    			   					var disciplineId = discipline_combo.getValue() ;
-    			   					//adviserGrid.getStore().load({params:{'name': adviserName,'disciplineId':disciplineId}}) ;
-    			   					squadStore.reload({params:{'name': adviserName,'disciplineId':disciplineId,'start':0,'limit':20}}) ;
+    			   					var name = Ext.getCmp('name').getValue()  ;
+    			   					var startdt = Ext.getCmp('startdt').getValue()  ;
+    			   					var enddt = Ext.getCmp('enddt').getValue()  ;
+    			   					var qq = Ext.getCmp('qq').getValue() ;
+    			   					var apply = applyCombo.getValue() ;
+    			   					var evalId = Ext.getCmp('eval_id').getValue() ;
+    			   					store.reload({params:{'evalId':evalId,'name': name,'startdt':startdt,'enddt':enddt,'qq':qq,'apply':apply,'start':0,'limit':20}}) ;
     			   				}
     			   			},
     			   			{		    			   		
@@ -212,7 +246,7 @@
     			   				text:' 重 置  ',
     			   				width:70,
     			   				handler:function(){
-    			   					
+    			   					form_query.getForm().reset()
     			   				}
     			   			}
     			   	]

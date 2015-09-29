@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,9 +17,11 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import cn.itcast.application.study.evaluation.core.Constant;
 import cn.itcast.application.study.evaluation.core.EvaluationUtils;
 import cn.itcast.application.study.manage.holland.domain.EvaluationResult;
+import cn.itcast.application.study.manage.holland.dto.EvaluationResultQuery;
 import cn.itcast.application.study.manage.holland.service.HollandManageService;
 import cn.itcast.application.study.utils.Page;
 import cn.itcast.application.study.utils.PageResult;
+
 
 
 @Controller
@@ -46,10 +49,11 @@ public class HollandManageController {
 	
 	
 	@RequestMapping("/query.do")
-	public ModelAndView queryEstimateList(@RequestParam(value="start",required=false) Integer start , 
+	public ModelAndView queryEstimateList(@ModelAttribute("query") EvaluationResultQuery query, 
+			@RequestParam(value="start",required=false) Integer start , 
 			@RequestParam(value="limit",required=false) Integer limit){
-
-		PageResult<EvaluationResult> result = hollandManageService.findList(start, limit) ;
+		System.out.println(query);
+		PageResult<EvaluationResult> result = hollandManageService.findList(query) ;
 		ModelAndView mv = new ModelAndView() ;
 		mv.setView(jsonView);
 		mv.addObject("data", result.getResult()); 
@@ -106,6 +110,24 @@ public class HollandManageController {
 		mv.addObject("step", step) ;
 		return mv ;
 	}
+	
+	
+	@RequestMapping("/delete.do")
+	public ModelAndView delete(@RequestParam("id") Integer id ){
+		
+		String msg = null ;
+		try{
+			hollandManageService.deleteResult(id);
+			msg = "删除成功" ;
+		}catch(Exception e){
+			msg = e.getMessage() ;
+		}
+		
+		ModelAndView mv = new ModelAndView() ;
+		mv.setView(jsonView);
+		return mv;
+	}
+	
 	
 	
 	

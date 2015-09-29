@@ -16,23 +16,77 @@
 		<result property="aValue" column="a_value"/>
 		<result property="eValue" column="e_value"/>
 		<result property="cValue" column="c_value"/>
+		<result property="ip" column="eval_ip"/>
 	</resultMap>
 	<insert id="add" parameterType="evaluationResult">
-		insert into holland_result(eval_id,eval_name,eval_qq,eval_content,talents_type,r_value,i_value,s_value,a_value,e_value,c_value)
-			values(#{evaluationId},#{name},#{qq},#{content},#{talentsType},#{rValue},#{iValue},#{sValue},#{aValue},#{eValue},#{cValue})
+		insert into holland_result(eval_id,eval_name,eval_qq,eval_content,talents_type,r_value,i_value,s_value,a_value,e_value,c_value,eval_ip)
+			values(#{evaluationId},#{name},#{qq},#{content},#{talentsType},#{rValue},#{iValue},#{sValue},#{aValue},#{eValue},#{cValue},#{ip})
 	</insert>
 	
-	<select id="findAllForPage" parameterType="cn.itcast.application.study.utils.Page" resultMap="evaluationResultMap">
-		select id,eval_id,eval_name,eval_qq,talents_type,r_value,i_value,s_value,a_value,e_value,c_value
-			from holland_result limit #{pageNo},#{pageSize}
+	<select id="findQueryForPage" parameterType="cn.itcast.application.study.manage.holland.dto.EvaluationResultQuery" resultMap="evaluationResultMap">
+		select id,eval_id,eval_name,eval_qq,talents_type,r_value,i_value,s_value,a_value,e_value,c_value,create_date,eval_ip
+			from holland_result 
+			   <where>
+			    <if test="name !=null and name !=''">
+			    	or eval_name like '%${name}%'
+			    </if>
+			    <if test="qq !=null and qq !=''">
+			    	 or eval_qq=#{qq}
+			    </if>
+			    <if test="evalId !=null and evalId !=''">
+			    	or eval_id=#{evalId}
+			    </if>
+			    <if test="apply">
+			    
+			    </if>
+			    <if test="startdt !=null and startdt !=''">
+			    <![CDATA[
+			        or create_date>=#{startdt}
+			    ]]>
+			    </if>
+			    <if test="enddt !=null and enddt !=''">
+			    <![CDATA[
+			    	or create_date<=#{enddt}
+			    ]]>
+			    </if>
+			   </where>
+			  limit #{start},#{limit}
 	</select>
 	
-	<select id="findAllCount" resultType="int">
+	<select id="findQueryCount" parameterType="cn.itcast.application.study.manage.holland.dto.EvaluationResultQuery" resultType="int">
 		select count(id) from holland_result
+		    <where>
+			    <if test="name !=null and name !=''">
+			    	or eval_name like '%${name}%'
+			    </if>
+			    <if test="qq !=null and qq !=''">
+			    	or eval_qq=#{qq}
+			    </if>
+			    <if test="evalId !=null and evalId !=''">
+			    	or eval_id=#{evalId}
+			    </if>
+			    <if test="apply">
+			    
+			    </if>
+			    <if test="startdt !=null and startdt !=''">
+			    <![CDATA[
+			        or create_date>=#{startdt}
+			    ]]>
+			    </if>
+			    <if test="enddt !=null and enddt !=''">
+			    <![CDATA[
+			    	or create_date<=#{enddt}
+			    ]]>
+			    </if>
+			  </where>
 	</select>
 	
 	<select id="findByEvalId" resultType="string" resultMap="evaluationResultMap">
 	    select id,eval_id,eval_name,eval_qq,eval_content,talents_type,r_value,i_value,s_value,a_value,e_value,c_value
 			from holland_result where eval_id = #{evalId}
 	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from holland_result where id=#{id}
+	</delete>
 </mapper>
