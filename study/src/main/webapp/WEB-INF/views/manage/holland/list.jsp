@@ -29,10 +29,19 @@
     }; 
     
     var renderProcess = function(value,cellmeta,record,rowIndex,columnIndex,store){
-    	//alert(Ext.util.Format.date(new Date(parseInt(record.data.deployDate)),'Y-m-d')) ;
-        var s = "<a  href='javascript:showSelStrategyWin(\""+rowIndex+"\")' onclick=''>查看</a>";
-         return s;
+    	var s = "" ;
+    	if( record.data['applyId'] ){
+    		if( record.data['isProcessed'] == 1)
+    		  s = "<a  href='javascript:showProcessWin(\""+ record.data['applyId']+"\")' onclick=''>查看</a>";
+    		else
+    		  s = "未处理" ;
+    	}else{
+    		s = "<font color='red'>无申请</font>"
+    	}
+        return s;
     }; 
+    
+    
     
   
 
@@ -76,7 +85,7 @@
    	      										{header:'评测时间',dataIndex:'createDate',sortable:false},
    	      										{header:'评测报告',dataIndex:'id',renderer:renderReport,sortable:false},
    	      										{header:'评测明细',dataIndex:'id',renderer:renderDetail,sortable:false},
-   	      										{header:'处理意见',dataIndex:'id',renderer:renderDetail,sortable:false},
+   	      										{header:'处理意见',dataIndex:'id',renderer:renderProcess,sortable:false},
    	      										{header:'常规操作',dataIndex:'id',renderer:renderEdit,sortable:false}
    	      										]);
    	
@@ -93,7 +102,9 @@
           		{name:'name'},
           		{name:'qq'},
           		{name:'createDate'},
-          		{name:'ip'}
+          		{name:'ip'},
+          		{name:'applyId'},
+          		{name:'isProcessed'}
           	  ]),
       	  remoteSort:true
       });
@@ -138,6 +149,27 @@
      	    displayField: 'name',
      	 	hiddenName:'status'
      	});
+      
+      var processCombo = new Ext.form.ComboBox({ 
+  	    id:'process' ,
+   	    typeAhead: true,
+   	    triggerAction: 'all',
+   	    lazyRender:false,
+   	    fieldLabel:'是否处理',
+   	    mode: 'local',
+   	    width:50,
+   	    store: new Ext.data.ArrayStore({
+   	        id: 0,
+   	        fields: [
+   	            'id',
+   	            'name'
+   	        ],
+   	        data: [[1, '是'], [0, '否']]
+   	    }),
+   	    valueField: 'id',
+   	    displayField: 'name',
+   	 	hiddenName:'isProcess'
+   	});
        	
       
     //查询窗口
@@ -227,6 +259,7 @@
     			   layout:'form',   
     			   border:true,
     			   items:[
+							//processCombo ,
     			   			{		    			   		
     			   				xtype:'button',
     			   				text:' 查 询  ',
@@ -238,15 +271,9 @@
     			   					var qq = Ext.getCmp('qq').getValue() ;
     			   					var apply = applyCombo.getValue() ;
     			   					var evalId = Ext.getCmp('eval_id').getValue() ;
-    			   					store.reload({params:{'evalId':evalId,'name': name,'startdt':startdt,'enddt':enddt,'qq':qq,'apply':apply,'start':0,'limit':20}}) ;
-    			   				}
-    			   			},
-    			   			{		    			   		
-    			   				xtype:'button',
-    			   				text:' 重 置  ',
-    			   				width:70,
-    			   				handler:function(){
-    			   					form_query.getForm().reset()
+    			   					//var process = Ext.getCmp('process').getValue() ;
+    			   					store.baseParams = {'evalId':evalId,'name': name,'startdt':startdt,'enddt':enddt,'qq':qq,'apply':apply } ;
+    			   					store.reload({params:{'start':0,'limit':20}}) ;
     			   				}
     			   			}
     			   	]
@@ -256,8 +283,155 @@
     	]
     }) ;
 
+  //---------------------------查看或修改处理信息---begin-------------------------------------
+    var processWin ;
+    var processFormPanel = new Ext.FormPanel({
+      id:'process-form',
+      width:200,
+      height:70,
+      frame:true,
+      labelWidth: 100,
+      items:[
+					{ 
+						 xtype:'hidden',
+						 name:'id',
+						 value:''
+					},
+					{
+						xtype:'textfield',
+						name:'name',
+						value:'',
+						disabled :true,
+						fieldLabel :'姓名',
+						width:200
+					},
+					{
+						xtype:'textfield',
+						name:'qq',
+						value:'',
+						disabled :true,
+						fieldLabel :'qq',
+						width:200
+					},
+					{
+						xtype:'textfield',
+						name:'profession',
+						value:'',
+						disabled :true,
+						fieldLabel :'专业',
+						width:200
+					},
+					{
+						xtype:'textfield',
+						name:'schoolYear',
+						value:'',
+						disabled :true,
+						fieldLabel :'入学年份',
+						width:200
+					},
+					{
+						xtype:'textfield',
+						name:'career',
+						value:'',
+						disabled :true,
+						fieldLabel :'职业',
+						width:200
+					},
+					{
+						xtype:'textfield',
+						name:'educationName',
+						value:'',
+						disabled :true,
+						fieldLabel :'学历',
+						width:200
+					},
+					{
+						xtype:'textarea',
+						name:'memo',
+						value:'',
+						disabled :true,
+						fieldLabel :'备注',
+						width:200,
+						height:100
+					},
+					{
+						xtype:'textarea',
+						name:'processInfo',
+						value:'',
+						fieldLabel :'处理意见',
+						width:200,
+						height:100
+					}
+			],
+			buttonAlign:'center',
+	    	buttons:[
+	    		{
+	    			text:'处理或修改',
+	    			id:'btn_save_edit',
+	    			handler:function(){
+	    				processFormPanel.getForm().submit({
+			    			    clientValidation: true,
+			    			    url: '<%=request.getContextPath()%>/common/apply/saveProcess.do',
+			    			    params :{ },
+			    			    success: function(form, action) {
+			    			    	Ext.Msg.alert('', action.result.msg);
+			    			    },
+			    			    failure: function(form, action) {
+			    			        switch (action.failureType) {
+			    			            case Ext.form.Action.CLIENT_INVALID:
+			    			                Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
+			    			                break;
+			    			            case Ext.form.Action.CONNECT_FAILURE:
+			    			                Ext.Msg.alert('处理失败', '发生通信错误');
+			    			                break;
+			    			            case Ext.form.Action.SERVER_INVALID:
+			    			               Ext.Msg.alert('Failure', action.result.msg);
+			    			       }
+			    			    }
+			    		}); 
+		    				
+	    			}				    			
+	    		}
+	    	]
+  });
     
-    
+ 	showProcessWin=function( applyId){
+ 		//查询申请信息
+ 		Ext.Ajax.request({
+  				   url: '<%=request.getContextPath()%>/common/apply/view.do',
+  				   success: function(response,options){
+			 			var result = Ext.decode(response.responseText) ;
+			 			processFormPanel.getForm().setValues(result.data) ;
+			   			//Ext.Msg.alert('',result.data.name) ;
+					},
+				   failure: function(){
+					 	Ext.Msg.alert('','通信错误') ;
+				   },
+  				   headers: {
+  				   },
+  				   params: { applyId: applyId }
+  		});
+    	if (!processWin) {
+    		processWin = new Ext.Window({
+				id:'processWin',
+		        title: '',
+		        width: 350,
+		        height:300,
+		        layout: 'fit',
+		        bodyStyle:'padding:5px;',
+		        buttonAlign:'center',
+		        items: [
+							processFormPanel
+		                ],
+		        closable: true,
+		        closeAction:'hide',
+              plain: true
+		    }) ;
+		}
+    	
+    	processWin.show();
+  }  
+ 	 //---------------------------查看或修改处理信息---end-------------------------------------   
 	
     var viewport = new Ext.Viewport({
     		layout:'border',

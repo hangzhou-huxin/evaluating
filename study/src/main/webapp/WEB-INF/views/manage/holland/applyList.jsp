@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>霍兰德评估结果查询</title>
+<title>霍兰德深度报告申请处理</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/ext/resources/css/ext-all.css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/ext/adapter/ext/ext-base.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/ext/ext-all.js"></script>
@@ -67,7 +67,7 @@
       
      
       var grid = new Ext.grid.GridPanel({
-      	title:'霍兰德评测列表',
+      	title:'霍兰德深度报告申请列表',
       	store:store,
       	region:'center',
       	width:300,

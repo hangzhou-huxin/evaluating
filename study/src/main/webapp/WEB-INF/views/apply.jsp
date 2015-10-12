@@ -48,6 +48,10 @@
 		    	<option value="7">博士</option>
 		    </select>
 		  </div>
+		  <div class="form-group">
+		  	<label>备注</label>
+		  	<textarea class="form-control" rows="3" name="memo"></textarea>
+		  </div>
 		  <button type="submit" class="btn btn-default">提交</button>
 		  <button type="reset" class="btn btn-default">重置</button>
 		</form>

@@ -4,7 +4,16 @@
 	
 	<resultMap type="applyInfo" id="applyInfoMap">
 		<id property="id" column="id"/>
-		
+		<result property="evId" column="eval_id"/>
+		<result property="name" column="name"/>
+		<result property="qq" column="qq"/>
+		<result property="profession" column="profession"/>
+		<result property="schoolYear" column="school_year"/>
+		<result property="educationId" column="education"/>
+		<result property="ip" column="ip"/>
+		<result property="memo" column="memo"/>
+		<result property="isProcessed" column="is_processed"/>
+		<result property="processInfo" column="process_result"/>
 	</resultMap>
 	
 	<insert id="add" parameterType="applyInfo">
@@ -16,4 +25,13 @@
 	<delete id="delete" parameterType="int">
 		delete from eval_apply where id=#{id}
 	</delete>
+	
+	<select id="findById" parameterType="int" resultMap="applyInfoMap">
+	    select id,eval_id,name,qq,profession,career,school_year,education,ip,memo,is_processed,process_result 
+	      from eval_apply where id=#{id}
+	</select>
+	
+	<update id="saveProcessInfo" parameterType="cn.itcast.application.study.common.dto.ProcessInfoDto">
+		update eval_apply set process_result = #{processInfo},is_processed=1 where id=#{id}
+	</update>
 </mapper>

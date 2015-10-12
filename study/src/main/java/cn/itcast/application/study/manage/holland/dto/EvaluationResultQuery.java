@@ -12,6 +12,8 @@ public class EvaluationResultQuery {
 	
 	private Boolean apply ;
 	
+	private Boolean process ;
+	
 	private String name ;
 	
 	private Integer start ;
@@ -82,6 +84,16 @@ public class EvaluationResultQuery {
 
 	public void setLimit(Integer limit) {
 		this.limit = limit;
+	}
+	
+	
+
+	public Boolean getProcess() {
+		return process;
+	}
+
+	public void setProcess(Boolean process) {
+		this.process = process;
 	}
 
 	@Override

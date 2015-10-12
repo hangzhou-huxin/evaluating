@@ -25,6 +25,10 @@ public class ApplyInfo {
 	
 	private String	memo ;
 	
+	private String	processInfo ;
+	
+	private Boolean isProcessed ;
+	
 	
 	private String  ip ;
 
@@ -119,6 +123,22 @@ public class ApplyInfo {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public String getProcessInfo() {
+		return processInfo;
+	}
+
+	public void setProcessInfo(String processInfo) {
+		this.processInfo = processInfo;
+	}
+
+	public Boolean getIsProcessed() {
+		return isProcessed;
+	}
+
+	public void setIsProcessed(Boolean isProcessed) {
+		this.isProcessed = isProcessed;
 	}
 	
 	

@@ -69,6 +69,9 @@ public class HollandManageController {
 	}
 	
 	
+	
+	
+	
 	@RequestMapping("/viewReport.do")
 	public ModelAndView viewReport( @RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evalId ){
 		

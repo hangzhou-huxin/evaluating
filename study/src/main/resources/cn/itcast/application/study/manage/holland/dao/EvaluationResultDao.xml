@@ -17,6 +17,8 @@
 		<result property="eValue" column="e_value"/>
 		<result property="cValue" column="c_value"/>
 		<result property="ip" column="eval_ip"/>
+		<result property="applyId"	column="apply_id"/>
+		<result property="isProcessed"	column="is_processed"/>
 	</resultMap>
 	<insert id="add" parameterType="evaluationResult">
 		insert into holland_result(eval_id,eval_name,eval_qq,eval_content,talents_type,r_value,i_value,s_value,a_value,e_value,c_value,eval_ip)
@@ -24,29 +26,33 @@
 	</insert>
 	
 	<select id="findQueryForPage" parameterType="cn.itcast.application.study.manage.holland.dto.EvaluationResultQuery" resultMap="evaluationResultMap">
-		select id,eval_id,eval_name,eval_qq,talents_type,r_value,i_value,s_value,a_value,e_value,c_value,create_date,eval_ip
-			from holland_result 
+		select h.id,h.eval_id,h.eval_name,h.eval_qq,h.talents_type,h.r_value,h.i_value,h.s_value,h.a_value,h.e_value,h.c_value,h.create_date,h.eval_ip,e.id as 'apply_id',e.is_processed
+        from holland_result h left join eval_apply e on h.eval_id=e.eval_id    
 			   <where>
 			    <if test="name !=null and name !=''">
-			    	or eval_name like '%${name}%'
+			    	and h.eval_name like '%${name}%'
 			    </if>
 			    <if test="qq !=null and qq !=''">
-			    	 or eval_qq=#{qq}
+			    	 and h.eval_qq=#{qq}
 			    </if>
 			    <if test="evalId !=null and evalId !=''">
-			    	or eval_id=#{evalId}
+			    	and h.eval_id=#{evalId}
 			    </if>
-			    <if test="apply">
+			    <if test="apply ==1">
+			        and e.id is not null
+			    </if>
+			    <if test="apply ==0">
+			        and e.id is  null
+			    </if>
 			    
-			    </if>
 			    <if test="startdt !=null and startdt !=''">
 			    <![CDATA[
-			        or create_date>=#{startdt}
+			        and h.create_date>=#{startdt}
 			    ]]>
 			    </if>
 			    <if test="enddt !=null and enddt !=''">
 			    <![CDATA[
-			    	or create_date<=#{enddt}
+			    	and h.create_date<=#{enddt}
 			    ]]>
 			    </if>
 			   </where>
@@ -54,7 +60,7 @@
 	</select>
 	
 	<select id="findQueryCount" parameterType="cn.itcast.application.study.manage.holland.dto.EvaluationResultQuery" resultType="int">
-		select count(id) from holland_result
+		select count(*) from  holland_result h left join eval_apply e on h.eval_id=e.eval_id  
 		    <where>
 			    <if test="name !=null and name !=''">
 			    	or eval_name like '%${name}%'
@@ -65,8 +71,11 @@
 			    <if test="evalId !=null and evalId !=''">
 			    	or eval_id=#{evalId}
 			    </if>
-			    <if test="apply">
-			    
+			    <if test="apply ==1">
+			        or e.id is not null
+			    </if>
+			    <if test="apply ==0">
+			        or e.id is  null
 			    </if>
 			    <if test="startdt !=null and startdt !=''">
 			    <![CDATA[

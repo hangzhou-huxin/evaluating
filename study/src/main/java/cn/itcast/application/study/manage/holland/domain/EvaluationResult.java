@@ -31,6 +31,10 @@ public class EvaluationResult {
 	
 	private String ip ;
 	
+	private Integer	applyId ;
+	
+	private Boolean isProcessed ;
+	
 	
 	private String	createDate ;
 
@@ -146,6 +150,22 @@ public class EvaluationResult {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+
+	public Integer getApplyId() {
+		return applyId;
+	}
+
+	public void setApplyId(Integer applyId) {
+		this.applyId = applyId;
+	}
+
+	public Boolean getIsProcessed() {
+		return isProcessed;
+	}
+
+	public void setIsProcessed(Boolean isProcessed) {
+		this.isProcessed = isProcessed;
 	}
 	
 	
