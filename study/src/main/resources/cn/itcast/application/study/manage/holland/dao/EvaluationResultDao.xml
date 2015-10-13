@@ -56,7 +56,7 @@
 			    ]]>
 			    </if>
 			   </where>
-			  limit #{start},#{limit}
+			  order by id desc limit #{start},#{limit}
 	</select>
 	
 	<select id="findQueryCount" parameterType="cn.itcast.application.study.manage.holland.dto.EvaluationResultQuery" resultType="int">
@@ -88,6 +88,12 @@
 			    ]]>
 			    </if>
 			  </where>
+	</select>
+	
+	<select id="findForApply" resultMap="evaluationResultMap">
+	    select h.id,h.eval_id,h.eval_name,h.eval_qq,h.talents_type,h.r_value,h.i_value,h.s_value,h.a_value,h.e_value,h.c_value,h.create_date,h.eval_ip,e.id as 'apply_id',e.is_processed
+        from holland_result h left join eval_apply e on h.eval_id=e.eval_id 
+             where is_processed=0 
 	</select>
 	
 	<select id="findByEvalId" resultType="string" resultMap="evaluationResultMap">

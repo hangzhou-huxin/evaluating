@@ -32,7 +32,7 @@ $(document).ready(function(){
         },
 
         xAxis: {
-            categories: ['实际型', '调查型', '艺术型', '社会型', '事业型', '常规型'],
+            categories: ['R:实际型', 'I:调查型', 'A:艺术型', 'S:社会型', 'E:事业型', 'C:常规型'],
             tickmarkPlacement: 'on',
             lineWidth: 0
         },
@@ -68,9 +68,9 @@ $(document).ready(function(){
    <div class="bs-example" data-example-id="simple-dl">
     <dl>
       <dt>【共同特点】</dt>
-      <dd>喜欢以各种艺术形式的创作来表现自己的才能，实现自身的价值；具有特殊艺术才能和个性。</dd>
+      <dd id="common-feature">${commonFeature}</dd>
       <dt>【性格特点】</dt>
-      <dd>有责任心、依赖性强、高效率、稳重踏实、细致、有耐心。</dd>
+      <dd id="character-feature">${characterFeature}</dd>
     </dl>
    </div>
     
@@ -134,16 +134,9 @@ $(document).ready(function(){
        </table>
     
     
-	<div class="highlight">
-		<pre>
-			<code class="language-html" data-lang="html">
-				<span class="cp"></span>
-				<span class="nt"></span>
-			</code>
-		</pre>
-	</div>
+	
 	<div class="container">
-		<button type="button" class="btn btn-primary btn-lg active"><a href="<%=request.getContextPath()%>/common/apply.do?evId=${evId}"><span style="color:black;">申请深入解读戳这里</span></a></button>
+		<button type="button" class="btn btn-primary btn-lg active" ><a  style="color:black;" href="<%=request.getContextPath()%>/common/apply.do?evId=${evId}">申请深入解读戳这里</a></button>
 	</div>
 </body>
 </html>

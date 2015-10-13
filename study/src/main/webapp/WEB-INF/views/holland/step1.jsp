@@ -29,23 +29,29 @@
 	    $('#navi-next-button').click(function(){
 	    	if(!validateQuestions(questions1)){
 	    		showSubitem(1) ;
-	    		return  ;
+	    		alert("请输入完整") ;
+	    		return  false ;
 	    	}
 	    	if(!validateQuestions(questions2)){
 	    		showSubitem(2) ;
-	    		return  ;
+	    		alert("请输入完整") ;
+	    		return  false;
 	    	}if(!validateQuestions(questions3)){
 	    		showSubitem(3) ;
-	    		return  ;
+	    		alert("请输入完整") ;
+	    		return  false ;
 	    	}if(!validateQuestions(questions4)){
 	    		showSubitem(4) ;
-	    		return  ;
+	    		alert("请输入完整") ;
+	    		return  false;
 	    	}if(!validateQuestions(questions5)){
 	    		showSubitem(5) ;
-	    		return  ;
+	    		alert("请输入完整") ;
+	    		return  false;
 	    	}if(!validateQuestions(questions6)){
 	    		showSubitem(6) ;
-	    		return  ;
+	    		alert("请输入完整") ;
+	    		return  false ;
 	    	}
 	    }) ;
 	});

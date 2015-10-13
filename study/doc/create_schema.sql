@@ -1,3 +1,20 @@
+CREATE TABLE `eval_apply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `eval_id` varchar(255) DEFAULT NULL COMMENT '评估编号',
+  `name` varchar(255) DEFAULT NULL COMMENT '申请人姓名',
+  `qq` varchar(255) DEFAULT NULL,
+  `profession` varchar(255) DEFAULT NULL COMMENT '专业',
+  `school_year` varchar(255) DEFAULT NULL COMMENT '入学年份',
+  `career` varchar(255) DEFAULT NULL COMMENT '职业',
+  `education` int(11) DEFAULT NULL COMMENT '学历',
+  `ip` varchar(255) DEFAULT NULL,
+  `memo` varchar(1000) DEFAULT NULL,
+  `is_processed` bit(1) DEFAULT b'0' COMMENT '是否已处理',
+  `process_result` varchar(2000) DEFAULT NULL COMMENT '处理结果',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `eval_id` (`eval_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
 CREATE TABLE `holland_result` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `eval_id` varchar(255) DEFAULT NULL COMMENT '评测编号',
@@ -12,17 +29,7 @@ CREATE TABLE `holland_result` (
   `e_value` int(11) DEFAULT NULL,
   `a_value` int(11) DEFAULT NULL,
   `c_value` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
-
-CREATE TABLE `holland_apply` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-CREATE TABLE `manage_user` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `eval_ip` varchar(255) DEFAULT NULL COMMENT '评估的IP地址',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_holland_result_eval_Id` (`eval_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;

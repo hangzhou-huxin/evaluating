@@ -26,6 +26,13 @@ public class HollandManageService {
 	}
 	
 	
+	public List<EvaluationResult> findListForApply(){
+		return evaluationResultDao.findForApply() ;
+	}
+	
+	
+	
+	
 	public void saveResult( EvaluationResult result ){
 		evaluationResultDao.add(result);
 	}

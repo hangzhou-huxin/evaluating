@@ -61,7 +61,7 @@
 	
 </script>
 </head>
-<body style="margin:0 auto;width: 75%;">
+<body style="margin:0 auto;width: 80%;">
    
   	<div id="test" class="container-fluid">
   		<h1 class="page-header" style="text-align:center;">三.	你所喜欢的职业</h1>

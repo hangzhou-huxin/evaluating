@@ -288,7 +288,7 @@
     var processFormPanel = new Ext.FormPanel({
       id:'process-form',
       width:200,
-      height:70,
+      height:370,
       frame:true,
       labelWidth: 100,
       items:[

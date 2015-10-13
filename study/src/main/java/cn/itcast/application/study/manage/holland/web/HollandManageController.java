@@ -62,8 +62,20 @@ public class HollandManageController {
 	}
 	
 	
+	@RequestMapping("/queryForApply.do")
+	public ModelAndView queryApplyList(){
+		
+		List<EvaluationResult> list = hollandManageService.findListForApply() ;
+		ModelAndView mv = new ModelAndView() ;
+		mv.setView(jsonView);
+		mv.addObject("data",list); 
+		return mv ;
+	}
+	
+	
 	@RequestMapping("/applyList.do")
 	public ModelAndView gotoApplyList(){
+		
 		
 		return new ModelAndView("manage/holland/applyList") ;
 	}
@@ -85,6 +97,10 @@ public class HollandManageController {
 		typeAndValue.put("e", result.geteValue()) ;
 		typeAndValue.put("c", result.getcValue()) ;
 		String newResult = EvaluationUtils.getOrderedResult(typeAndValue) ;
+		String commonFeature = Constant.commonFeatureMap.get(newResult.toLowerCase()) ;
+		String characterFeature = Constant.characterFeatureMap.get(newResult.toLowerCase()) ;
+		mv.addObject("commonFeature",commonFeature ) ;
+		mv.addObject("characterFeature",characterFeature) ;
 		mv.addObject("orderedResult", newResult) ;
 		mv.addObject( "result"	, typeAndValue) ;
 		return mv ;

@@ -21,5 +21,8 @@ public interface EvaluationResultDao {
 	
 	public void delete(Integer id) ;
 	
+	
+	public List<EvaluationResult>	findForApply() ;
+	
 
 }

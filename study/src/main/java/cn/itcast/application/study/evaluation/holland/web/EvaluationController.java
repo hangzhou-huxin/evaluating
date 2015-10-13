@@ -161,8 +161,12 @@ public class EvaluationController {
 			Map<String,Integer> result = EvaluationUtils.getHollandEvaluationResult(cache) ;
 			//对评分结果进行排序
 			String newResult = EvaluationUtils.getOrderedResult(result) ;
+			String commonFeature = Constant.commonFeatureMap.get(newResult.toLowerCase()) ;
+			String characterFeature = Constant.characterFeatureMap.get(newResult.toLowerCase()) ;
 			mv.addObject("orderedResult", newResult) ;
 			mv.addObject( "result"	, result) ;
+			mv.addObject("commonFeature",commonFeature ) ;
+			mv.addObject("characterFeature",characterFeature) ;
 			
 			//保存评分数据
 			Map<String,String> filter = new HashMap<String,String>() ;
@@ -192,7 +196,11 @@ public class EvaluationController {
 			
 			String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,filter) ;
 			evaluationResult.setContent(cacheJson);
-			hollandManageService.saveResult(evaluationResult);
+			try{
+				hollandManageService.saveResult(evaluationResult);
+			}catch(Exception e){
+				
+			}
 		}
 
 		
