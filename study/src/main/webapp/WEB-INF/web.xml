@@ -23,7 +23,8 @@
  		<param-name>contextConfigLocation</param-name>
  		<param-value>classpath*:applicationContext-redis.xml
  					 classpath*:applicationContext-eval.xml
- 					 classpath*:applicationContext-manage.xml
+ 					 classpath*:applicationContext-holland-manage.xml
+ 					 classpath*:applicationContext-escape-manage.xml
  					 classpath*:applicationContext.xml
  					 classpath*:applicationContext-apply.xml
  		</param-value>

@@ -7,6 +7,33 @@
 
 <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet">
 <title>Insert title here</title>
+<script type="text/javascript" src="<%=request.getContextPath()%>/jquery/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#submit').click(function(){
+		var obj = $("input[name='profession']") ;
+		if( obj.val() == '' ){
+	            alert('请输入专业') ;
+	        	   return false ;
+	    }
+		obj = $("input[name='schoolYear']") ;
+		if( obj.val() == ''){
+	        	alert('请输入入学年份') ;
+	        	return false ;
+	    }
+		obj = $("input[name='career']") ;
+		if( obj.val() == ''){
+	        	alert('请输入职业') ;
+	        	return false ;
+	    }
+		if( !($("#educationId").val()) || $("#educationId").val()<1){
+			   alert('请选择学历') ;
+			   return false ;
+		}
+		
+	}) 
+});
+</script>
 </head>
 <body>
 	<div>
@@ -37,7 +64,7 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="exampleInputFile">学历</label>
-		    <select style="width:200px;" name="educationId">
+		    <select style="width:200px;" id="educationId" name="educationId">
 		    	<option value="0">请选择...</option>
 		    	<option value="1">初中</option>
 		    	<option value="2">高中</option>
@@ -52,7 +79,7 @@
 		  	<label>备注</label>
 		  	<textarea class="form-control" rows="3" name="memo"></textarea>
 		  </div>
-		  <button type="submit" class="btn btn-default">提交</button>
+		  <button id="submit" type="submit" class="btn btn-default">提交</button>
 		  <button type="reset" class="btn btn-default">重置</button>
 		</form>
 	</div>

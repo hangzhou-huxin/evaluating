@@ -4,15 +4,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
+<meta name="renderer" content="webkit">
 <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet">
 <script type="text/javascript" src="<%=request.getContextPath()%>/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/holland/step1.js" charset="UTF-8"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/question.js" charset="UTF-8"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		
-	   var cache = ${cache} ;
+		var cache = ${cache} ;
 	   if( !cache){
 		   cache = {} ;
 		   
@@ -59,7 +58,7 @@
 	
 </script>
 </head>
-<body style="margin:0 auto;width: 75%;">
+<body style="margin:0 auto;width: 80%;">
    
   	<div id="test" class="container-fluid">
   		<h1 class="page-header" style="text-align:center;">一.	您所感兴趣的活动</h1>

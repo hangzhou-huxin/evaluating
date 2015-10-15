@@ -50,7 +50,12 @@ public class UserApplyController {
 	public ModelAndView save(@ModelAttribute("applyInfo") ApplyInfo applyInfo){
 		String ip = request.getRemoteAddr() ;
 		applyInfo.setIp(ip);
-		applyInfoService.saveApplyInfo(applyInfo);
+		try{
+			applyInfoService.saveApplyInfo(applyInfo);
+		}catch(Exception e){
+			
+		}
+		
 		String url = "redirect:/manage/holland/viewReport.do?" + Constant.EVALUATION_ID_PARAM_NAME + "=" + applyInfo.getEvId();
 		ModelAndView mv = new ModelAndView(url);
 		

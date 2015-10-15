@@ -159,11 +159,17 @@
 			            expanded:true,
 			            children: [
 									{
+									    text: '测试配置',
+									    leaf: true,
+									    url:'<%=request.getContextPath()%>/manage/escape/config.do'
+									    
+									},
+									{
 									    text: '测试结果查询',
 									    leaf: true
 									},
 									{
-									    text: '测评报告配置',
+									    text: '深度报告申请处理',
 									    leaf: true
 									}
 			            ]

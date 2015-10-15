@@ -4,6 +4,7 @@
 <head>
 <title>逆袭</title>
 <meta content="text/html;charset=UTF-8" http-equiv="Content-Type" />
+<meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet">
 <script type="text/javascript" src="<%=request.getContextPath()%>/jquery/jquery-2.1.4.min.js"></script>
@@ -30,23 +31,29 @@
 		    $('#finisth-button,#navi-previous-button').click(function(){
 		    	if(!validateQuestions(questions1)){
 		    		showSubitem(1) ;
-		    		return  ;
+		    		alert("请输入完整") ;
+		    		return  false ;
 		    	}
 		    	if(!validateQuestions(questions2)){
 		    		showSubitem(2) ;
-		    		return  ;
+		    		alert("请输入完整") ;
+		    		return  false ;
 		    	}if(!validateQuestions(questions3)){
 		    		showSubitem(3) ;
-		    		return  ;
+		    		alert("请输入完整") ;
+		    		return  false ;
 		    	}if(!validateQuestions(questions4)){
 		    		showSubitem(4) ;
-		    		return  ;
+		    		alert("请输入完整") ;
+		    		return  false ;
 		    	}if(!validateQuestions(questions5)){
 		    		showSubitem(5) ;
-		    		return  ;
+		    		alert("请输入完整") ;
+		    		return  false ;
 		    	}if(!validateQuestions(questions6)){
 		    		showSubitem(6) ;
-		    		return  ;
+		    		alert("请输入完整") ;
+		    		return  false ;
 		    	}
 		    }) ;
 	       
