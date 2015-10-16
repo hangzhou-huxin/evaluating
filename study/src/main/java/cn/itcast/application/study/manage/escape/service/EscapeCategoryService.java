@@ -26,5 +26,10 @@ public class EscapeCategoryService {
 	public List<EscapeCategory> findForList(){
 		return escapeCategoryDao.findForList() ;
 	}
+	
+	
+	public EscapeCategory findById(Integer id){
+		return escapeCategoryDao.findById(id) ;
+	}
 
 }

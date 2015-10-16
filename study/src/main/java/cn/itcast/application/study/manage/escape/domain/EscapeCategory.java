@@ -6,6 +6,8 @@ public class EscapeCategory {
 	
 	private String name ;
 	
+	private String key	;
+	
 	private String memo  ;
 	
 	private String createDate ;
@@ -50,6 +52,14 @@ public class EscapeCategory {
 
 	public void setLastUpdate(String lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 	
 	

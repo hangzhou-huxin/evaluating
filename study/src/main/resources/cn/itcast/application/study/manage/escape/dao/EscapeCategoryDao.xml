@@ -4,21 +4,8 @@
 	
 	<resultMap type="cn.itcast.application.study.manage.escape.domain.EscapeCategory" id="escapeCategoryMap">
 		<id property="id" column="id"/>
-		<result property="evaluationId" column="eval_id"/>
-		<result property="name" column="eval_name"/>
-		<result property="qq" column="eval_qq"/>
-		<result property="talentsType" column="talents_type"/>
 		<result property="createDate" column="create_date"/>
-		<result property="content" column="eval_content"/>
-		<result property="rValue" column="r_value"/>
-		<result property="iValue" column="i_value"/>
-		<result property="sValue" column="s_value"/>
-		<result property="aValue" column="a_value"/>
-		<result property="eValue" column="e_value"/>
-		<result property="cValue" column="c_value"/>
-		<result property="ip" column="eval_ip"/>
-		<result property="applyId"	column="apply_id"/>
-		<result property="isProcessed"	column="is_processed"/>
+		<result property="lastUpdate" column="last_update"/>
 	</resultMap>
 	
 	<insert id="add" parameterType="cn.itcast.application.study.manage.escape.domain.EscapeCategory">

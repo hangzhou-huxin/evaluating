@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.application.study.manage.escape.dao.EscapeQuestionOptionDao">
+	
+	<resultMap type="cn.itcast.application.study.manage.escape.domain.EscapeQuestionOption" id="escapeQuestionOptionMap">
+		<id property="id" column="id"/>
+		
+	</resultMap>
+	
+	<insert id="add" parameterType="cn.itcast.application.study.manage.escape.domain.EscapeQuestionOption">
+		insert into escape_question_options(index,title,content)
+			values(#{index},#{title},#{content})
+	</insert>
+	
+	<update id="update" parameterType="cn.itcast.application.study.manage.escape.domain.EscapeQuestionOption">
+	    update escape_question_options set index=#{index},title=#{title},content=#{content} where id=#{id}
+	</update>
+	
+	
+	
+	<select id="findById"  parameterType="int" resultMap="escapeQuestionOptionMap">
+	    select id,index,title,content
+			from escape_question_options where id = #{id}
+	</select>
+	
+	<select id="findForList" resultMap="escapeQuestionOptionMap">
+		select id,index,title,content
+			from escape_question_options
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from escape_category where id=#{id}
+	</delete>
+</mapper>
