@@ -4,31 +4,32 @@
 	
 	<resultMap type="cn.itcast.application.study.manage.escape.domain.EscapeQuestionOption" id="escapeQuestionOptionMap">
 		<id property="id" column="id"/>
-		
+		<result property="index" column="option_index"/>
+		<result property="questionId" column="question_id"/>
 	</resultMap>
 	
 	<insert id="add" parameterType="cn.itcast.application.study.manage.escape.domain.EscapeQuestionOption">
-		insert into escape_question_options(index,title,content)
-			values(#{index},#{title},#{content})
+		insert into escape_question_options(option_index,content,question_id)
+			values(#{index},#{content},#{questionId})
 	</insert>
 	
 	<update id="update" parameterType="cn.itcast.application.study.manage.escape.domain.EscapeQuestionOption">
-	    update escape_question_options set index=#{index},title=#{title},content=#{content} where id=#{id}
+	    update escape_question_options set option_index=#{index},content=#{content} where id=#{id}
 	</update>
 	
 	
 	
 	<select id="findById"  parameterType="int" resultMap="escapeQuestionOptionMap">
-	    select id,index,title,content
+	    select id,option_index,content,question_id
 			from escape_question_options where id = #{id}
 	</select>
 	
-	<select id="findForList" resultMap="escapeQuestionOptionMap">
-		select id,index,title,content
-			from escape_question_options
+	<select id="findForList" resultMap="escapeQuestionOptionMap" parameterType="int">
+		select id,option_index,content,question_id
+			from escape_question_options where question_id=#{questionId}
 	</select>
 	
 	<delete id="delete" parameterType="int">
-		delete from escape_category where id=#{id}
+		delete from escape_question_options where id=#{id}
 	</delete>
 </mapper>

@@ -18,6 +18,9 @@ public interface EscapeQuestionOptionDao {
 	public EscapeQuestionOption findById(Integer id) ;
 	
 	
-	public List<EscapeQuestionOption> findForList() ;
+	public List<EscapeQuestionOption> findForList(Integer questionId) ;
+	
+	
+	public void delete(Integer id) ;
 
 }

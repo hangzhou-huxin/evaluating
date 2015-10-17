@@ -23,9 +23,9 @@
 			from escape_questions where id = #{id}
 	</select>
 	
-	<select id="findForList" resultMap="escapeQuestionMap">
+	<select id="findForList" resultMap="escapeQuestionMap" parameterType="int">
 		select id,question_index,title,content
-			from escape_questions
+			from escape_questions where category_id=#{categoryId}
 	</select>
 	
 	<delete id="delete" parameterType="int">

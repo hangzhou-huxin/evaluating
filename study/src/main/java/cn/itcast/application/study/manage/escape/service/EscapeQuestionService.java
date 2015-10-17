@@ -24,8 +24,8 @@ public class EscapeQuestionService {
 	}
 	
 	
-	public List<EscapeQuestion> findForList(){
-		return escapeQuestionDao.findForList() ;
+	public List<EscapeQuestion> findForList(Integer categoryId){
+		return escapeQuestionDao.findForList(categoryId) ;
 	}
 	
 	

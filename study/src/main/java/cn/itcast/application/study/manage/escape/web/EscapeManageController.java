@@ -18,7 +18,9 @@ import cn.itcast.application.study.evaluation.core.Constant;
 import cn.itcast.application.study.evaluation.core.EvaluationUtils;
 import cn.itcast.application.study.manage.escape.domain.EscapeCategory;
 import cn.itcast.application.study.manage.escape.domain.EscapeQuestion;
+import cn.itcast.application.study.manage.escape.domain.EscapeQuestionOption;
 import cn.itcast.application.study.manage.escape.service.EscapeCategoryService;
+import cn.itcast.application.study.manage.escape.service.EscapeQuestionOptionService;
 import cn.itcast.application.study.manage.escape.service.EscapeQuestionService;
 import cn.itcast.application.study.manage.holland.domain.EvaluationResult;
 import cn.itcast.application.study.manage.holland.dto.EvaluationResultQuery;
@@ -45,6 +47,9 @@ public class EscapeManageController {
 	
 	@Autowired
 	private EscapeQuestionService escapeQuestionService ;
+	
+	@Autowired
+	private EscapeQuestionOptionService escapeQuestionOptionService ;
 	
 	@RequestMapping("/config.do")
 	public ModelAndView main(){
@@ -87,6 +92,24 @@ public class EscapeManageController {
 	}
 	
 	
+	@RequestMapping("/options/save.do")
+	public ModelAndView saveOption(@ModelAttribute("option") EscapeQuestionOption option){
+		ModelAndView mv = new ModelAndView() ;
+		mv.setView(jsonView);
+		
+		try{
+			escapeQuestionOptionService.save(option);
+			mv.addObject("success", true); 
+			mv.addObject("msg", "操作成功") ;
+		}catch(Exception e){
+			mv.addObject("success", false); 
+			mv.addObject("msg", e.getMessage()) ;
+		}
+		return mv ;
+	}
+	
+	
+	
 	@RequestMapping("/category/list.do")
 	public ModelAndView categoryList(){
 		ModelAndView mv = new ModelAndView() ;
@@ -99,14 +122,26 @@ public class EscapeManageController {
 	
 	
 	@RequestMapping("/questions/list.do")
-	public ModelAndView questionList(){
+	public ModelAndView questionList(@RequestParam("categoryId") Integer categoryId){
+		
 		ModelAndView mv = new ModelAndView() ;
 		mv.setView(jsonView);
-		List<EscapeQuestion> list = escapeQuestionService.findForList() ;
+		List<EscapeQuestion> list = escapeQuestionService.findForList( categoryId) ;
 		mv.addObject("data", list); 
 		mv.addObject("totalCount", list.size()) ;
 		return mv ;
 	}
+	
+	@RequestMapping("/options/list.do")
+	public ModelAndView optoinList(@RequestParam("questionId") Integer questionId){
+		ModelAndView mv = new ModelAndView() ;
+		mv.setView(jsonView);
+		List<EscapeQuestionOption> list = escapeQuestionOptionService.findForList(questionId) ;
+		mv.addObject("data", list); 
+		mv.addObject("totalCount", list.size()) ;
+		return mv ;
+	}
+	
 	
 	
 	@RequestMapping("/questions/delete.do")
@@ -115,6 +150,22 @@ public class EscapeManageController {
 		mv.setView(jsonView);
 		try{
 			escapeQuestionService.delete(id);
+			mv.addObject("success", true); 
+			mv.addObject("msg", "操作成功") ;
+		}catch(Exception e){
+			mv.addObject("success", false); 
+			mv.addObject("msg", e.getMessage()) ;
+		}
+		return mv ;
+	}
+	
+	
+	@RequestMapping("/options/delete.do")
+	public ModelAndView deleteOption(@RequestParam("id") Integer id ){
+		ModelAndView mv = new ModelAndView() ;
+		mv.setView(jsonView);
+		try{
+			escapeQuestionOptionService.delete(id);
 			mv.addObject("success", true); 
 			mv.addObject("msg", "操作成功") ;
 		}catch(Exception e){

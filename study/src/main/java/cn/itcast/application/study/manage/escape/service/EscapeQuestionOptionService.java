@@ -24,7 +24,12 @@ public class EscapeQuestionOptionService {
 	}
 	
 	
-	public List<EscapeQuestionOption> findForList(){
-		return escapeQuestionOptionDao.findForList() ;
+	public List<EscapeQuestionOption> findForList(Integer questionId){
+		return escapeQuestionOptionDao.findForList(questionId) ;
+	}
+	
+	
+	public void delete(Integer id){
+		escapeQuestionOptionDao.delete(id);
 	}
 }

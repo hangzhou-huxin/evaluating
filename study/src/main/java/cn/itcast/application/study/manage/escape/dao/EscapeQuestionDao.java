@@ -17,7 +17,7 @@ public interface EscapeQuestionDao {
 	public EscapeQuestion findById(Integer id) ;
 	
 	
-	public List<EscapeQuestion> findForList() ;
+	public List<EscapeQuestion> findForList(Integer categoryId) ;
 	
 	
 	public void delete(Integer id) ;
