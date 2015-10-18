@@ -32,6 +32,9 @@ public class EscapeQuestionService {
 	public void delete(Integer id){
 		escapeQuestionDao.delete(id);
 	}
+	
+	
+	
 
 
 }

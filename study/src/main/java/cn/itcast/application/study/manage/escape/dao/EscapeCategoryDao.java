@@ -17,5 +17,8 @@ public interface EscapeCategoryDao {
 	
 	
 	public List<EscapeCategory> findForList() ;
+	
+	
+	public void delete(Integer id) ;
 
 }

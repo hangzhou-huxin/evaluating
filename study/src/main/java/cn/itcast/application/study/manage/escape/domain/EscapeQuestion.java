@@ -12,6 +12,18 @@ public class EscapeQuestion {
 	
 	private Integer categoryId ;
 	
+	private Integer dimensionId ;
+	
+	private String	dimensionName ;
+	
+
+	public String getDimensionName() {
+		return dimensionName;
+	}
+
+	public void setDimensionName(String dimensionName) {
+		this.dimensionName = dimensionName;
+	}
 
 	public Integer getId() {
 		return id;
@@ -51,6 +63,14 @@ public class EscapeQuestion {
 
 	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public Integer getDimensionId() {
+		return dimensionId;
+	}
+
+	public void setDimensionId(Integer dimensionId) {
+		this.dimensionId = dimensionId;
 	}
 
 	

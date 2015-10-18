@@ -31,5 +31,10 @@ public class EscapeCategoryService {
 	public EscapeCategory findById(Integer id){
 		return escapeCategoryDao.findById(id) ;
 	}
+	
+	
+	public void delete(Integer id){
+		escapeCategoryDao.delete(id);
+	}
 
 }

@@ -17,7 +17,35 @@
 		Ext.QuickTips.init();
    		Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
    	
-   
+   		var dimension_combo = new Ext.form.ComboBox({
+   	  	  id:'dimension-combo',
+   	  	  fieldLabel:'维度',
+   	  	  typeAhead:true,
+   	  	  triggerAction:'all',
+   	  	  lazyRender:false,
+   	  	  mode:'remote',
+   	  	  store:new Ext.data.Store({
+   	  		  proxy:new Ext.data.HttpProxy({
+   	  			  url:'<%=request.getContextPath()%>/manage/escape/dimension/list.do?categoryId=${category.id}'
+   	  		  }),
+   	  		  reader:new Ext.data.JsonReader({
+   	  			  root:'data'
+   	  		  },[{name:'id'},{name:'name'}])
+   	  	  }),
+   	  	  valueField:'id',
+   	  	  hiddenName:'dimensionId',
+   	  	  displayField:'name',
+   	  	  allowBlank:false
+   	    }) ;
+   		
+   		dimension_combo_store = new Ext.data.Store({
+  		  proxy:new Ext.data.HttpProxy({
+  			  url:'<%=request.getContextPath()%>/manage/escape/dimension/list.do?categoryId=${category.id}'
+  		  }),
+  		  reader:new Ext.data.JsonReader({
+  			  root:'data'
+  		  },[{name:'id'},{name:'name'}])
+  	  });
    
     var renderOptions = function(value,cellmeta,record,rowIndex,columnIndex,store){
     	var s = "<a  href='javascript:showOptionsWin(\""+ record.data['id']+"\")' onclick=''>查看或编辑</a>";
@@ -45,19 +73,62 @@
     
     
     
+    var renderResult = function(value,cellmeta,record,rowIndex,columnIndex,store){
+    	//alert(Ext.util.Format.date(new Date(parseInt(record.data.deployDate)),'Y-m-d')) ;
+        var s = "<a  href='#' onclick='genResultUpdate(\""+ rowIndex +"\")'>修改</a>" ;
+            s+= "     <a  href='javascript:genResultDelete(\""+record.data['id'] +"\")' onclick=''>删除</a>" ;
+        //alert(s) ;
+            return s;
+    }; 
   
 
     var renderEdit = function(value,cellmeta,record,rowIndex,columnIndex,store){
     	//alert(Ext.util.Format.date(new Date(parseInt(record.data.deployDate)),'Y-m-d')) ;
-        var s =  "  <a  href='javascript:genResultDelete(\"question\",\""+record.data['id'] +"\")' onclick=''>删除</a>";
+        var s = "<a  href='#' onclick='genResultUpdate(\""+ rowIndex +"\")'>修改</a>" ;
+        s +=  "  <a  href='javascript:genResultDelete(\"question\",\""+record.data['id'] +"\")' onclick=''>删除</a>";
          return s;
     }; 
     
     var renderOptionEdit = function(value,cellmeta,record,rowIndex,columnIndex,store){
-    	//alert(Ext.util.Format.date(new Date(parseInt(record.data.deployDate)),'Y-m-d')) ;
-        var s =  "  <a  href='javascript:genResultDelete(\"option\",\""+record.data['id'] +"\")' onclick=''>删除</a>";
+    	 var s = "<a  href='#' onclick='genOptionResultUpdate(\""+ rowIndex +"\")'>修改</a>" ;
+         s +=  "  <a  href='javascript:genResultDelete(\"option\",\""+record.data['id'] +"\")' onclick=''>删除</a>";
          return s;
     }; 
+    
+    //更新选项
+    genOptionResultUpdate = function(rowIndex){
+    	var record = optionStore.getAt(rowIndex) ;
+    	showAddWin("更新" , record.data.id) ;
+		 if(record){
+        	var values = [{id:'id',value:record.data.id},
+    				 	  {id:'index',value:record.data.index},
+    				 	  {id:'title',value:record.data.title},
+    				 	  {id:'content',value:record.data.content},
+    				 	  {id:'value',value:record.data.value}] ;
+        	optionFormPanel.getForm().setValues(values) ;
+        }else{
+        	optionFormPanel.getForm().reset();
+        }
+    	
+    }
+    
+    //更新题
+    genResultUpdate = function(rowIndex){
+    	var record = store.getAt(rowIndex) ;
+    	showWin("更新" , record.data.id) ;
+		 if(record){
+        	var values = [{id:'id',value:record.data.id},
+    				 	  {id:'index',value:record.data.index},
+    				 	  {id:'title',value:record.data.title},
+    				 	  {id:'content',value:record.data.content},
+    				 	  {id:'dimensionId',value:record.data['dimensionId']}
+    				 	 ] ;
+        	formPanel.getForm().setValues(values) ;
+        }else{
+        	formPanel.getForm().reset();
+        }
+    	
+    }
     
     genResultDelete = function(type,id){
    		Ext.Msg.confirm('','确定删除吗?',function(button){
@@ -97,6 +168,7 @@
    	      										{header:'序号',dataIndex:'id',sortable:false},
    	      										{header:'题索引',dataIndex:'index',sortable:false},
    	      										{header:'题标题',dataIndex:'title',sortable:false},
+   	      										{header:'所属维度',dataIndex:'dimensionName',sortable:false},
    	      										{header:'题选项维护',dataIndex:'questionId',renderer:renderOptions,sortable:false},
    	      										{header:'查看和编辑',dataIndex:'id',renderer:renderDetail,sortable:false},
    	      										{header:'删除',dataIndex:'id',renderer:renderEdit,sortable:false}
@@ -114,7 +186,9 @@
           		{name:'title'},
           		{name:'content'},
           		{name:'index'},
-          		{name:'questionId'}
+          		{name:'categoryId'},
+          		{name:'dimensionId'},
+          		{name:'dimensionName'}
           	  ]),
          
       	  remoteSort:true
@@ -192,7 +266,8 @@
 						width:300,
 						height:100,
 						allowBlank:false
-					}
+					},
+					dimension_combo
 			],
 			buttonAlign:'center',
 	    	buttons:[
@@ -234,23 +309,6 @@
   });
     
  	showWin=function(title, id){
- 		if(id){
- 			//查询申请信息
- 	 		Ext.Ajax.request({
- 	  				   url: '<%=request.getContextPath()%>/common/apply/view.do',
- 	  				   success: function(response,options){
- 				 			var result = Ext.decode(response.responseText) ;
- 				 			processFormPanel.getForm().setValues(result.data) ;
- 				   			//Ext.Msg.alert('',result.data.name) ;
- 						},
- 					   failure: function(){
- 						 	Ext.Msg.alert('','通信错误') ;
- 					   },
- 	  				   headers: {
- 	  				   },
- 	  				   params: { id: id }
- 	  		});
- 		}
  		
     	if (!win) {
     		win = new Ext.Window({
@@ -269,16 +327,18 @@
               	plain: true
 		    }) ;
 		}
+    	win.setTitle(title) ;
     	win.show();
   }  
  	 //---------------------------查看或修改处理信息---end------------------------------------- 
- 	 
+ 	
  	 
  	 //---------------------------题选项维护---begin-------------------------------------
  	var optionWin ;
 	var optionCm = new Ext.grid.ColumnModel([ //new Ext.grid.RowNumberer(),
      										{header:'选项索引',width:10,dataIndex:'index',sortable:false},
      										{header:'选项内容',dataIndex:'content',sortable:false},
+     										{header:'选项分值',dataIndex:'value',sortable:false},
      										{header:'删除',dataIndex:'id',renderer:renderOptionEdit,sortable:false}
      										]);
 
@@ -293,7 +353,8 @@
 	     	{name:'id'},
 	  		{name:'content'},
 	  		{name:'index'},
-	  		{name:'questionId'}
+	  		{name:'questionId'},
+	  		{name:'value'}
 	  	  ]),
 	  //baseParams :[{questionId:'${questionId}'}],
 		  remoteSort:true
@@ -312,7 +373,7 @@
 					tooltip:'',
 					iconCls:'add',
 					handler:function(){
-						showAddWin();
+						showAddWin('新增');
 						//formPanel.getForm().reset();
 					}
 				}
@@ -349,6 +410,14 @@
   						fieldLabel :'选项内容',
   						width:300,
   						height:100,
+  						allowBlank:false
+  					},
+  					{
+  						xtype:'textfield',
+  						name:'value',
+  						value:'',
+  						fieldLabel :'分值',
+  						width:300,
   						allowBlank:false
   					}
   			],
@@ -391,8 +460,10 @@
     });
     
     var addWin ;
-    showAddWin=function(){
-			
+    showAddWin=function(title,id){
+	    if(!id){
+	    	optionFormPanel.getForm().reset(); 
+	    }
     	if (!addWin) {
     		addWin = new Ext.Window({
 				id:'addWin',
@@ -410,7 +481,7 @@
               	plain: true
 		    }) ;
 		}
-    	
+    	addWin.setTitle(title) ;
     	addWin.show();
   	}  
  	
@@ -447,6 +518,7 @@
    				]
     });
     store.load({params:{'categoryId':categoryId}}) ;
+    dimension_combo_store.load();
 	
   
 });   					

@@ -92,6 +92,9 @@ public class EscapeManageController {
 	}
 	
 	
+	
+	
+	
 	@RequestMapping("/options/save.do")
 	public ModelAndView saveOption(@ModelAttribute("option") EscapeQuestionOption option){
 		ModelAndView mv = new ModelAndView() ;
@@ -142,6 +145,21 @@ public class EscapeManageController {
 		return mv ;
 	}
 	
+	
+	@RequestMapping("/category/delete.do")
+	public ModelAndView deleteCategory(@RequestParam("id") Integer id ){
+		ModelAndView mv = new ModelAndView() ;
+		mv.setView(jsonView);
+		try{
+			escapeCategoryService.delete(id);
+			mv.addObject("success", true); 
+			mv.addObject("msg", "操作成功") ;
+		}catch(Exception e){
+			mv.addObject("success", false); 
+			mv.addObject("msg", e.getMessage()) ;
+		}
+		return mv ;
+	}
 	
 	
 	@RequestMapping("/questions/delete.do")
