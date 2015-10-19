@@ -1,5 +1,7 @@
 package cn.itcast.application.study.manage.escape.domain;
 
+import java.util.List;
+
 public class EscapeQuestion {
 	
 	private Integer id ;
@@ -15,6 +17,8 @@ public class EscapeQuestion {
 	private Integer dimensionId ;
 	
 	private String	dimensionName ;
+	
+	private List<EscapeQuestionOption> options; 
 	
 
 	public String getDimensionName() {
@@ -71,6 +75,14 @@ public class EscapeQuestion {
 
 	public void setDimensionId(Integer dimensionId) {
 		this.dimensionId = dimensionId;
+	}
+
+	public List<EscapeQuestionOption> getOptions() {
+		return options;
+	}
+
+	public void setOptions(List<EscapeQuestionOption> options) {
+		this.options = options;
 	}
 
 	

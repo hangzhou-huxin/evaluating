@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,19 +10,16 @@
 <script type="text/javascript" src="jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/testpaper.js" charset="UTF-8"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
-		
-	  
-	  
-	});
+	
 </script>
 </head>
 <body style="margin:0 auto;width: 75%;">
  
   <div id="test" class="container-fluid" style="margin-top:50px;">
   		<ul>
-  			<li><a href="holland/main.do">霍兰德职业倾向测试量表</a></li>
-  			<li><a href="escape/evaluation/index.do">各类逆袭评测</a></li>
+  		    <c:forEach var="category" items="${categoryList}" >
+  		    	<li><a href="<%=request.getContextPath()%>/escape/evaluation/main.do?id=${category.id}"><c:out value="${category.name}" /></a></li>
+  		    </c:forEach>
   		</ul>
   </div>
 

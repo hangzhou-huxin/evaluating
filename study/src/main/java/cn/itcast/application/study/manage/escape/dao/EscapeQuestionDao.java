@@ -3,6 +3,7 @@ package cn.itcast.application.study.manage.escape.dao;
 import java.util.List;
 
 import cn.itcast.application.study.manage.escape.domain.EscapeQuestion;
+import cn.itcast.application.study.manage.escape.dto.EscapeQuestionQuery;
 
 
 
@@ -21,4 +22,10 @@ public interface EscapeQuestionDao {
 	
 	
 	public void delete(Integer id) ;
+	
+	
+	public List<EscapeQuestion> findForPageList(EscapeQuestionQuery query) ;
+	
+	
+	public Integer findForPageListCount(Integer categoryId) ;
 }

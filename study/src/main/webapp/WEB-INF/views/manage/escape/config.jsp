@@ -103,7 +103,7 @@
    	      										{header:'创建时间',dataIndex:'createDate',sortable:false},
    	      										{header:'最后更新时间',dataIndex:'lastUpdate',sortable:false},
    	      										{header:'评测题维护',dataIndex:'id',renderer:renderDetail,sortable:false},
-   	      										{header:'报告模板维护',dataIndex:'id',renderer:renderDetail,sortable:false},
+   	      										{header:'分值段维护',dataIndex:'id',renderer:renderDetail,sortable:false},
    	      										{header:'维度维护',dataIndex:'id',renderer:renderDimension,sortable:false},
    	      										{header:'编辑和删除',dataIndex:'id',renderer:renderEdit,sortable:false}
    	      										]);

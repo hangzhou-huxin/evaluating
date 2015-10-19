@@ -22,7 +22,7 @@
    	  	  fieldLabel:'维度',
    	  	  typeAhead:true,
    	  	  triggerAction:'all',
-   	  	  lazyRender:false,
+   	  	  lazyRender:true,
    	  	  mode:'remote',
    	  	  store:new Ext.data.Store({
    	  		  proxy:new Ext.data.HttpProxy({

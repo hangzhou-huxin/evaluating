@@ -150,6 +150,20 @@
 						value:'',
 						fieldLabel :'维度名称',
 						width:200
+					},
+					{
+						xtype:'textfield',
+						name:'key',
+						value:'',
+						fieldLabel :'维度key',
+						width:200
+					},
+					{
+						xtype:'textfield',
+						name:'totalValue',
+						value:'',
+						fieldLabel :'维度总分',
+						width:200
 					}
 			],
 			buttonAlign:'center',
@@ -208,7 +222,7 @@
               	plain: true
 		    }) ;
 		}
-    	
+    	win.setTitle(title) ;
     	win.show();
   }  
  	 //---------------------------查看或修改处理信息---end-------------------------------------   

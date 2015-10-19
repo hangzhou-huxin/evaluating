@@ -33,6 +33,10 @@
         	<!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->  
         	<bean class="cn.itcast.application.study.evaluation.interceptor.EvaluationInterceptor"/>  
     	</mvc:interceptor>  
+    	<mvc:interceptor>
+    		<mvc:mapping path="/escape/evaluation/*.do"/>
+    		<bean class="cn.itcast.application.study.evaluation.interceptor.EscapeEvaluationInterceptor"/>
+    	</mvc:interceptor>
 	</mvc:interceptors>
 	
 	<bean id="handlerExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
