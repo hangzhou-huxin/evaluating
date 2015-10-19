@@ -11,10 +11,10 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/question.js" charset="UTF-8"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		var questions = ${questions} ;
 		var cache = ${cache} ;
 	   if( !cache){
 		   cache = {} ;
-		   
 	   }
 	   createTrueFalseQuestion($('#questions1') , questions1 ,cache);
 	   createTrueFalseQuestion($('#questions2') , questions2 ,cache) ;
@@ -64,6 +64,9 @@
   		<h1 class="page-header" style="text-align:center;">一.	您所感兴趣的活动</h1>
   		<form id="form" action="<%=request.getContextPath()%>/holland/step2.do" method="post" onsubmit="return validateForm() ;">
 			<input type="hidden" name="evId" value="${evId}"/>
+			<input type="hidden" name="step" value="${step}"/>
+			<input type="hidden" name="stepCount" value="${stepCoutn}"/>
+			<input type="hidden" name="categoryId" value="${categoryId}"/>
 		<div id="part1" class="container">
 		 	<div class="row">
 		 	  下面列举了若干种活动，请就这些活动判断你的好恶。喜欢的，请选“是”，反之，请选“否”，请按顺序回答全部问题。

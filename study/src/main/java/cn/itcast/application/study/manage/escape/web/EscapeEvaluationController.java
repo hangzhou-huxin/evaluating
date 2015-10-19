@@ -17,6 +17,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import cn.itcast.application.study.evaluation.core.Constant;
 import cn.itcast.application.study.evaluation.core.EvaluationUtils;
+import cn.itcast.application.study.evaluation.utils.JsonUtils;
 import cn.itcast.application.study.evaluation.utils.WebUtil;
 import cn.itcast.application.study.manage.escape.domain.Dimension;
 import cn.itcast.application.study.manage.escape.domain.EscapeCategory;
@@ -73,6 +74,7 @@ public class EscapeEvaluationController {
 	public ModelAndView step(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evid,
 							 @RequestParam("categoryId") Integer categoryId,
 							 @RequestParam("step") Integer step ,
+							 @RequestParam(value="stepCount",required=false) Integer stepCount ,
 							 @RequestParam(value=Constant.PREVIOUS_STEP_PARAM_NAME,required=false) String previous ,
 							 @RequestParam(value=Constant.NEXT_STEP_PARAM_NAME,required=false) String next 
 							 ) {
@@ -95,26 +97,36 @@ public class EscapeEvaluationController {
 			}else if( previous != null && !StringUtils.isEmpty(previous)){
 				step = step-- ;
 				pageNo = step ;
+			}else{
+				pageNo = 1 ;
 			}
 			
-			Integer count = escapeQuestionService.findForPageListCount(categoryId) ;
-			Integer stepCount = count/10 ;
-			if(count % 10 > 0){
-				stepCount = stepCount + 1 ;
+			if( stepCount == null){
+				Integer count = escapeQuestionService.findForPageListCount(categoryId) ;
+				stepCount = count/10 ;
+				if(count % 10 > 0){
+					stepCount = stepCount + 1 ;
+				}
 			}
+			
+			//如果下一页是最后一页，则进入完成页面
 			if( pageNo >= stepCount){
 				//进入完成页面
-				viewName = "escape/report" ;
+				viewName = "escape/finish" ;
 			}else{
 				//进入步聚页面
 				viewName = "escape/step" ;
 			}
+			System.out.println(viewName);
 			List<EscapeQuestion> list = escapeQuestionService.findForPageList(categoryId, pageNo) ;
 			//渲染页面
-			mv.setViewName("holland/step1");
+			mv.setViewName(viewName);
 			mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evid) ;
 			mv.addObject("cache",cacheJson) ;
-			mv.addObject("questions",list) ;
+			mv.addObject("questions", JsonUtils.objectToJson(list)) ;
+			if(step < 1){
+				step = 1 ;
+			}
 			mv.addObject("step", step) ;
 			return  mv ;
 		

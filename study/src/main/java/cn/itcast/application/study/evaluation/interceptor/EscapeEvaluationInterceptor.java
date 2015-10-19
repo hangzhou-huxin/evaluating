@@ -18,6 +18,7 @@ public class EscapeEvaluationInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		
+		System.out.println("------------------escape---------------------");
 		String evid = (String)request.getParameter(Constant.EVALUATION_ID_PARAM_NAME) ;
 		if(evid==null || StringUtils.isEmpty(evid)){
 			evid = (String)request.getAttribute(Constant.EVALUATION_ID_PARAM_NAME) ;
@@ -27,7 +28,8 @@ public class EscapeEvaluationInterceptor implements HandlerInterceptor {
 			String evalId = java.util.UUID.randomUUID().toString() ;
 			EvaluationUtils.putEvalId(evalId);
 			request.setAttribute(Constant.EVALUATION_ID_PARAM_NAME, evalId);
-			request.setAttribute("errMsg",  "评测失效，请重新进行测试");
+			//System.out.println(request.getHeader("referer") );
+			//request.setAttribute("errMsg",  "评测失效，请重新进行测试");
 			request.getRequestDispatcher("/WEB-INF/views/escape/main.jsp").forward(request, response);  
 			return false ;
 		}
@@ -39,10 +41,12 @@ public class EscapeEvaluationInterceptor implements HandlerInterceptor {
 		if( userName==null || StringUtils.isEmpty(userName)){
 			userName = (String)request.getAttribute(Constant.USER_NAME_PARAM_NAME) ;
 		}
-		if( userName==null || StringUtils.isEmpty(userName) || cache.get(Constant.USER_NAME_PARAM_NAME) == null){
-			request.setAttribute("errMsg",  "请填写完整");
-			request.getRequestDispatcher("/WEB-INF/views/escape/main.jsp").forward(request, response);  
-			return false ;
+		if( userName==null || StringUtils.isEmpty(userName) ){
+			if(cache.get(Constant.USER_NAME_PARAM_NAME) == null){
+				request.setAttribute("errMsg",  "请填写完整");
+				request.getRequestDispatcher("/WEB-INF/views/escape/index.jsp").forward(request, response);  
+				return false ;
+			}
 		}
 		data.put(Constant.USER_NAME_PARAM_NAME, userName) ;
 		
@@ -50,10 +54,12 @@ public class EscapeEvaluationInterceptor implements HandlerInterceptor {
 		if( qq==null || StringUtils.isEmpty(qq)){
 			qq = (String)request.getAttribute(Constant.QQ_PARAM_NAME) ;
 		}
-		if( qq==null || StringUtils.isEmpty(qq) || cache.get(Constant.QQ_PARAM_NAME) == null){
-			request.setAttribute("errMsg",  "请填写完整");
-			request.getRequestDispatcher("/WEB-INF/views/escape/main.jsp").forward(request, response);  
-			return false ;
+		if( qq==null || StringUtils.isEmpty(qq) ){
+			if( cache.get(Constant.QQ_PARAM_NAME) == null ){
+				request.setAttribute("errMsg",  "请填写完整");
+				request.getRequestDispatcher("/WEB-INF/views/escape/index.jsp").forward(request, response);  
+				return false ;
+			}
 		}
 		data.put(Constant.QQ_PARAM_NAME, qq) ;
 		EvaluationUtils.saveStepDataToCache(evid, data);

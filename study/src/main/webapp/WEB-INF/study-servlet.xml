@@ -35,6 +35,8 @@
     	</mvc:interceptor>  
     	<mvc:interceptor>
     		<mvc:mapping path="/escape/evaluation/*.do"/>
+    		<mvc:exclude-mapping path="/escape/evaluation/index.do"/>
+    		<mvc:exclude-mapping path="/escape/evaluation/main.do"/>
     		<bean class="cn.itcast.application.study.evaluation.interceptor.EscapeEvaluationInterceptor"/>
     	</mvc:interceptor>
 	</mvc:interceptors>
