@@ -1,9 +1,10 @@
+var prefix = "es_" ;
 function createQuestion( containerObj , questionList  , cacheData){
-	 var len = questionList.length ;
-	 
-	 for( var i=0 ; i<len ;i++){
+	var len = questionList.length ; 
+	for( var i=0 ; i<len ;i++){
+		 
 		 var q = questionList[i] ;
-		 var questionObj=$('<div class="container"></div>');
+		 var questionObj=$('<div id="question_id_' + i +  '" class="row" style="display:none;"></div>');
 		  //newObj.addclass('container'); 
 		 var contentObj=$('<div class="row"><div class="col-xs-12"><span style="font-size:14px;">'+ q.index + '&nbsp;'+ q.content +'</span></div></div>') ;
 		 questionObj.append(contentObj) ;
@@ -14,63 +15,57 @@ function createQuestion( containerObj , questionList  , cacheData){
 			 var inputStr = "" ;
 			 var cacheValue = cacheData[q.id] ;
 		     if( cacheValue && cacheValue == option.value	){
-		    	 inputStr = '<div class="row"><div class="col-xs-12" >&nbsp;&nbsp;<input type="radio"  checked required="required" value="' + option.value + '" name="' + q.id +'" id="' + q.id + '"/>&nbsp;&nbsp;'+option.content+'</div></div>';
+		    	 inputStr = '<div class="row"><div class="col-xs-12" >&nbsp;&nbsp;<input type="radio"  checked required="required" value="' + option.value + '" name="' + prefix + q.id +"_"+q.dimensionKey +'" id="' + q.id + '"/>&nbsp;&nbsp;'+option.content+'</div></div>';
 		     }else{
-		    	 inputStr = '<div class="row"><div class="col-xs-12" >&nbsp;&nbsp;<input type="radio"   required="required" value="' + option.value + '" name="' + q.id +'" id="' + q.id + '"/>&nbsp;&nbsp;'+option.content+'</div></div>';
+		    	 inputStr = '<div class="row"><div class="col-xs-12" >&nbsp;&nbsp;<input type="radio"   required="required" value="' + option.value + '" name="' + prefix + q.id +"_"+q.dimensionKey +'" id="' + q.id + '"/>&nbsp;&nbsp;'+option.content+'</div></div>';
 		     }
 		     var optionObj=$(inputStr) ;
 			 questionObj.append( optionObj) ;
 		 }
 		 
 		 containerObj.append(questionObj) ;  
-		 containerObj.append($('<br/>')) ; 
+		// containerObj.append($('<br/>')) ; 
 	 }
 	 
+}
+
+
+function showQuestions(pageNo , pageSize ,questions){
+	var start = (pageNo-1) * pageSize; 
+	var end = start + pageSize -1 ; 
+	var len = questions.length ;
+	for( var i=0 ; i<len ;i++){
+		 var q = questions[i] ;
+		 var obj = $("#question_id_" +i + "") ;
+		 if(i>=start && i<=end){
+			 obj.show() ;
+		 }else{
+			 obj.css("display", "none");  ;
+		 }
+	}
 }
 
 function validateForm( ){
 	
 }
 
-function validateQuestions(questions ){
+function validateQuestions(pageNo , pageSize ,questions ){
+	var start = (pageNo-1) * pageSize; 
+	var end = start + pageSize -1 ; 
 	var len = questions.length ;
 	 var flag = true ;
 	 for( var i=0 ; i<len ;i++){
-		 var q = questions[i] ;
-		 var obj = $("input[name='" +q.qid + "']:checked") ;
-		 if(!obj.val()){
-			flag = false ; 
-			break ;
+		 if(i>=start && i<=end){
+			 var q = questions[i] ;
+			 var obj = $("input[name='" +prefix+q.id +"_"+q.dimensionKey + "']:checked") ;
+			 if(!obj.val()){
+				flag = false ; 
+				break ;
+			 }
 		 }
 	 }
 	// alert(flag) ;
 	 return flag ;
 }
 
-function setSubitemClickEvent(  ){
-	for(var i=1; i<7 ;i++){
- 	   $('#subitem'+i).click(function(e) {
- 		   var id = $(this).attr('id').replace("subitem","") ;
- 		   $('#questions1').hide() ;
- 		   $('#questions2').hide() ;
- 		   $('#questions3').hide() ;
- 		   $('#questions4').hide() ;
- 		   $('#questions5').hide() ;
- 		   $('#questions6').hide() ;
- 		   $('#questions' +id).show(); 
- 		   
- 	   }) ;
- 	   
-    } 
-}
-
-function showSubitem(  index ){
-	$('#questions1').hide() ;
-	$('#questions2').hide() ;
- 	$('#questions3').hide() ;
- 	$('#questions4').hide() ;
- 	$('#questions5').hide() ;
- 	$('#questions6').hide() ;
- 	$('#questions' + index).show(); 
-}
 

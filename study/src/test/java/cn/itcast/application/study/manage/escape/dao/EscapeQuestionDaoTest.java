@@ -28,7 +28,7 @@ public class EscapeQuestionDaoTest {
 		query.setCategoryId(categoryId);
 		query.setStart(0);
 		query.setLimit(10);
-		List<EscapeQuestion> questionList = escapeQuestionDao.findForPageList(query) ;
+		List<EscapeQuestion> questionList = escapeQuestionDao.findForPageList(categoryId) ;
 		for(EscapeQuestion  question: questionList){
 			List optionList = question.getOptions() ;
 			System.out.println("option:" + optionList.size());

@@ -119,7 +119,6 @@
 		 if(record){
         	var values = [{id:'id',value:record.data.id},
     				 	  {id:'index',value:record.data.index},
-    				 	  {id:'title',value:record.data.title},
     				 	  {id:'content',value:record.data.content},
     				 	  {id:'dimensionId',value:record.data['dimensionId']}
     				 	 ] ;
@@ -167,7 +166,7 @@
    	var cm = new Ext.grid.ColumnModel([ //new Ext.grid.RowNumberer(),
    	      										{header:'序号',dataIndex:'id',sortable:false},
    	      										{header:'题索引',dataIndex:'index',sortable:false},
-   	      										{header:'题标题',dataIndex:'title',sortable:false},
+   	      										{header:'题内容',dataIndex:'content',sortable:false},
    	      										{header:'所属维度',dataIndex:'dimensionName',sortable:false},
    	      										{header:'题选项维护',dataIndex:'questionId',renderer:renderOptions,sortable:false},
    	      										{header:'查看和编辑',dataIndex:'id',renderer:renderDetail,sortable:false},
@@ -247,14 +246,6 @@
 						name:'index',
 						value:'',
 						fieldLabel :'题索引',
-						width:300,
-						allowBlank:false
-					},
-					{
-						xtype:'textfield',
-						name:'title',
-						value:'',
-						fieldLabel :'题标题',
 						width:300,
 						allowBlank:false
 					},

@@ -175,5 +175,29 @@ public class EvaluationUtils {
 		//orderedResult.delete(len-1, len) ;
 		return orderedResult.toString().toUpperCase() ;
 	}
+	
+	
+	public static Map<String,Integer> getEscapeEvaluationResult(Map<String,String> data){
+		Map<String,Integer> result = new HashMap<String,Integer>() ;
+		String prefix = Constant.ESCAPE_PREFIX ;
+		Integer totalScore = 0 ;
+		for (Map.Entry<String, String> entry : data.entrySet()) {
+			String key = entry.getKey() ;
+			String value = entry.getValue() ;
+			if( key.startsWith(prefix)){
+				String[] keys = key.split("_") ;
+				String dimension = keys[2] ;
+				Integer dimensionScore = result.get(dimension) ;
+				if(dimensionScore == null){
+					result.put(dimension, Integer.parseInt(value)) ;
+				}else{
+					result.put(dimension, dimensionScore + Integer.parseInt(value)) ;
+				}
+				totalScore += Integer.parseInt(value) ;
+			} 
+		}
+		result.put(Constant.ESCAPE_TOTAL_SCORE , totalScore) ;
+		return result ;
+	}
 
 }

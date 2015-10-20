@@ -35,16 +35,9 @@ public class EscapeQuestionService {
 	}
 	
 	
-	public List<EscapeQuestion> findForPageList(Integer categoryId , Integer pageNo){
-		Integer pageSize = 10 ;
-		Integer start = (pageNo-1) * pageSize ;
-		EscapeQuestionQuery query = new EscapeQuestionQuery() ;
+	public List<EscapeQuestion> findForPageList(Integer categoryId ){
 		
-		query.setCategoryId(categoryId);
-		query.setStart(start);
-		query.setLimit(pageSize);
-		
-		List<EscapeQuestion> list = escapeQuestionDao.findForPageList(query) ;
+		List<EscapeQuestion> list = escapeQuestionDao.findForPageList(categoryId) ;
 		return list ;
 	}
 	

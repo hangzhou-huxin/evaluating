@@ -42,7 +42,8 @@ public class EscapeEvaluationInterceptor implements HandlerInterceptor {
 			userName = (String)request.getAttribute(Constant.USER_NAME_PARAM_NAME) ;
 		}
 		if( userName==null || StringUtils.isEmpty(userName) ){
-			if(cache.get(Constant.USER_NAME_PARAM_NAME) == null){
+			userName = cache.get(Constant.USER_NAME_PARAM_NAME) ;
+			if(userName == null){
 				request.setAttribute("errMsg",  "请填写完整");
 				request.getRequestDispatcher("/WEB-INF/views/escape/index.jsp").forward(request, response);  
 				return false ;
@@ -55,7 +56,8 @@ public class EscapeEvaluationInterceptor implements HandlerInterceptor {
 			qq = (String)request.getAttribute(Constant.QQ_PARAM_NAME) ;
 		}
 		if( qq==null || StringUtils.isEmpty(qq) ){
-			if( cache.get(Constant.QQ_PARAM_NAME) == null ){
+			qq = cache.get(Constant.QQ_PARAM_NAME)  ;
+			if( qq == null ){
 				request.setAttribute("errMsg",  "请填写完整");
 				request.getRequestDispatcher("/WEB-INF/views/escape/index.jsp").forward(request, response);  
 				return false ;

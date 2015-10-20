@@ -24,7 +24,7 @@ public interface EscapeQuestionDao {
 	public void delete(Integer id) ;
 	
 	
-	public List<EscapeQuestion> findForPageList(EscapeQuestionQuery query) ;
+	public List<EscapeQuestion> findForPageList(Integer categoryId) ;
 	
 	
 	public Integer findForPageListCount(Integer categoryId) ;

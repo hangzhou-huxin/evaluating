@@ -7,52 +7,74 @@
 <meta name="renderer" content="webkit">
 <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet">
 <script type="text/javascript" src="<%=request.getContextPath()%>/jquery/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/holland/step1.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/question.js" charset="UTF-8"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/escape/question.js" charset="UTF-8"></script>
 <script type="text/javascript">
+
+   
 	$(document).ready(function(){
-		var questions = ${questions} ;
-		var cache = ${cache} ;
+	   var pageNo = 1; 
+	   var pageSize = 10; 
+	   var questions = ${questions} ;
+	   var size = questions.length  ;
+	   var totalPage = Math.floor(size/pageSize) ;
+	   if( (size%pageSize) > 0){
+		   totalPage = totalPage + 1 ;
+		   if(totalPage ==1){
+			   $('#navi-next-button').hide() ;
+			   $('#navi-previous-button').hide() ;
+		   }else{
+			   $('#navi-previous-button').hide() ;
+			   $('#finish-button').hide() ;
+		   }
+	   }
+	   var cache = ${cache} ;
 	   if( !cache){
 		   cache = {} ;
 	   }
-	   createTrueFalseQuestion($('#questions1') , questions1 ,cache);
-	   createTrueFalseQuestion($('#questions2') , questions2 ,cache) ;
-	   createTrueFalseQuestion($('#questions3') , questions3 ,cache) ;
-	   createTrueFalseQuestion($('#questions4') , questions4 ,cache) ;
-	   createTrueFalseQuestion($('#questions5') , questions5 ,cache) ;
-	   createTrueFalseQuestion($('#questions6') , questions6 ,cache) ;
+	   createQuestion($('#questions') , questions ,cache);
+	   showQuestions(pageNo , pageSize ,questions);
 	   
-	   setSubitemClickEvent(); 
-	        
-	    $('#navi-next-button').click(function(){
-	    	if(!validateQuestions(questions1)){
-	    		showSubitem(1) ;
-	    		alert("请输入完整") ;
-	    		return  false ;
-	    	}
-	    	if(!validateQuestions(questions2)){
-	    		showSubitem(2) ;
-	    		alert("请输入完整") ;
-	    		return  false;
-	    	}if(!validateQuestions(questions3)){
-	    		showSubitem(3) ;
-	    		alert("请输入完整") ;
-	    		return  false ;
-	    	}if(!validateQuestions(questions4)){
-	    		showSubitem(4) ;
-	    		alert("请输入完整") ;
-	    		return  false;
-	    	}if(!validateQuestions(questions5)){
-	    		showSubitem(5) ;
-	    		alert("请输入完整") ;
-	    		return  false;
-	    	}if(!validateQuestions(questions6)){
-	    		showSubitem(6) ;
-	    		alert("请输入完整") ;
-	    		return  false ;
-	    	}
+	   $('#navi-previous-button').click(function(){
+		      if(!validateQuestions(pageNo , pageSize ,questions)){
+				alert('请填写完整!') ;
+				return ;
+			  }
+		      if( pageNo > 1){
+		    	  pageNo = pageNo -1 ;
+		      }
+	    	  if(pageNo == 1){
+	    		 $('#navi-previous-button').hide();
+	    	  }
+	    	  $('#finish-button').hide() ; 
+	    	  $('#navi-next-button').show() ; 
+	    	  showQuestions(pageNo , pageSize ,questions);
 	    }) ;
+      
+	   $('#navi-next-button').click(function(){
+		      if(!validateQuestions(pageNo , pageSize ,questions)){
+				alert('请填写完整!') ;
+				return ;
+			  }
+		      if( pageNo < totalPage){
+		    	  pageNo = pageNo + 1 ;
+		      }
+		      
+		      if( pageNo ==  totalPage ){
+		    	  $('#navi-next-button').hide() ;
+		    	  $('#finish-button').show() ;
+		    	  
+		      }
+		      $('#navi-previous-button').show() ;
+		      showQuestions(pageNo , pageSize ,questions) ;
+	    }) ;
+	   
+	   $('#finish-button').click(function(){
+		      if(!validateQuestions(pageNo , pageSize ,questions)){
+				alert('请填写完整!') ;
+				return false ;
+			  }
+	    }) ;
+	   
 	});
 	
 	
@@ -61,45 +83,18 @@
 <body style="margin:0 auto;width: 80%;">
    
   	<div id="test" class="container-fluid">
-  		<h1 class="page-header" style="text-align:center;">一.	您所感兴趣的活动</h1>
-  		<form id="form" action="<%=request.getContextPath()%>/holland/step2.do" method="post" onsubmit="return validateForm() ;">
+  		<form id="form" action="<%=request.getContextPath()%>/escape/evaluation/finish.do" method="post" onsubmit="return validateForm(qu) ;">
 			<input type="hidden" name="evId" value="${evId}"/>
 			<input type="hidden" name="step" value="${step}"/>
 			<input type="hidden" name="stepCount" value="${stepCoutn}"/>
 			<input type="hidden" name="categoryId" value="${categoryId}"/>
-		<div id="part1" class="container">
-		 	<div class="row">
-		 	  下面列举了若干种活动，请就这些活动判断你的好恶。喜欢的，请选“是”，反之，请选“否”，请按顺序回答全部问题。
-		 	</div>
-	 		<br/>
-	 	    <div class="container">
-	 	       <p id="subitem1" class="bg-primary">R：实际型活动</p>
-			   <div id="questions1" class="row" style=""></div>
-	 	    </div>
-	 	    <div class="container">
-	 	       <p id="subitem2" class="bg-primary">A：艺术型活动</p>
-			   <div id="questions2" class="row" style="display:none;"></div>
-	 	    </div>
-	 	    <div class="container">
-	 	       <p id="subitem3" class="bg-primary">I：调查型活动</p>
-			   <div id="questions3" class="row" style="display:none;"></div>
-	 	    </div>
-	 	    <div class="container">
-	 	       <p id="subitem4" class="bg-primary">S：社会型活动</p>
-			   <div id="questions4" class="row" style="display:none;"></div>
-	 	    </div>
-	 	    <div class="container">
-	 	       <p id="subitem5" class="bg-primary">E：事业型活动</p>
-			   <div id="questions5" class="row" style="display:none;"></div>
+			<div id="questions" class="container">
 	 	    </div>
 	 		<div class="container">
-	 	       <p id="subitem6" class="bg-primary">C：常规型活动</p>
-			   <div id="questions6" class="row" style="display:none;"></div>
-	 	    </div>
-	 	</div>
-	 	<div class="container">
-	    	<input id="navi-next-button" type="submit" class="btn btn-primary btn-lg active" value="下一步"/>
-	 	</div>
+	    		<input type="button" value="上一步" id="navi-previous-button" name="previous" class="btn btn-default btn-lg active"  />
+	    		<input type="button" name="next"   id="navi-next-button" class="btn btn-primary btn-lg active"  value="下一步"/>
+	    		<input id="finish-button" type="submit" class="btn btn-primary btn-lg active" value="完成"/>
+			</div>
 	 	</form>
 	 </div>
 </body>

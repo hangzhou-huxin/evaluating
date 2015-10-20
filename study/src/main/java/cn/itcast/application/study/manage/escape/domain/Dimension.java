@@ -14,6 +14,12 @@ public class Dimension {
 	
 	
 	private Integer categoryId ;
+	
+	
+	private String  key ;
+	
+	
+	private Integer scoreValue ;
 
 
 	public Integer getId() {
@@ -43,6 +49,26 @@ public class Dimension {
 
 	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
+	}
+
+
+	public String getKey() {
+		return key;
+	}
+
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+
+	public Integer getScoreValue() {
+		return scoreValue;
+	}
+
+
+	public void setScoreValue(Integer scoreValue) {
+		this.scoreValue = scoreValue;
 	}
 	
 	

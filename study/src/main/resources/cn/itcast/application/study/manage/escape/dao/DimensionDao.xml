@@ -5,26 +5,28 @@
 	<resultMap type="cn.itcast.application.study.manage.escape.domain.Dimension" id="dimensionMap">
 		<id property="id" column="id"/>
 		<result property="categoryId" column="category_id"/>
+		<result property="scoreValue" column="score_value"/>
+		<result property="key" column="key_name"/>
 	</resultMap>
 	
 	<insert id="add" parameterType="cn.itcast.application.study.manage.escape.domain.Dimension">
-		insert into escape_dimension(name,category_id)
-			values(#{name},#{categoryId})
+		insert into escape_dimension(name,category_id,key_name,score_value)
+			values(#{name},#{categoryId},#{key},#{scoreValue})
 	</insert>
 	
 	<update id="update" parameterType="cn.itcast.application.study.manage.escape.domain.Dimension">
-	    update escape_dimension set name=#{name} where id=#{id}
+	    update escape_dimension set name=#{name},key_name=#{key},score_value=#{scoreValue} where id=#{id}
 	</update>
 	
 	
 	
 	<select id="findById"  parameterType="int" resultMap="dimensionMap">
-	    select id,name
+	    select id,name,key_name,score_value
 			from escape_dimension where id = #{id}
 	</select>
 	
 	<select id="findForList" parameterType="int" resultMap="dimensionMap">
-		select id,name
+		select id,name,key_name,score_value
 			from escape_dimension where category_id=#{categoryId}
 	</select>
 	

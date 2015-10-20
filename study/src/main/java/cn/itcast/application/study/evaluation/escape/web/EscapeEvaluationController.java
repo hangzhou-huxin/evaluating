@@ -1,4 +1,4 @@
-package cn.itcast.application.study.manage.escape.web;
+package cn.itcast.application.study.evaluation.escape.web;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,14 +72,9 @@ public class EscapeEvaluationController {
 	
 	@RequestMapping("/step.do")
 	public ModelAndView step(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evid,
-							 @RequestParam("categoryId") Integer categoryId,
-							 @RequestParam("step") Integer step ,
-							 @RequestParam(value="stepCount",required=false) Integer stepCount ,
-							 @RequestParam(value=Constant.PREVIOUS_STEP_PARAM_NAME,required=false) String previous ,
-							 @RequestParam(value=Constant.NEXT_STEP_PARAM_NAME,required=false) String next 
+							 @RequestParam("categoryId") Integer categoryId
 							 ) {
 		
-			Integer pageNo = 0;
 			String	viewName = "" ;
 			ModelAndView mv = new ModelAndView(  ) ;
 			//缓存数据
@@ -91,45 +86,33 @@ public class EscapeEvaluationController {
 			Map<String,String> cache = EvaluationUtils.getCacheData(evid) ;
 			String cacheJson = EvaluationUtils.cacheDataToJSON(cache , null) ;
 			
-			if( next != null && !StringUtils.isEmpty(next)){
-				step = step++ ;
-				pageNo = step ;
-			}else if( previous != null && !StringUtils.isEmpty(previous)){
-				step = step-- ;
-				pageNo = step ;
-			}else{
-				pageNo = 1 ;
-			}
 			
-			if( stepCount == null){
-				Integer count = escapeQuestionService.findForPageListCount(categoryId) ;
-				stepCount = count/10 ;
-				if(count % 10 > 0){
-					stepCount = stepCount + 1 ;
-				}
-			}
+			viewName = "escape/step" ;
 			
-			//如果下一页是最后一页，则进入完成页面
-			if( pageNo >= stepCount){
-				//进入完成页面
-				viewName = "escape/finish" ;
-			}else{
-				//进入步聚页面
-				viewName = "escape/step" ;
-			}
 			System.out.println(viewName);
-			List<EscapeQuestion> list = escapeQuestionService.findForPageList(categoryId, pageNo) ;
+			List<EscapeQuestion> list = escapeQuestionService.findForPageList(categoryId) ;
 			//渲染页面
 			mv.setViewName(viewName);
 			mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evid) ;
 			mv.addObject("cache",cacheJson) ;
 			mv.addObject("questions", JsonUtils.objectToJson(list)) ;
-			if(step < 1){
-				step = 1 ;
-			}
-			mv.addObject("step", step) ;
+			
+			//mv.addObject("step", step) ;
 			return  mv ;
 		
+	}
+	
+	
+	@RequestMapping("/finish.do")
+	public ModelAndView finish(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evid,
+		 						@RequestParam("categoryId") Integer categoryId){
+		   ModelAndView mv = new ModelAndView("escape/report") ;
+		   
+		   Map<String,String> data = WebUtil.getParamsToMap(request);
+		   
+		   Map<String,Integer> result = EvaluationUtils.getEscapeEvaluationResult(data) ;
+		   mv.addObject("result",  result) ;
+		   return mv ;
 	}
 	
 	

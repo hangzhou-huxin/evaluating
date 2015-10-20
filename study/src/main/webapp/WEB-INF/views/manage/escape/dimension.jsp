@@ -45,7 +45,10 @@
     	showWin("更新" , record.data.id) ;
 		 if(record){
         	var values = [{id:'id',value:record.data.id},
-    				 	  {id:'name',value:record.data.name}] ;
+    				 	  {id:'name',value:record.data.name},
+    				 	  {id:'key',value:record.data.key},
+    				 	  {id:'scoreValue',value:record.data.scoreValue}
+    				 	  ] ;
         	formPanel.getForm().setValues(values) ;
         }else{
         	formPanel.getForm().reset();
@@ -82,6 +85,8 @@
    	var cm = new Ext.grid.ColumnModel([ //new Ext.grid.RowNumberer(),
    	      										{header:'序号',dataIndex:'id',sortable:false},
    	      										{header:'维度名称',dataIndex:'name',sortable:false},
+   	      										{header:'维度key',dataIndex:'key',sortable:false},
+   	      										{header:'维度分值',dataIndex:'scoreValue',sortable:false},
    	      										{header:'维护',dataIndex:'id',renderer:renderEdit,sortable:false}
    	      										]);
    	
@@ -94,7 +99,9 @@
       			root:'data'
           },[
              	{name:'id'},
-          		{name:'name'}
+          		{name:'name'},
+          		{name:'key'},
+          		{name:'scoreValue'}
           	  ]),
       	  remoteSort:true
       });
@@ -160,7 +167,7 @@
 					},
 					{
 						xtype:'textfield',
-						name:'totalValue',
+						name:'scoreValue',
 						value:'',
 						fieldLabel :'维度总分',
 						width:200

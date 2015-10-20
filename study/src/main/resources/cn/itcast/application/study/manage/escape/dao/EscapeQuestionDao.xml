@@ -7,6 +7,7 @@
 		<result property="index" column="question_index"/>
 		<result property="dimensionName" column="dimension_name"/>
 		<result property="dimensionId" column="dimension_id"/>
+		<result property="dimensionKey" column="dimension_key"/>
 		<result property="content" column="content"/>
 		<collection property="options" ofType="cn.itcast.application.study.manage.escape.domain.EscapeQuestionOption">
 			<id property="id" column="option_id"/>
@@ -41,11 +42,11 @@
 		delete from escape_questions where id=#{id}
 	</delete>
 	
-	<select id="findForPageList" resultMap="escapeQuestionMap" parameterType="cn.itcast.application.study.manage.escape.dto.EscapeQuestionQuery">
-	select q.id,q.question_index,q.title,q.content,q.dimension_id,d.name as 'dimension_name',
+	<select id="findForPageList" resultMap="escapeQuestionMap" parameterType="int">
+	select q.id,q.question_index,q.title,q.content,q.dimension_id,d.name as 'dimension_name',d.key_name as 'dimension_key',
         o.id as 'option_id', o.option_index as 'option_index',o.content as 'option_content',o.value as 'option_value'
 			from escape_questions q left join escape_dimension d  on(q.dimension_id=d.id) left join escape_question_options o  on o.question_id=q.id
-             where  q.category_id=#{categoryId}  limit #{start},#{limit}
+             where  q.category_id=#{categoryId}  order by q.question_index
 	</select>
 	
 	

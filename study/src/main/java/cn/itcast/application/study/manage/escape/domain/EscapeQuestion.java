@@ -18,6 +18,8 @@ public class EscapeQuestion {
 	
 	private String	dimensionName ;
 	
+	private String  dimensionKey ;
+	
 	private List<EscapeQuestionOption> options; 
 	
 
@@ -83,6 +85,18 @@ public class EscapeQuestion {
 
 	public void setOptions(List<EscapeQuestionOption> options) {
 		this.options = options;
+	}
+
+	public String getDimensionKey() {
+		return dimensionKey;
+	}
+
+	public void setDimensionKey(String dimensionKey) {
+		if(dimensionKey == null)
+			this.dimensionKey = "";
+		else{
+			this.dimensionKey = dimensionKey ;
+		}
 	}
 
 	
