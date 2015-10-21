@@ -166,7 +166,8 @@
 									},
 									{
 									    text: '测试结果查询',
-									    leaf: true
+									    leaf: true,
+									    url:'<%=request.getContextPath()%>/manage/escape/list.do'
 									},
 									{
 									    text: '深度报告申请处理',

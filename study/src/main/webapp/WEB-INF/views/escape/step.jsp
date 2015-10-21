@@ -85,8 +85,8 @@
   	<div id="test" class="container-fluid">
   		<form id="form" action="<%=request.getContextPath()%>/escape/evaluation/finish.do" method="post" onsubmit="return validateForm(qu) ;">
 			<input type="hidden" name="evId" value="${evId}"/>
-			<input type="hidden" name="step" value="${step}"/>
-			<input type="hidden" name="stepCount" value="${stepCoutn}"/>
+			<input type="hidden" name="qq" value="${qq}"/>
+			<input type="hidden" name="username" value="${username}"/>
 			<input type="hidden" name="categoryId" value="${categoryId}"/>
 			<div id="questions" class="container">
 	 	    </div>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>逆袭指数配置</title>
+<title>分值段配置</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/ext/resources/css/ext-all.css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/ext/adapter/ext/ext-base.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/ext/ext-all.js"></script>
@@ -17,15 +17,7 @@
    	
    
    
-    var renderReport = function(value,cellmeta,record,rowIndex,columnIndex,store){
-    	var s = "<a  href='<%=request.getContextPath()%>/manage/holland/viewReport.do?evId=" + record.data['evaluationId'] +"' target='_blank' onclick=''>查看</a>";
-        return s;
-    }; 
-    
-    var renderDimension = function(value,cellmeta,record,rowIndex,columnIndex,store){
-    	var s = "<a  href='<%=request.getContextPath()%>/manage/escape/dimension/main.do?categoryId=" + record.data['id'] +"' target='_blank' onclick=''>查看</a>";
-        return s;
-    }
+   
     
     var renderDetail = function(value,cellmeta,record,rowIndex,columnIndex,store){
     	//alert(Ext.util.Format.date(new Date(parseInt(record.data.deployDate)),'Y-m-d')) ;
@@ -33,24 +25,6 @@
          return s;
     }; 
     
-    var renderScoreSection = function(value,cellmeta,record,rowIndex,columnIndex,store){
-    	//alert(Ext.util.Format.date(new Date(parseInt(record.data.deployDate)),'Y-m-d')) ;
-        var s = "<a  href='<%=request.getContextPath()%>/manage/escape/scoreSection/main.do?id=" + record.data['id'] +"' target='_blank' onclick=''>查看或编辑</a>";
-         return s;
-    };
-    
-    var renderProcess = function(value,cellmeta,record,rowIndex,columnIndex,store){
-    	var s = "" ;
-    	if( record.data['applyId'] ){
-    		if( record.data['isProcessed'] == 1)
-    		  s = "<a  href='javascript:showProcessWin(\""+ record.data['applyId']+"\")' onclick=''>查看</a>";
-    		else
-    		  s = "未处理" ;
-    	}else{
-    		s = "<font color='red'>无申请</font>"
-    	}
-        return s;
-    }; 
     
     
   
@@ -68,8 +42,10 @@
     	showWin("更新" , record.data.id) ;
 		 if(record){
         	var values = [{id:'id',value:record.data.id},
-    				 	  {id:'name',value:record.data.name},
-    				 	  {id:'memo',value:record.data.memo}] ;
+    				 	  {id:'caption',value:record.data.caption},
+    				 	  {id:'lowerValue',value:record.data.lowerValue},
+    				 	  {id:'upperValue',value:record.data.upperValue}
+    				 	  ] ;
         	formPanel.getForm().setValues(values) ;
         }else{
         	formPanel.getForm().reset();
@@ -82,11 +58,11 @@
    		Ext.Msg.confirm('','确定删除吗?',function(button){
   			if(button == "yes"){
   				Ext.Ajax.request({
-  				   url: '<%=request.getContextPath()%>/manage/escape/category/delete.do',
+  				   url: '<%=request.getContextPath()%>/manage/escape/scoreSection/delete.do',
   				   success: function(response,options){
 			 			var msg = Ext.decode(response.responseText) ;
 			   			Ext.Msg.alert('',msg.msg) ;
-			   			grid.getStore().reload(); ;
+			   			grid.getStore().load({params:{'categoryId':'${category.id}'}}); ;
 					},
 				   failure: function(){
 					 	Ext.Msg.alert('','通信错误') ;
@@ -105,28 +81,24 @@
    
    	var cm = new Ext.grid.ColumnModel([ //new Ext.grid.RowNumberer(),
    	      										{header:'序号',dataIndex:'id',sortable:false},
-   	      										{header:'类别名称',dataIndex:'name',sortable:false},
-   	      										{header:'创建时间',dataIndex:'createDate',sortable:false},
-   	      										{header:'最后更新时间',dataIndex:'lastUpdate',sortable:false},
-   	      										{header:'评测题维护',dataIndex:'id',renderer:renderDetail,sortable:false},
-   	      										{header:'分值段维护',dataIndex:'id',renderer:renderScoreSection,sortable:false},
-   	      										{header:'维度维护',dataIndex:'id',renderer:renderDimension,sortable:false},
-   	      										{header:'编辑和删除',dataIndex:'id',renderer:renderEdit,sortable:false}
+   	      										{header:'分值段名称',dataIndex:'caption',sortable:false},
+   	      										{header:'下限分值',dataIndex:'lowerValue',sortable:false},
+   	      										{header:'上限分值',dataIndex:'upperValue',sortable:false},
+   	      										{header:'维护',dataIndex:'id',renderer:renderEdit,sortable:false}
    	      										]);
    	
       
       
       var store = new Ext.data.Store({
-      	  proxy:new Ext.data.HttpProxy({url:'<%=request.getContextPath()%>/manage/escape/category/list.do?time=' + (new Date).getTime()}),
+      	  proxy:new Ext.data.HttpProxy({url:'<%=request.getContextPath()%>/manage/escape/scoreSection/list.do?time=' + (new Date).getTime()}),
       	  reader:new Ext.data.JsonReader({
       			totalProperty:'totalCount',
       			root:'data'
           },[
              	{name:'id'},
-          		{name:'name'},
-          		{name:'memo'},
-          		{name:'createDate'},
-          		{name:'lastUpdate'}
+          		{name:'caption'},
+          		{name:'lowerValue'},
+          		{name:'upperValue'}
           	  ]),
       	  remoteSort:true
       });
@@ -134,7 +106,7 @@
       
      
       var grid = new Ext.grid.GridPanel({
-      	title:'逆袭指数配置',
+      	title:'${category.name}-分值段配置',
       	store:store,
       	region:'center',
       	width:300,
@@ -162,7 +134,7 @@
     var formPanel = new Ext.FormPanel({
       id:'form',
       width:200,
-      height:370,
+      height:70,
       frame:true,
       labelWidth: 100,
       items:[
@@ -171,34 +143,45 @@
 						 name:'id',
 						 value:''
 					},
+					{ 
+						 xtype:'hidden',
+						 name:'categoryId',
+						 value:'${category.id}'
+					},
 					{
 						xtype:'textfield',
-						name:'name',
+						name:'caption',
 						value:'',
-						fieldLabel :'类别名称',
+						fieldLabel :'分值段名称',
 						width:200
 					},
 					{
-						xtype:'textarea',
-						name:'memo',
+						xtype:'textfield',
+						name:'lowerValue',
 						value:'',
-						fieldLabel :'备注',
-						width:200,
-						height:100
+						fieldLabel :'下限分值',
+						width:200
+					},
+					{
+						xtype:'textfield',
+						name:'upperValue',
+						value:'',
+						fieldLabel :'上限分值',
+						width:200
 					}
 			],
 			buttonAlign:'center',
 	    	buttons:[
 	    		{
-	    			text:'处理或修改',
+	    			text:'保存',
 	    			id:'btn_save_edit',
 	    			handler:function(){
 	    				formPanel.getForm().submit({
 			    			    clientValidation: true,
-			    			    url: '<%=request.getContextPath()%>/manage/escape/category/save.do',
+			    			    url: '<%=request.getContextPath()%>/manage/escape/scoreSection/save.do',
 			    			    params :{ },
 			    			    success: function(form, action) {
-			    			    	store.reload() ;
+			    			    	store.load({params:{'categoryId':'${category.id}'}}) ;
 			    			    	Ext.Msg.alert('', action.result.msg);
 			    			    	win.hide();
 			    			    },
@@ -243,7 +226,7 @@
               	plain: true
 		    }) ;
 		}
-    	
+    	win.setTitle(title) ;
     	win.show();
   }  
  	 //---------------------------查看或修改处理信息---end-------------------------------------   
@@ -254,7 +237,7 @@
 					grid
    				]
     });
-    store.load();
+    store.load({params:{'categoryId':'${category.id}'}});
   
 });   					
   </script>

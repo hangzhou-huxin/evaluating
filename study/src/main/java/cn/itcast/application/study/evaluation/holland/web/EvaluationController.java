@@ -54,7 +54,7 @@ public class EvaluationController {
 		
 		//获取缓存中的测试数据,转测试数据为json
 		Map<String,String> cache = EvaluationUtils.getCacheData(evalId) ;
-		String cacheJson = EvaluationUtils.cacheDataToJSON(cache , null) ;
+		String cacheJson = EvaluationUtils.cacheDataToJSON(cache , new HashMap()) ;
 		
 		//渲染页面
 		ModelAndView mv = new ModelAndView( "holland/step1" ) ;
@@ -76,7 +76,7 @@ public class EvaluationController {
 		
 		//获取缓存中的测试数据,转测试数据为json
 		Map<String,String> cache = EvaluationUtils.getCacheData(evalId) ;
-		String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,null) ;
+		String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,new HashMap()) ;
 		mv.addObject("cache",cacheJson) ;
 		
 		
@@ -102,7 +102,7 @@ public class EvaluationController {
 		
 		//获取缓存中的测试数据,转测试数据为json
 		Map<String,String> cache = EvaluationUtils.getCacheData(evalId) ;
-		String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,null) ;
+		String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,new HashMap()) ;
 		mv.addObject("cache",cacheJson) ;
 		
 		if( !StringUtils.isEmpty(previous)){
@@ -125,7 +125,7 @@ public class EvaluationController {
 		EvaluationUtils.saveStepDataToCache(evalId, params);
 		//取出缓存的数据发送到页面
 		Map<String,String> cache = EvaluationUtils.getCacheData(evalId) ;
-		String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,null) ;
+		String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,new HashMap()) ;
 		mv.addObject("cache",cacheJson) ;
 		mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, evalId) ;
 		
@@ -153,7 +153,7 @@ public class EvaluationController {
 		Map<String,String> cache = EvaluationUtils.getCacheData(evalId) ;
 		if( !StringUtils.isEmpty(previous)){
 			//通过缓存数据展示页面
-			String cacheJson = EvaluationUtils.cacheDataToJSON(cache ,null) ;
+			String cacheJson = EvaluationUtils.cacheDataToJSON(cache , new HashMap()) ;
 			mv.addObject("cache",cacheJson) ;
 			view = "holland/step3" ;   //返回上一步
 		}else{

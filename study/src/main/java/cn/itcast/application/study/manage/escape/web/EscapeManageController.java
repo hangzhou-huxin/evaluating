@@ -19,9 +19,12 @@ import cn.itcast.application.study.evaluation.core.EvaluationUtils;
 import cn.itcast.application.study.manage.escape.domain.EscapeCategory;
 import cn.itcast.application.study.manage.escape.domain.EscapeQuestion;
 import cn.itcast.application.study.manage.escape.domain.EscapeQuestionOption;
+import cn.itcast.application.study.manage.escape.domain.EscapeResult;
+import cn.itcast.application.study.manage.escape.dto.EscapeResultQuery;
 import cn.itcast.application.study.manage.escape.service.EscapeCategoryService;
 import cn.itcast.application.study.manage.escape.service.EscapeQuestionOptionService;
 import cn.itcast.application.study.manage.escape.service.EscapeQuestionService;
+import cn.itcast.application.study.manage.escape.service.EscapeResultService;
 import cn.itcast.application.study.manage.holland.domain.EvaluationResult;
 import cn.itcast.application.study.manage.holland.dto.EvaluationResultQuery;
 import cn.itcast.application.study.manage.holland.service.HollandManageService;
@@ -51,11 +54,36 @@ public class EscapeManageController {
 	@Autowired
 	private EscapeQuestionOptionService escapeQuestionOptionService ;
 	
+	
+	@Autowired
+	private EscapeResultService escapeResultService ;
+	
 	@RequestMapping("/config.do")
 	public ModelAndView main(){
 		
 		return new ModelAndView("manage/escape/config") ;
 	}
+	
+	
+	@RequestMapping("/list.do")
+	public ModelAndView gotoList(){
+		
+		return new ModelAndView("manage/escape/list") ;
+	}
+	
+	
+	@RequestMapping("/query.do")
+	public ModelAndView query(@ModelAttribute("query") EscapeResultQuery query){
+		ModelAndView mv = new ModelAndView() ;
+		mv.setView(jsonView);
+		PageResult<EscapeResult> result = escapeResultService.findPageList(query) ;
+		mv.addObject("data", result.getResult()); 
+		mv.addObject("totalCount", result.getTotalCount()) ;
+		return mv ;
+	}
+	
+	
+	
 	
 	
 	@RequestMapping("/category/save.do")
@@ -152,6 +180,22 @@ public class EscapeManageController {
 		mv.setView(jsonView);
 		try{
 			escapeCategoryService.delete(id);
+			mv.addObject("success", true); 
+			mv.addObject("msg", "操作成功") ;
+		}catch(Exception e){
+			mv.addObject("success", false); 
+			mv.addObject("msg", e.getMessage()) ;
+		}
+		return mv ;
+	}
+	
+	
+	@RequestMapping("/result/delete.do")
+	public ModelAndView deleteResult(@RequestParam("id") Integer id ){
+		ModelAndView mv = new ModelAndView() ;
+		mv.setView(jsonView);
+		try{
+			escapeResultService.delete(id);
 			mv.addObject("success", true); 
 			mv.addObject("msg", "操作成功") ;
 		}catch(Exception e){

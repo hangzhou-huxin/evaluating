@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.application.study.manage.escape.dao.EscapeResultDao">
+	
+	<resultMap type="cn.itcast.application.study.manage.escape.domain.EscapeResult" id="escapeResultMap">
+		<id property="id" column="id"/>
+		<result property="categoryId" column="category_id"/>
+		<result property="userName" column="eval_username"/>
+		<result property="qq" column="eval_qq"/>
+		<result property="totalScore" column="total_score"/>
+		<result property="evalId" column="eval_id"/>
+		<result property="createDate" column="create_date"/>
+		<result property="ip" column="eval_ip"/>
+	</resultMap>
+	
+	<insert id="add" parameterType="cn.itcast.application.study.manage.escape.domain.EscapeResult">
+		insert into escape_result(eval_id,category_id,eval_username,eval_qq,eval_content,total_score,eval_ip)
+			values(#{evalId},#{categoryId},#{userName},#{qq},#{content},#{totalScore},#{ip})
+	</insert>
+	  
+	<select id="findById"  parameterType="int" resultMap="escapeResultMap">
+	    select id,eval_id,category_id,eval_username,eval_qq,eval_content,total_score
+			from escape_result where id = #{id}
+	</select>
+	
+	<select id="findForList" parameterType="int" resultMap="escapeResultMap">
+		select id,eval_id,category_id,eval_username,eval_qq,eval_content,total_score
+			from escape_result where category_id=#{categoryId}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from escape_result where id=#{id}
+	</delete>
+	 
+	<select id="findForPageList" parameterType="cn.itcast.application.study.manage.escape.dto.EscapeResultQuery" resultMap="escapeResultMap">
+		select e.id,e.eval_id,e.eval_username,e.eval_qq,e.create_date,e.eval_ip,a.id as 'apply_id',a.is_processed,e.total_score
+        from escape_result e left join  eval_apply a on e.eval_id=a.eval_id    
+			   <where>
+			    <if test="categoryId != null">
+		    		and e.category_id = #{categoryId}
+		    	</if>
+			    <if test="userName !=null and userName !=''">
+			    	and e.eval_username like '%${userName}%'
+			    </if>
+			    <if test="qq !=null and qq !=''">
+			    	 and e.eval_qq=#{qq}
+			    </if>
+			    <if test="evalId !=null and evalId !=''">
+			    	and e.eval_id=#{evalId}
+			    </if>
+			    <if test="apply ==1">
+			        and a.id is not null
+			    </if>
+			    <if test="apply ==0">
+			        and a.id is  null
+			    </if>
+			    
+			    <if test="startdt !=null and startdt !=''">
+			    <![CDATA[
+			        and e.create_date>=#{startdt}
+			    ]]>
+			    </if>
+			    <if test="enddt !=null and enddt !=''">
+			    <![CDATA[
+			    	and e.create_date<=#{enddt}
+			    ]]>
+			    </if>
+			   </where>
+			  order by id desc limit #{start},#{limit}
+	</select>
+	
+	<select id="findForPageListCount" parameterType="cn.itcast.application.study.manage.escape.dto.EscapeResultQuery" resultType="int">
+		select count(*)
+        from escape_result e left join  eval_apply a on e.eval_id=a.eval_id  
+		    <where>
+		    	<if test="categoryId != null">
+		    		and e.category_id = #{categoryId}
+		    	</if>
+			    <if test="userName !=null and userName !=''">
+			    	and eval_username like '%${userName}%'
+			    </if>
+			    <if test="qq !=null and qq !=''">
+			    	and eval_qq=#{qq}
+			    </if>
+			    <if test="evalId !=null and evalId !=''">
+			    	and e.eval_id=#{evalId}
+			    </if>
+			    <if test="apply ==1">
+			        and a.id is not null
+			    </if>
+			    <if test="apply ==0">
+			        and a.id is  null
+			    </if>
+			    <if test="startdt !=null and startdt !=''">
+			    <![CDATA[
+			        and create_date>=#{startdt}
+			    ]]>
+			    </if>
+			    <if test="enddt !=null and enddt !=''">
+			    <![CDATA[
+			    	and create_date<=#{enddt}
+			    ]]>
+			    </if>
+			  </where>
+	</select> 
+</mapper>

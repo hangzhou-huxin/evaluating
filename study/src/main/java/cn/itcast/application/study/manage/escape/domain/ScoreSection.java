@@ -5,7 +5,7 @@ package cn.itcast.application.study.manage.escape.domain;
  * @author Administrator
  *
  */
-public class SectionScore {
+public class ScoreSection {
 	
 	private Integer id ;
 	
@@ -22,7 +22,7 @@ public class SectionScore {
 	private String	description ;
 	
 	
-	private Integer dimensionId	 ;
+	private Integer categoryId ;
 
 
 	public Integer getId() {
@@ -75,14 +75,17 @@ public class SectionScore {
 	}
 
 
-	public Integer getDimensionId() {
-		return dimensionId;
+	public Integer getCategoryId() {
+		return categoryId;
 	}
 
 
-	public void setDimensionId(Integer dimensionId) {
-		this.dimensionId = dimensionId;
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
 	}
+
+
+	
 	
 	
 	

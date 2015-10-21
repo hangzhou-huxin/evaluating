@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.application.study.manage.escape.dao.ScoreSectionDao">
+	
+	<resultMap type="cn.itcast.application.study.manage.escape.domain.ScoreSection" id="scoreSectionMap">
+		<id property="id" column="id"/>
+		<result property="categoryId" column="category_id"/>
+		<result property="lowerValue" column="lower_value"/>
+		<result property="upperValue" column="upper_value"/>
+	</resultMap>
+	
+	<insert id="add" parameterType="cn.itcast.application.study.manage.escape.domain.ScoreSection">
+		insert into escape_score_section(caption,category_id,lower_value,upper_value)
+			values(#{caption},#{categoryId},#{lowerValue},#{upperValue})
+	</insert>
+	
+	<update id="update" parameterType="cn.itcast.application.study.manage.escape.domain.Dimension">
+	    update escape_score_section set caption=#{caption},lower_value=#{lowerValue},upper_value=#{upperValue} where id=#{id}
+	</update>
+	
+	
+	
+	<select id="findById"  parameterType="int" resultMap="scoreSectionMap">
+	    select id,caption,lower_value,upper_value
+			from escape_score_section where id = #{id}
+	</select>
+	
+	<select id="findForList" parameterType="int" resultMap="scoreSectionMap">
+		select id,caption,lower_value,upper_value
+			from escape_score_section where category_id=#{categoryId}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from escape_score_section where id=#{id}
+	</delete>
+</mapper>

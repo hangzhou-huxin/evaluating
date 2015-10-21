@@ -139,6 +139,25 @@ public class EvaluationUtils {
 		return buffer.toString() ;
 	}
 	
+	
+	public static String cacheDataToJSON(Map<String,String> cache ,String prefix){
+		
+		StringBuilder buffer = new StringBuilder("{") ;
+		for (Map.Entry<String, String> entry : cache.entrySet()) {
+			String key = entry.getKey() ;
+			String value = entry.getValue() ;
+			if( key.startsWith(prefix) ){
+				buffer.append("'").append( key).append("':'").append(value).append("',") ;
+			} 
+		}
+		
+		int length = buffer.length() ;
+		buffer.delete(length-1, length) ;
+		buffer.append("}") ;
+		return buffer.toString() ;
+	}
+	
+	
 	/**
 	 * 按照分数高低返回评分的类型字符串
 	 * @param result
