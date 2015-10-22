@@ -20,6 +20,7 @@
 </head>
 <body style="margin:0 auto;width: 80%;">
    
-  	${templateContent}
+  	报告页面: ${result} </br>
+  	所属分值段: ${scoreSection.caption} </br>
 </body>
 </html>

@@ -59,5 +59,6 @@ public class Constant {
 	public final static String ESCAPE_TOTAL_SCORE = "__escape_total_score__" ;
 	
 	
+	public final static String[] TEMPLATE_VARS = new String[]{"totalScore" } ;
 
 }

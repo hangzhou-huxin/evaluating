@@ -18,15 +18,20 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import cn.itcast.application.study.evaluation.core.Constant;
 import cn.itcast.application.study.evaluation.core.EvaluationUtils;
 import cn.itcast.application.study.evaluation.utils.JsonUtils;
+import cn.itcast.application.study.evaluation.utils.RandomUtil;
 import cn.itcast.application.study.evaluation.utils.WebUtil;
 import cn.itcast.application.study.manage.escape.domain.Dimension;
 import cn.itcast.application.study.manage.escape.domain.EscapeCategory;
 import cn.itcast.application.study.manage.escape.domain.EscapeQuestion;
 import cn.itcast.application.study.manage.escape.domain.EscapeResult;
+import cn.itcast.application.study.manage.escape.domain.ScoreSection;
+import cn.itcast.application.study.manage.escape.domain.Template;
 import cn.itcast.application.study.manage.escape.service.DimensionService;
 import cn.itcast.application.study.manage.escape.service.EscapeCategoryService;
 import cn.itcast.application.study.manage.escape.service.EscapeQuestionService;
 import cn.itcast.application.study.manage.escape.service.EscapeResultService;
+import cn.itcast.application.study.manage.escape.service.ScoreSectionService;
+import cn.itcast.application.study.manage.escape.service.TemplateService;
 
 @Controller
 @RequestMapping("/escape/evaluation")
@@ -49,11 +54,25 @@ public class EscapeEvaluationController {
 	@Autowired
 	private EscapeResultService escapeResultService ;
 	
+	@Autowired
+	private ScoreSectionService scoreSectionService ;
+	
+	
+	@Autowired
+	private TemplateService templateService ;
+	
 	@RequestMapping("/index.do")
 	public ModelAndView index(){
 		List<EscapeCategory> categoryList = escapeCategoryService.findForList() ;
 		ModelAndView mv = new ModelAndView("escape/index") ;
 		mv.addObject("categoryList", categoryList) ;
+		return mv ;
+	}
+	
+	
+	public ModelAndView apply(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evid){
+		ModelAndView mv = new ModelAndView("apply") ;
+		mv.addObject(Constant.EVALUATION_ID_PARAM_NAME , evid) ;
 		return mv ;
 	}
 	
@@ -116,7 +135,9 @@ public class EscapeEvaluationController {
 	@RequestMapping("/finish.do")
 	public ModelAndView finish(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evid,
 		 						@RequestParam("categoryId") Integer categoryId){
-		   ModelAndView mv = new ModelAndView("escape/report") ;
+		
+		    
+		   ModelAndView mv = new ModelAndView() ;
 		   String ip = request.getRemoteAddr() ;
 		   
 		   Map<String,String> data = WebUtil.getParamsToMap(request);
@@ -131,11 +152,49 @@ public class EscapeEvaluationController {
 		   escapeResult.setQq(qq);
 		   escapeResult.setUserName(userName);
 		   escapeResult.setIp(ip);
-		   escapeResult.setTotalScore(result.get(Constant.ESCAPE_TOTAL_SCORE));
+		   Integer totalScore = result.get(Constant.ESCAPE_TOTAL_SCORE) ;
+		   escapeResult.setTotalScore(totalScore);
 		   String cacheJson = EvaluationUtils.cacheDataToJSON(data ,Constant.ESCAPE_PREFIX) ;
 		   escapeResult.setContent(cacheJson);
 		   escapeResultService.save(escapeResult);
 		   mv.addObject("result",  result) ;
+		   
+		   String viewName = "escape/default-report";
+		   
+		   //获取相应的分值段
+		   ScoreSection  myScoreSection = null ;
+		   List<ScoreSection> scoreSectionList = scoreSectionService.findForList(categoryId) ;
+		   for(ScoreSection scoreSection : scoreSectionList){
+			   Integer lowerValue = scoreSection.getLowerValue() ;
+			   Integer upperValue = scoreSection.getUpperValue() ;
+			   if( totalScore >= lowerValue && totalScore <= upperValue){
+				   myScoreSection = scoreSection ;
+				   break ;
+			   }
+		   }
+		   mv.addObject("scoreSection", myScoreSection) ;
+		   
+		   //获取相应的模板
+		   Map<String,String> replateMap = new HashMap<String,String>() ;
+		   replateMap.put("totalScore", result.get(Constant.ESCAPE_TOTAL_SCORE).toString()) ;
+		   
+		   if(myScoreSection != null){
+			   List<Template> templateList = templateService.findForList(myScoreSection.getId()) ;
+			   if(templateList != null && templateList.size()>0){
+				   int size = templateList.size() ;
+				   int index = RandomUtil.getNumber(size) ;
+				   Template template = templateList.get(index) ;
+				   if(template != null){
+					   String templateContent = template.getContent() ;
+					   String replatedContent = EvaluationUtils.replateTemplateVars(Constant.TEMPLATE_VARS, templateContent, replateMap) ;
+					   viewName = "escape/report" ;
+					   mv.addObject("templateContent", replatedContent) ;
+				   }
+			   }
+			   
+		   }
+		   
+		   mv.setViewName(viewName);
 		   return mv ;
 	}
 	

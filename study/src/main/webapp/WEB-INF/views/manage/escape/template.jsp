@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>分值段配置</title>
+<title>${scoreSection.caption}-模板配置配置</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/ext/resources/css/ext-all.css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/ext/adapter/ext/ext-base.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/ext/ext-all.js"></script>
@@ -17,14 +17,7 @@
    	
    
    
-   
-    
-    var renderTemplate = function(value,cellmeta,record,rowIndex,columnIndex,store){
-    	//alert(Ext.util.Format.date(new Date(parseInt(record.data.deployDate)),'Y-m-d')) ;
-        var s = "<a  href='<%=request.getContextPath()%>/manage/escape/template/main.do?id=" + record.data['id'] +"' target='_blank' onclick=''>设置</a>";
-         return s;
-    }; 
-    
+  
     
     
   
@@ -42,10 +35,9 @@
     	showWin("更新" , record.data.id) ;
 		 if(record){
         	var values = [{id:'id',value:record.data.id},
-    				 	  {id:'caption',value:record.data.caption},
-    				 	  {id:'lowerValue',value:record.data.lowerValue},
-    				 	  {id:'upperValue',value:record.data.upperValue}
-    				 	  ] ;
+    				 	  {id:'content',value:record.data.content},
+    				 	  {id:'memo',value:record.data.memo}
+    				 	   ] ;
         	formPanel.getForm().setValues(values) ;
         }else{
         	formPanel.getForm().reset();
@@ -58,11 +50,11 @@
    		Ext.Msg.confirm('','确定删除吗?',function(button){
   			if(button == "yes"){
   				Ext.Ajax.request({
-  				   url: '<%=request.getContextPath()%>/manage/escape/scoreSection/delete.do',
+  				   url: '<%=request.getContextPath()%>/manage/escape/template/delete.do',
   				   success: function(response,options){
 			 			var msg = Ext.decode(response.responseText) ;
 			   			Ext.Msg.alert('',msg.msg) ;
-			   			grid.getStore().load({params:{'categoryId':'${category.id}'}}); ;
+			   			grid.getStore().load({params:{'scoreSectionId':'${scoreSection.id}'}}); ;
 					},
 				   failure: function(){
 					 	Ext.Msg.alert('','通信错误') ;
@@ -81,25 +73,24 @@
    
    	var cm = new Ext.grid.ColumnModel([ //new Ext.grid.RowNumberer(),
    	      										{header:'序号',dataIndex:'id',sortable:false},
-   	      										{header:'分值段名称',dataIndex:'caption',sortable:false},
-   	      										{header:'下限分值',dataIndex:'lowerValue',sortable:false},
-   	      										{header:'上限分值',dataIndex:'upperValue',sortable:false},
-   	      										{header:'模板设置',dataIndex:'id',renderer:renderTemplate,sortable:false},
+   	      										{header:'备注',dataIndex:'memo',sortable:false},
+   	      										{header:'预览',dataIndex:'key',sortable:false},
+   	      										{header:'模板变量查看',dataIndex:'scoreValue',sortable:false},
    	      										{header:'维护',dataIndex:'id',renderer:renderEdit,sortable:false}
    	      										]);
    	
       
       
       var store = new Ext.data.Store({
-      	  proxy:new Ext.data.HttpProxy({url:'<%=request.getContextPath()%>/manage/escape/scoreSection/list.do?time=' + (new Date).getTime()}),
+      	  proxy:new Ext.data.HttpProxy({url:'<%=request.getContextPath()%>/manage/escape/template/list.do?time=' + (new Date).getTime()}),
       	  reader:new Ext.data.JsonReader({
       			totalProperty:'totalCount',
       			root:'data'
           },[
              	{name:'id'},
-          		{name:'caption'},
-          		{name:'lowerValue'},
-          		{name:'upperValue'}
+          		{name:'content'},
+          		{name:'memo'},
+          		{name:'scoreValue'}
           	  ]),
       	  remoteSort:true
       });
@@ -107,7 +98,7 @@
       
      
       var grid = new Ext.grid.GridPanel({
-      	title:'${category.name}-分值段配置',
+      	title:'${scoreSection.caption}-模板配置',
       	store:store,
       	region:'center',
       	width:300,
@@ -146,29 +137,23 @@
 					},
 					{ 
 						 xtype:'hidden',
-						 name:'categoryId',
-						 value:'${category.id}'
+						 name:'scoreSectionId',
+						 value:'${scoreSection.id}'
 					},
 					{
-						xtype:'textfield',
-						name:'caption',
+						xtype:'textarea',
+						name:'content',
 						value:'',
-						fieldLabel :'分值段名称',
-						width:200
+						fieldLabel :'模板内容',
+						width:400,
+						height:400
 					},
 					{
-						xtype:'textfield',
-						name:'lowerValue',
+						xtype:'textarea',
+						name:'memo',
 						value:'',
-						fieldLabel :'下限分值',
-						width:200
-					},
-					{
-						xtype:'textfield',
-						name:'upperValue',
-						value:'',
-						fieldLabel :'上限分值',
-						width:200
+						fieldLabel :'备注',
+						width:400
 					}
 			],
 			buttonAlign:'center',
@@ -179,10 +164,10 @@
 	    			handler:function(){
 	    				formPanel.getForm().submit({
 			    			    clientValidation: true,
-			    			    url: '<%=request.getContextPath()%>/manage/escape/scoreSection/save.do',
+			    			    url: '<%=request.getContextPath()%>/manage/escape/template/save.do',
 			    			    params :{ },
 			    			    success: function(form, action) {
-			    			    	store.load({params:{'categoryId':'${category.id}'}}) ;
+			    			    	store.load({params:{'scoreSectionId':'${scoreSection.id}'}}) ;
 			    			    	Ext.Msg.alert('', action.result.msg);
 			    			    	win.hide();
 			    			    },
@@ -238,7 +223,7 @@
 					grid
    				]
     });
-    store.load({params:{'categoryId':'${category.id}'}});
+    store.load({params:{'scoreSectionId':'${scoreSection.id}'}});
   
 });   					
   </script>

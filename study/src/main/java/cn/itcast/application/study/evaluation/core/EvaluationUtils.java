@@ -218,5 +218,22 @@ public class EvaluationUtils {
 		result.put(Constant.ESCAPE_TOTAL_SCORE , totalScore) ;
 		return result ;
 	}
+	
+	
+	public static String replateTemplateVars(String[] vars, String tempContent ,Map<String,String> replateMap){
+		StringBuilder buffer = new StringBuilder(tempContent) ;
+		int varSize = vars.length ;
+		for(int i=0; i<varSize ; i++){
+			String var = "#{" + vars[i] + "}"; 
+			int start = buffer.indexOf( var ) ;
+			if(start == -1){
+				break ;
+			}
+			int end = start + var.length() ;
+			buffer.replace(start, end, replateMap.get(vars[i])) ;
+		}
+		return buffer.toString() ;
+		
+	}
 
 }

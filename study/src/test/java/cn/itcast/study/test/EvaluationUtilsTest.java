@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import cn.itcast.application.study.evaluation.core.Constant;
 import cn.itcast.application.study.evaluation.core.EvaluationUtils;
 
 public class EvaluationUtilsTest {
@@ -56,6 +57,21 @@ public class EvaluationUtilsTest {
 		String result = EvaluationUtils.getOrderedResult(map) ;
 		
 		System.out.println(result);
+	}
+	
+	
+	@Test
+	public void testReplaceTemplate(){
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"applicationContext-redis.xml","applicationContext-eval.xml"}) ;
+		
+		String tempContent = "sdfdsfggfgfgffggfgfgffggdfs11#{totalScore}22" ;
+		
+		Map<String,String> replateMap = new HashMap<String,String>() ;
+		replateMap.put("totalScore", "<%%5>"	) ;
+		String str = EvaluationUtils.replateTemplateVars(Constant.TEMPLATE_VARS, tempContent, replateMap) ;
+		
+		System.out.println(str);
+		
 	}
 
 }
