@@ -1,0 +1,323 @@
+-- MySQL dump 10.13  Distrib 5.6.15, for Win64 (x86_64)
+--
+-- Host: localhost    Database: evaluation
+-- ------------------------------------------------------
+-- Server version	5.6.15
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `escape_category`
+--
+
+DROP TABLE IF EXISTS `escape_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `escape_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `memo` varchar(1000) DEFAULT NULL,
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `last_update` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `key` varchar(255) DEFAULT NULL COMMENT '关键字',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='逆袭指数类别表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `escape_category`
+--
+
+LOCK TABLES `escape_category` WRITE;
+/*!40000 ALTER TABLE `escape_category` DISABLE KEYS */;
+INSERT INTO `escape_category` VALUES (4,'地推项目','地推项目','2015-10-18 19:25:32','2015-10-22 16:19:30',NULL);
+/*!40000 ALTER TABLE `escape_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `escape_dimension`
+--
+
+DROP TABLE IF EXISTS `escape_dimension`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `escape_dimension` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL COMMENT '维度名称',
+  `category_id` int(11) DEFAULT NULL,
+  `key_name` varchar(255) NOT NULL DEFAULT '' COMMENT '维度key值',
+  `score_value` int(11) DEFAULT NULL COMMENT '维度分值',
+  PRIMARY KEY (`id`),
+  KEY `fk_escape_dimension_category_id` (`category_id`),
+  CONSTRAINT `fk_escape_dimension_category_id` FOREIGN KEY (`category_id`) REFERENCES `escape_category` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='维度表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `escape_dimension`
+--
+
+LOCK TABLES `escape_dimension` WRITE;
+/*!40000 ALTER TABLE `escape_dimension` DISABLE KEYS */;
+INSERT INTO `escape_dimension` VALUES (4,'成就动机',4,'cj',95),(5,'逆商',4,'ns',95),(6,'逻辑',4,'lj',25);
+/*!40000 ALTER TABLE `escape_dimension` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `escape_question_options`
+--
+
+DROP TABLE IF EXISTS `escape_question_options`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `escape_question_options` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `option_index` varchar(255) DEFAULT NULL,
+  `content` text,
+  `question_id` int(11) DEFAULT NULL,
+  `value` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_escape_question_options_question_id` (`question_id`),
+  CONSTRAINT `fk_escape_question_options_question_id` FOREIGN KEY (`question_id`) REFERENCES `escape_questions` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=240 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `escape_question_options`
+--
+
+LOCK TABLES `escape_question_options` WRITE;
+/*!40000 ALTER TABLE `escape_question_options` DISABLE KEYS */;
+INSERT INTO `escape_question_options` VALUES (3,'1','完全符合',10,5),(4,'2','比较符合',10,4),(5,'3','说不清楚',10,3),(6,'4','比较不符合',10,2),(7,'5','完全不符合',10,1),(8,'5','完全不符合',11,5),(9,'4','比较不符合',11,4),(10,'3','说不清楚',11,3),(11,'2','比较符合',11,2),(12,'1','完全符合',11,1),(18,'5','完全不符合',13,1),(19,'1','完全符合',13,5),(20,'2','比较符合',13,4),(21,'3','说不清楚',13,3),(22,'4','比较不符合',13,2),(23,'4','比较不符合',14,4),(24,'5','完全不符合',14,5),(25,'1','完全符合',14,1),(26,'2','比较符合',14,2),(27,'3','说不清楚',14,3),(29,'3','说不清楚',15,3),(30,'1','完全符合',15,5),(31,'5','完全不符合',15,1),(32,'4','比较不符合',15,2),(33,'2','比较符合',15,4),(34,'2','比较符合',16,2),(35,'4','比较不符合',16,4),(36,'1','完全符合',16,1),(37,'5','完全不符合',16,5),(38,'3','说不清楚',16,3),(39,'3','说不清楚',17,3),(40,'1','完全符合',17,1),(41,'5','完全不符合',17,5),(42,'2','比较符合',17,2),(43,'4','比较不符合',17,4),(44,'4','比较不符合',18,2),(45,'2','比较符合',18,4),(46,'1','完全符合',18,5),(47,'5','完全不符合',18,1),(48,'3','说不清楚',18,3),(49,'3','说不清楚',19,3),(50,'1','完全符合',19,1),(51,'5','完全不符合',19,5),(52,'2','比较符合',19,2),(53,'4','比较不符合',19,4),(54,'4','比较不符合',20,2),(55,'2','比较符合',20,4),(56,'1','完全符合',20,5),(57,'5','完全不符合',20,1),(58,'3','说不清楚',20,3),(59,'3','说不清楚',21,3),(60,'1','完全符合',21,1),(61,'5','完全不符合',21,5),(62,'4','比较不符合',21,4),(63,'2','比较符合',21,2),(64,'2','比较符合',22,4),(65,'4','比较不符合',22,2),(66,'5','完全不符合',22,1),(67,'1','完全符合',22,5),(68,'3','说不清楚',22,3),(69,'3','说不清楚',23,3),(70,'1','完全符合',23,1),(71,'5','完全不符合',23,5),(72,'2','比较符合',23,2),(73,'4','比较不符合',23,4),(74,'4','比较不符合',24,2),(75,'2','比较符合',24,4),(76,'1','完全符合',24,5),(77,'5','完全不符合',24,1),(78,'3','说不清楚',24,3),(79,'3','说不清楚',25,3),(80,'1','完全符合',25,5),(81,'5','完全不符合',25,1),(82,'4','比较不符合',25,2),(83,'2','比较符合',25,4),(84,'2','比较符合',26,4),(85,'4','比较不符合',26,2),(86,'5','完全不符合',26,1),(87,'1','完全符合',26,5),(88,'3','说不清楚',26,3),(89,'3','说不清楚',27,3),(90,'1','完全符合',27,5),(91,'5','完全不符合',27,1),(92,'4','比较不符合',27,2),(93,'2','比较符合',27,4),(94,'2','比较符合',28,4),(95,'4','比较不符合',28,2),(96,'5','完全不符合',28,1),(97,'1','完全符合',28,5),(98,'3','说不清楚',28,3),(99,'3','说不清楚',29,3),(100,'1','完全符合',29,1),(101,'5','完全不符合',29,5),(102,'4','比较不符合',29,4),(103,'2','比较符合',29,2),(104,'2','比较符合',30,4),(105,'4','比较不符合',30,2),(106,'5','完全不符合',30,1),(107,'1','完全符合',30,5),(108,'3','说不清楚',30,3),(109,'3','说不清楚',31,3),(110,'1','完全符合',31,5),(111,'5','完全不符合',31,1),(112,'4','比较不符合',31,2),(113,'2','比较符合',31,4),(114,'1','完全符合',32,1),(115,'5','完全不符合',32,5),(116,'4','比较不符合',32,4),(117,'2','比较符合',32,2),(118,'3','说不清楚',32,3),(119,'3','说不清楚',33,3),(120,'1','完全符合',33,1),(121,'5','完全不符合',33,5),(122,'4','比较不符合',33,4),(123,'2','比较符合',33,2),(124,'2','比较符合',34,4),(125,'4','比较不符合',34,2),(126,'5','完全不符合',34,1),(127,'1','完全符合',34,5),(128,'3','说不清楚',34,3),(129,'3','说不清楚',35,3),(130,'1','完全符合',35,1),(131,'5','完全不符合',35,5),(132,'4','比较不符合',35,4),(133,'2','比较符合',35,2),(134,'2','比较符合',36,2),(135,'4','比较不符合',36,4),(136,'5','完全不符合',36,5),(137,'1','完全符合',36,1),(138,'3','说不清楚',36,3),(139,'3','说不清楚',37,3),(140,'3','说不清楚',38,3),(141,'3','说不清楚',39,3),(142,'3','说不清楚',40,3),(143,'3','说不清楚',41,3),(144,'3','说不清楚',42,3),(145,'3','说不清楚',43,3),(146,'3','说不清楚',44,3),(147,'3','说不清楚',45,3),(148,'3','说不清楚',46,3),(149,'3','说不清楚',47,3),(150,'3','说不清楚',48,3),(151,'3','说不清楚',49,3),(152,'3','说不清楚',50,3),(153,'3','说不清楚',51,3),(154,'3','说不清楚',52,3),(156,'1','完全符合',52,5),(157,'1','完全符合',51,1),(158,'1','完全符合',50,1),(159,'1','完全符合',49,5),(160,'1','完全符合',48,1),(161,'1','完全符合',47,5),(162,'1','完全符合',46,1),(163,'1','完全符合',45,5),(164,'1','完全符合',44,5),(165,'1','完全符合',43,5),(166,'1','完全符合',42,1),(167,'1','完全符合',41,5),(168,'1','完全符合',40,5),(169,'1','完全符合',39,1),(170,'1','完全符合',38,1),(171,'1','完全符合',37,5),(172,'2','比较符合',37,4),(173,'2','比较符合',38,2),(174,'2','比较符合',39,2),(175,'2','比较符合',40,4),(176,'2','比较符合',41,4),(177,'2','比较符合',42,2),(178,'2','比较符合',43,4),(179,'2','比较符合',44,4),(180,'2','比较符合',45,4),(181,'2','比较符合',46,2),(182,'2','比较符合',47,4),(183,'2','比较符合',48,2),(184,'2','比较符合',49,4),(185,'2','比较符合',50,2),(186,'2','比较符合',51,2),(187,'2','比较符合',52,4),(188,'4','比较不符合',52,2),(189,'4','比较不符合',51,4),(190,'4','比较不符合',50,4),(191,'4','比较不符合',49,2),(192,'4','比较不符合',48,4),(193,'4','比较不符合',47,2),(194,'4','比较不符合',46,4),(195,'4','比较不符合',45,2),(196,'4','比较不符合',44,2),(197,'4','比较不符合',43,2),(198,'4','比较不符合',42,4),(199,'4','比较不符合',41,2),(200,'4','比较不符合',40,2),(201,'4','比较不符合',39,4),(202,'4','比较不符合',38,4),(203,'4','比较不符合',37,2),(204,'5','完全不符合',37,1),(205,'5','完全不符合',38,5),(206,'5','完全不符合',39,5),(207,'5','完全不符合',40,1),(208,'5','完全不符合',41,1),(209,'5','完全不符合',42,5),(210,'5','完全不符合',43,1),(211,'5','完全不符合',44,1),(212,'5','完全不符合',45,1),(213,'5','完全不符合',46,5),(214,'5','完全不符合',47,1),(215,'5','完全不符合',48,5),(216,'5','完全不符合',49,1),(217,'5','完全不符合',50,5),(218,'5','完全不符合',51,5),(219,'5','完全不符合',52,1),(220,'1','138',54,0),(221,'2','139',54,0),(222,'3','173',54,0),(223,'4','179',54,0),(224,'1','齿轮：发条\n',55,0),(225,'2','表针：表盘',55,0),(226,'3','果核：果皮',55,0),(227,'4','轮胎：汽车',55,0),(228,'1','服药时增加饮水量会降低药物的浓度',56,0),(229,'2','服药时大量饮水，可加快药物通过咽、食管进入胃的速度\n',56,0),(230,'3','有些药物，由于代谢产物深解度低，容易在泌尿道中析出，引起其他症状，因此病人在服药期间每天至少要饮水1500毫升',56,0),(231,'4','服药时饮水过少会使药片滞留在食管中时间较长，甚至产生副作用。',56,0),(232,'1','甲与乙(房东)于6月5日签定租房协议(月租金500元)，该协议将于6月10日生效。乙要求甲先“交”100元钱，如甲不能履行合同，将不予退还\n',57,0),(233,'2','小张今年考入大学，通知书上写明：须先缴纳学费5000元，才能办理入学手续',57,0),(234,'3','甲欲借给乙1000元，甲的好友丙将自己价值1000元的相机留给乙作为担保',57,0),(235,'4','小王近日签定了一份购房合同，在合同条款中规定，首付10万现金，剩余10万于办理产权证书时一并交清',57,0),(236,'1','（1.3.4）、（2.5.6）',58,0),(237,'2','（1.4.5）、（2.3.6）',58,0),(238,'3','（1.2.3）、（4.5.6）',58,0),(239,'4','（1.4.6）、（2.3.5）',58,0);
+/*!40000 ALTER TABLE `escape_question_options` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `escape_questions`
+--
+
+DROP TABLE IF EXISTS `escape_questions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `escape_questions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL COMMENT '题标题',
+  `content` text COMMENT '题内容',
+  `question_index` int(11) DEFAULT NULL COMMENT '题索引',
+  `category_id` int(11) NOT NULL DEFAULT '0',
+  `dimension_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_escape_questions_category_id` (`category_id`),
+  KEY `fk_escape_question_dimension_id` (`dimension_id`),
+  CONSTRAINT `fk_escape_questions_category_id` FOREIGN KEY (`category_id`) REFERENCES `escape_category` (`id`),
+  CONSTRAINT `fk_escape_question_dimension_id` FOREIGN KEY (`dimension_id`) REFERENCES `escape_dimension` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `escape_questions`
+--
+
+LOCK TABLES `escape_questions` WRITE;
+/*!40000 ALTER TABLE `escape_questions` DISABLE KEYS */;
+INSERT INTO `escape_questions` VALUES (10,NULL,'如果身边有人和我在某方面水平相当，我会暗暗较劲，更加努力',1,4,4),(11,NULL,'如果没人监督，或者没有同伴，我做事会越来越不积极',2,4,4),(13,NULL,'如果事情没有做好，我会总结经验教训，下次面对类似的事情会更有信心做好。',4,4,4),(14,NULL,'如果碰到有失败的可能，我会马上主动寻求其他人的帮助',3,4,4),(15,NULL,'有风险的事情更值得做',6,4,NULL),(16,NULL,'碰到了失败，我最不希望受到家人的责怪',7,4,NULL),(17,NULL,'与性情不同的人一起工作是活受罪',8,4,NULL),(18,NULL,'做事时我一定要做到比别人突出',9,4,NULL),(19,NULL,'没有百分之八十以上成功把握的事情，我就不愿意做',10,4,NULL),(20,NULL,'我认为只要努力，就能够把事情做到一流的结果',11,4,NULL),(21,NULL,'我不喜欢总是处处表现得自己很能干的人。',12,4,NULL),(22,NULL,'我会为了获得成功而设定工作/学习的目标，因为有目标会让我干得更起劲',13,4,NULL),(23,NULL,'比起没做过的有点挑战性的任务，我更愿意做我做过的事情',14,4,NULL),(24,NULL,'当我感觉快要失败时，我总能采取有力的挽救措施',15,4,NULL),(25,NULL,'别人越是说我不行，我越是要干',16,4,NULL),(26,NULL,'如果让我做一件虽然不太了解 ，但是很有意义的事情，我也敢做',17,4,NULL),(27,NULL,'面对困难，我觉得应该做好最坏的打算，然后去争取成功',18,4,NULL),(28,NULL,'每一次的成功都有冒险的成分',19,4,NULL),(29,NULL,'当我感觉可能完不成某个任务的时候，我常常焦虑，不知道该该怎么办。',20,4,NULL),(30,NULL,'当我不知道的时候，我会毫不介意自己的无知',21,4,NULL),(31,NULL,'我常常盼望参加竞赛和评比',22,4,NULL),(32,NULL,'我认为人的能力是有限的',23,4,NULL),(33,NULL,'我不小心丢失了一份十分重要的文件，这件事会使我晚上睡不好',24,4,NULL),(34,NULL,'在工作学习中，遇到问题我经常会主动找同事、同学、领导或老师交流',25,4,NULL),(35,NULL,'失败会使我觉得很难堪',26,4,NULL),(36,NULL,'如果在竞争中获得了胜利，我会适可而止，不一定要进入下一轮更激烈的竞争',27,4,NULL),(37,NULL,'当我有过错时，我总会勇于认错',28,4,NULL),(38,NULL,'我不愿意做有风险的事情',29,4,NULL),(39,NULL,'我提出的新观点没有人支持，我就会放弃说服大家，服从团队的意见',30,4,NULL),(40,NULL,'我一定要在事业上取得突出的成绩，哪怕牺牲一些对家庭的照顾，因为这是人生',31,4,NULL),(41,NULL,'我很少想到失败和困难',32,4,NULL),(42,NULL,'以前我做过的喜欢的事情，主要因为越来越难做而放弃',33,4,NULL),(43,NULL,'干任何事情我都能找到好方法',34,4,NULL),(44,NULL,'不敢冒险的人常常失败',35,4,NULL),(45,NULL,'只要能够成功，我愿意付出任何代价',36,4,NULL),(46,NULL,'在团队活动中，我一般不太提供意见',37,4,NULL),(47,NULL,'对工作/学习中出现的紧急情况，我一点也不害怕',38,4,NULL),(48,NULL,'在结果尚不清楚的情况下，我总担心不会成功',39,4,NULL),(49,NULL,'我认为事业的成功常常来自大胆、自信的冒险决定',40,4,NULL),(50,NULL,'在面对困难时候，我常常感到不安、烦躁（负向题）',41,4,NULL),(51,NULL,'同样的事别人比我做得好也是情有可原',42,4,NULL),(52,NULL,'我愿意做有风险的事情',43,4,NULL),(54,NULL,'数字推理题34，35，69，104，（ ）',44,4,NULL),(55,NULL,'骨骼：肌肉（请在备选答案中找出一组与之在逻辑关系上最为贴近、相似或匹配的词）',45,4,NULL),(56,NULL,'日常生活中，有些人在服药时为图省事，将药片放在口中后，不喝水或仅喝一口水，再用力一咽，就算是服完药了。有些人认为，这种服药方式是不可取的。以下哪项如果为真，最能支持这些人的观点？',46,4,NULL),(57,NULL,'定金是指合同当事人为了确保合同的履行，依据法律规定或者当事人双方的约定．由当事人一方在合同订立时，或订立后、履行前，按合同标的额的一定比例，预先给付对方当事人的金钱或其他代替物。  \n以下属于定金的是？\n',47,4,NULL),(58,NULL,'请将以下六组图形分为两类，使得每一类图形都有各自的共同特征或规律：\n<img src=\"/images/48tu.jpg\" />',48,4,NULL);
+/*!40000 ALTER TABLE `escape_questions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `escape_result`
+--
+
+DROP TABLE IF EXISTS `escape_result`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `escape_result` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `eval_id` varchar(255) DEFAULT NULL COMMENT '评估编号',
+  `category_id` int(11) DEFAULT NULL COMMENT '评估类别',
+  `eval_username` varchar(255) DEFAULT NULL COMMENT '评估人姓名',
+  `eval_qq` varchar(255) DEFAULT NULL COMMENT '评估人QQ号',
+  `eval_content` text COMMENT '评估内容',
+  `total_score` int(11) DEFAULT NULL COMMENT '评估总分',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `eval_ip` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='各类逆袭评估结果表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `escape_result`
+--
+
+LOCK TABLES `escape_result` WRITE;
+/*!40000 ALTER TABLE `escape_result` DISABLE KEYS */;
+INSERT INTO `escape_result` VALUES (2,'3c473254-8d6b-482b-9d47-be2ab24f2ce0',4,'ttt','234423',NULL,NULL,'2015-10-21 15:49:13',NULL),(3,'8b986e19-7ecf-40bf-b7d1-4f91bfefb737',NULL,NULL,NULL,'{\'es_40_null\':\'5\',\'es_56_null\':\'0\',\'es_23_null\':\'3\',\'es_46_null\':\'1\',\'es_37_null\':\'5\',\'es_19_null\':\'1\',\'es_49_null\':\'5\',\'es_38_null\':\'2\',\'es_11_key11\':\'4\',\'es_27_null\':\'5\',\'es_18_null\':\'4\',\'es_14_key11\':\'5\',\'es_34_null\':\'2\',\'es_20_null\':\'4\',\'es_15_null\':\'5\',\'es_21_null\':\'5\',\'es_30_null\':\'2\',\'es_50_null\':\'2\',\'es_52_null\':\'5\',\'es_43_null\':\'5\',\'es_25_null\':\'5\',\'es_28_null\':\'2\',\'es_26_null\':\'4\',\'es_13_key11\':\'3\',\'es_33_null\':\'1\',\'es_36_null\':\'4\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'1\',\'es_42_null\':\'1\',\'es_17_null\':\'5\',\'es_24_null\':\'4\',\'es_32_null\':\'5\',\'es_35_null\':\'1\',\'es_48_null\':\'1\',\'es_10_key11\':\'5\',\'es_51_null\':\'2\',\'es_41_null\':\'4\',\'es_45_null\':\'5\',\'es_47_null\':\'5\',\'es_31_null\':\'5\',\'es_39_null\':\'2\',\'es_44_null\':\'3\',\'es_22_null\':\'2\',\'es_57_null\':\'0\',\'es_29_null\':\'1\',\'es_55_null\':\'0\'}',NULL,'2015-10-21 21:08:34',NULL),(4,'0720f4e7-8b90-43b1-8c69-19b6a4e17139',NULL,NULL,NULL,'{\'es_40_null\':\'4\',\'es_56_null\':\'0\',\'es_23_null\':\'1\',\'es_46_null\':\'5\',\'es_37_null\':\'2\',\'es_19_null\':\'3\',\'es_49_null\':\'5\',\'es_38_null\':\'5\',\'es_11_key11\':\'4\',\'es_27_null\':\'5\',\'es_18_null\':\'2\',\'es_14_key11\':\'1\',\'es_34_null\':\'1\',\'es_20_null\':\'2\',\'es_15_null\':\'5\',\'es_21_null\':\'5\',\'es_30_null\':\'2\',\'es_50_null\':\'1\',\'es_52_null\':\'2\',\'es_43_null\':\'1\',\'es_25_null\':\'3\',\'es_28_null\':\'1\',\'es_26_null\':\'4\',\'es_13_key11\':\'4\',\'es_33_null\':\'5\',\'es_36_null\':\'1\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'1\',\'es_42_null\':\'5\',\'es_17_null\':\'3\',\'es_24_null\':\'4\',\'es_32_null\':\'2\',\'es_35_null\':\'5\',\'es_48_null\':\'2\',\'es_10_key11\':\'5\',\'es_51_null\':\'4\',\'es_41_null\':\'1\',\'es_45_null\':\'1\',\'es_47_null\':\'2\',\'es_31_null\':\'1\',\'es_39_null\':\'4\',\'es_44_null\':\'1\',\'es_22_null\':\'2\',\'es_57_null\':\'0\',\'es_29_null\':\'3\',\'es_55_null\':\'0\'}',120,'2015-10-21 21:18:07',NULL),(5,'f10efe79-518d-4099-a52d-e6ae208c8640',4,'胡欣2','234243324','{\'es_40_null\':\'5\',\'es_56_null\':\'0\',\'es_23_null\':\'1\',\'es_46_null\':\'2\',\'es_37_null\':\'4\',\'es_19_null\':\'5\',\'es_49_null\':\'4\',\'es_38_null\':\'1\',\'es_11_key11\':\'4\',\'es_27_null\':\'5\',\'es_18_null\':\'4\',\'es_14_key11\':\'1\',\'es_34_null\':\'2\',\'es_20_null\':\'4\',\'es_15_null\':\'5\',\'es_21_null\':\'1\',\'es_30_null\':\'4\',\'es_50_null\':\'1\',\'es_52_null\':\'5\',\'es_43_null\':\'5\',\'es_25_null\':\'5\',\'es_26_null\':\'2\',\'es_28_null\':\'2\',\'es_13_key11\':\'4\',\'es_33_null\':\'5\',\'es_36_null\':\'5\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'4\',\'es_42_null\':\'2\',\'es_17_null\':\'1\',\'es_24_null\':\'4\',\'es_32_null\':\'5\',\'es_35_null\':\'1\',\'es_48_null\':\'2\',\'es_10_key11\':\'4\',\'es_51_null\':\'2\',\'es_41_null\':\'4\',\'es_45_null\':\'4\',\'es_47_null\':\'4\',\'es_31_null\':\'1\',\'es_39_null\':\'2\',\'es_44_null\':\'5\',\'es_22_null\':\'2\',\'es_57_null\':\'0\',\'es_29_null\':\'3\',\'es_55_null\':\'0\'}',136,'2015-10-21 21:33:41','127.0.0.1'),(6,'79400a83-eefa-4e9d-9331-5b4e5562c7d1',4,'胡欣8','132432','{\'es_40_null\':\'4\',\'es_56_null\':\'0\',\'es_23_null\':\'5\',\'es_46_null\':\'2\',\'es_37_null\':\'4\',\'es_19_null\':\'1\',\'es_49_null\':\'4\',\'es_38_null\':\'2\',\'es_11_key11\':\'3\',\'es_27_null\':\'1\',\'es_18_null\':\'5\',\'es_14_key11\':\'1\',\'es_34_null\':\'2\',\'es_20_null\':\'5\',\'es_15_null\':\'1\',\'es_21_null\':\'5\',\'es_30_null\':\'1\',\'es_50_null\':\'2\',\'es_52_null\':\'2\',\'es_43_null\':\'4\',\'es_25_null\':\'1\',\'es_26_null\':\'2\',\'es_28_null\':\'1\',\'es_13_key11\':\'4\',\'es_33_null\':\'1\',\'es_36_null\':\'4\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'4\',\'es_42_null\':\'2\',\'es_17_null\':\'5\',\'es_24_null\':\'1\',\'es_32_null\':\'5\',\'es_35_null\':\'5\',\'es_48_null\':\'1\',\'es_10_key11\':\'4\',\'es_51_null\':\'2\',\'es_41_null\':\'4\',\'es_45_null\':\'5\',\'es_47_null\':\'4\',\'es_31_null\':\'1\',\'es_39_null\':\'2\',\'es_44_null\':\'4\',\'es_22_null\':\'1\',\'es_57_null\':\'0\',\'es_29_null\':\'1\',\'es_55_null\':\'0\'}',118,'2015-10-22 11:37:14','127.0.0.1'),(7,'4d502d23-7b53-4557-b60c-29c35aa96eda',4,'胡欣9','2349234','{\'es_40_null\':\'5\',\'es_56_null\':\'0\',\'es_23_null\':\'5\',\'es_46_null\':\'1\',\'es_37_null\':\'4\',\'es_19_null\':\'3\',\'es_49_null\':\'4\',\'es_38_null\':\'1\',\'es_11_key11\':\'3\',\'es_27_null\':\'5\',\'es_18_null\':\'4\',\'es_14_key11\':\'1\',\'es_34_null\':\'4\',\'es_20_null\':\'2\',\'es_15_null\':\'5\',\'es_21_null\':\'3\',\'es_30_null\':\'1\',\'es_50_null\':\'2\',\'es_52_null\':\'5\',\'es_43_null\':\'5\',\'es_25_null\':\'1\',\'es_26_null\':\'1\',\'es_28_null\':\'2\',\'es_13_key11\':\'5\',\'es_33_null\':\'1\',\'es_36_null\':\'2\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'1\',\'es_42_null\':\'1\',\'es_17_null\':\'5\',\'es_24_null\':\'5\',\'es_32_null\':\'5\',\'es_35_null\':\'3\',\'es_48_null\':\'4\',\'es_10_key11\':\'3\',\'es_51_null\':\'2\',\'es_41_null\':\'5\',\'es_45_null\':\'5\',\'es_47_null\':\'2\',\'es_31_null\':\'1\',\'es_39_null\':\'2\',\'es_44_null\':\'5\',\'es_22_null\':\'1\',\'es_57_null\':\'0\',\'es_29_null\':\'5\',\'es_55_null\':\'0\'}',130,'2015-10-22 12:55:03','127.0.0.1'),(8,'2c8c35ac-2368-4d6e-9da8-ee5f624b8f1e',4,'胡欣10','243432','{\'es_40_null\':\'4\',\'es_56_null\':\'0\',\'es_23_null\':\'2\',\'es_46_null\':\'2\',\'es_37_null\':\'2\',\'es_19_null\':\'5\',\'es_49_null\':\'4\',\'es_38_null\':\'2\',\'es_11_key11\':\'4\',\'es_27_null\':\'2\',\'es_18_null\':\'4\',\'es_14_key11\':\'4\',\'es_34_null\':\'1\',\'es_20_null\':\'5\',\'es_15_null\':\'3\',\'es_21_null\':\'4\',\'es_30_null\':\'5\',\'es_50_null\':\'2\',\'es_52_null\':\'4\',\'es_43_null\':\'2\',\'es_25_null\':\'2\',\'es_26_null\':\'5\',\'es_28_null\':\'5\',\'es_13_key11\':\'1\',\'es_33_null\':\'5\',\'es_36_null\':\'5\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'2\',\'es_42_null\':\'4\',\'es_17_null\':\'1\',\'es_24_null\':\'1\',\'es_32_null\':\'4\',\'es_35_null\':\'5\',\'es_48_null\':\'2\',\'es_10_key11\':\'4\',\'es_51_null\':\'2\',\'es_41_null\':\'2\',\'es_45_null\':\'4\',\'es_47_null\':\'4\',\'es_31_null\':\'2\',\'es_39_null\':\'4\',\'es_44_null\':\'2\',\'es_22_null\':\'5\',\'es_57_null\':\'0\',\'es_29_null\':\'4\',\'es_55_null\':\'0\'}',136,'2015-10-22 12:57:48','127.0.0.1'),(9,'2c8c35ac-2368-4d6e-9da8-ee5f624b8f1e',4,'胡欣10','243432','{\'es_40_null\':\'4\',\'es_56_null\':\'0\',\'es_23_null\':\'2\',\'es_46_null\':\'2\',\'es_37_null\':\'2\',\'es_19_null\':\'5\',\'es_38_null\':\'2\',\'es_49_null\':\'4\',\'es_11_key11\':\'4\',\'es_27_null\':\'2\',\'es_18_null\':\'4\',\'es_14_key11\':\'4\',\'es_34_null\':\'1\',\'es_20_null\':\'5\',\'es_15_null\':\'3\',\'es_21_null\':\'4\',\'es_30_null\':\'5\',\'es_52_null\':\'4\',\'es_50_null\':\'2\',\'es_43_null\':\'2\',\'es_25_null\':\'2\',\'es_26_null\':\'5\',\'es_28_null\':\'5\',\'es_13_key11\':\'1\',\'es_33_null\':\'5\',\'es_36_null\':\'5\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'2\',\'es_42_null\':\'4\',\'es_17_null\':\'1\',\'es_24_null\':\'1\',\'es_32_null\':\'4\',\'es_35_null\':\'5\',\'es_48_null\':\'2\',\'es_10_key11\':\'4\',\'es_51_null\':\'2\',\'es_41_null\':\'2\',\'es_45_null\':\'4\',\'es_47_null\':\'4\',\'es_31_null\':\'2\',\'es_39_null\':\'4\',\'es_22_null\':\'5\',\'es_44_null\':\'2\',\'es_57_null\':\'0\',\'es_55_null\':\'0\',\'es_29_null\':\'4\'}',136,'2015-10-22 12:58:56','127.0.0.1'),(10,'2c8c35ac-2368-4d6e-9da8-ee5f624b8f1e',4,'胡欣10','243432','{\'es_40_null\':\'4\',\'es_56_null\':\'0\',\'es_23_null\':\'2\',\'es_46_null\':\'2\',\'es_37_null\':\'2\',\'es_19_null\':\'5\',\'es_49_null\':\'4\',\'es_38_null\':\'2\',\'es_11_key11\':\'4\',\'es_27_null\':\'2\',\'es_18_null\':\'4\',\'es_14_key11\':\'4\',\'es_34_null\':\'1\',\'es_20_null\':\'5\',\'es_15_null\':\'3\',\'es_21_null\':\'4\',\'es_30_null\':\'5\',\'es_50_null\':\'2\',\'es_52_null\':\'4\',\'es_43_null\':\'2\',\'es_25_null\':\'2\',\'es_26_null\':\'5\',\'es_28_null\':\'5\',\'es_13_key11\':\'1\',\'es_33_null\':\'5\',\'es_36_null\':\'5\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'2\',\'es_42_null\':\'4\',\'es_17_null\':\'1\',\'es_24_null\':\'1\',\'es_32_null\':\'4\',\'es_35_null\':\'5\',\'es_48_null\':\'2\',\'es_10_key11\':\'4\',\'es_51_null\':\'2\',\'es_41_null\':\'2\',\'es_45_null\':\'4\',\'es_47_null\':\'4\',\'es_31_null\':\'2\',\'es_39_null\':\'4\',\'es_44_null\':\'2\',\'es_22_null\':\'5\',\'es_57_null\':\'0\',\'es_29_null\':\'4\',\'es_55_null\':\'0\'}',136,'2015-10-22 12:59:44','127.0.0.1'),(11,'65eb63d4-10a7-46a8-80ad-3d279e46e709',4,'胡欣11','312231312','{\'es_40_null\':\'4\',\'es_56_null\':\'0\',\'es_23_null\':\'2\',\'es_46_null\':\'4\',\'es_37_null\':\'2\',\'es_19_null\':\'3\',\'es_49_null\':\'3\',\'es_38_null\':\'4\',\'es_11_key11\':\'3\',\'es_27_null\':\'2\',\'es_18_null\':\'4\',\'es_14_key11\':\'1\',\'es_34_null\':\'1\',\'es_20_null\':\'2\',\'es_15_null\':\'5\',\'es_21_null\':\'4\',\'es_30_null\':\'5\',\'es_50_null\':\'1\',\'es_52_null\':\'1\',\'es_43_null\':\'2\',\'es_25_null\':\'2\',\'es_26_null\':\'5\',\'es_28_null\':\'5\',\'es_13_key11\':\'4\',\'es_33_null\':\'4\',\'es_36_null\':\'5\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'4\',\'es_42_null\':\'4\',\'es_17_null\':\'5\',\'es_24_null\':\'1\',\'es_32_null\':\'2\',\'es_35_null\':\'5\',\'es_48_null\':\'4\',\'es_10_key11\':\'4\',\'es_51_null\':\'5\',\'es_41_null\':\'2\',\'es_45_null\':\'2\',\'es_47_null\':\'2\',\'es_31_null\':\'2\',\'es_39_null\':\'4\',\'es_44_null\':\'2\',\'es_22_null\':\'5\',\'es_57_null\':\'0\',\'es_29_null\':\'4\',\'es_55_null\':\'0\'}',135,'2015-10-22 13:43:50','127.0.0.1'),(12,'65eb63d4-10a7-46a8-80ad-3d279e46e709',4,'胡欣11','312231312','{\'es_40_null\':\'4\',\'es_56_null\':\'0\',\'es_23_null\':\'2\',\'es_46_null\':\'4\',\'es_37_null\':\'2\',\'es_19_null\':\'3\',\'es_49_null\':\'3\',\'es_38_null\':\'4\',\'es_11_key11\':\'3\',\'es_27_null\':\'2\',\'es_18_null\':\'4\',\'es_14_key11\':\'1\',\'es_34_null\':\'1\',\'es_20_null\':\'2\',\'es_15_null\':\'5\',\'es_21_null\':\'4\',\'es_30_null\':\'5\',\'es_50_null\':\'1\',\'es_52_null\':\'1\',\'es_43_null\':\'2\',\'es_25_null\':\'2\',\'es_26_null\':\'5\',\'es_28_null\':\'5\',\'es_13_key11\':\'4\',\'es_33_null\':\'4\',\'es_36_null\':\'5\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'4\',\'es_42_null\':\'4\',\'es_17_null\':\'5\',\'es_24_null\':\'1\',\'es_32_null\':\'2\',\'es_35_null\':\'5\',\'es_48_null\':\'4\',\'es_10_key11\':\'4\',\'es_51_null\':\'5\',\'es_41_null\':\'2\',\'es_45_null\':\'2\',\'es_47_null\':\'2\',\'es_31_null\':\'2\',\'es_39_null\':\'4\',\'es_44_null\':\'2\',\'es_22_null\':\'5\',\'es_57_null\':\'0\',\'es_29_null\':\'4\',\'es_55_null\':\'0\'}',135,'2015-10-22 14:09:04','127.0.0.1'),(13,'0e54ed66-e356-4fef-b524-1c4c3c8ace8e',4,'胡胡','21332','{\'es_40_null\':\'5\',\'es_56_null\':\'0\',\'es_23_null\':\'5\',\'es_46_null\':\'3\',\'es_37_null\':\'4\',\'es_19_null\':\'1\',\'es_49_null\':\'4\',\'es_38_null\':\'1\',\'es_11_key11\':\'4\',\'es_27_null\':\'5\',\'es_18_null\':\'5\',\'es_14_key11\':\'1\',\'es_34_null\':\'2\',\'es_20_null\':\'4\',\'es_15_null\':\'5\',\'es_21_null\':\'5\',\'es_30_null\':\'1\',\'es_50_null\':\'1\',\'es_52_null\':\'4\',\'es_43_null\':\'4\',\'es_25_null\':\'5\',\'es_26_null\':\'1\',\'es_28_null\':\'1\',\'es_13_key11\':\'5\',\'es_33_null\':\'1\',\'es_36_null\':\'4\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'4\',\'es_42_null\':\'1\',\'es_17_null\':\'5\',\'es_24_null\':\'1\',\'es_32_null\':\'5\',\'es_35_null\':\'3\',\'es_48_null\':\'1\',\'es_10_key11\':\'4\',\'es_51_null\':\'2\',\'es_41_null\':\'4\',\'es_45_null\':\'5\',\'es_47_null\':\'4\',\'es_31_null\':\'1\',\'es_39_null\':\'1\',\'es_44_null\':\'4\',\'es_22_null\':\'1\',\'es_57_null\':\'0\',\'es_29_null\':\'5\',\'es_55_null\':\'0\'}',132,'2015-10-22 14:22:05','127.0.0.1'),(14,'0e54ed66-e356-4fef-b524-1c4c3c8ace8e',4,'胡胡','21332','{\'es_40_null\':\'5\',\'es_56_null\':\'0\',\'es_23_null\':\'5\',\'es_46_null\':\'3\',\'es_37_null\':\'4\',\'es_19_null\':\'1\',\'es_49_null\':\'4\',\'es_38_null\':\'1\',\'es_11_key11\':\'4\',\'es_27_null\':\'5\',\'es_18_null\':\'5\',\'es_14_key11\':\'1\',\'es_34_null\':\'2\',\'es_20_null\':\'4\',\'es_15_null\':\'5\',\'es_21_null\':\'5\',\'es_30_null\':\'1\',\'es_50_null\':\'1\',\'es_52_null\':\'4\',\'es_43_null\':\'4\',\'es_25_null\':\'5\',\'es_26_null\':\'1\',\'es_28_null\':\'1\',\'es_13_key11\':\'5\',\'es_33_null\':\'1\',\'es_36_null\':\'4\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'4\',\'es_42_null\':\'1\',\'es_17_null\':\'5\',\'es_24_null\':\'1\',\'es_32_null\':\'5\',\'es_35_null\':\'3\',\'es_48_null\':\'1\',\'es_10_key11\':\'4\',\'es_51_null\':\'2\',\'es_41_null\':\'4\',\'es_45_null\':\'5\',\'es_47_null\':\'4\',\'es_31_null\':\'1\',\'es_39_null\':\'1\',\'es_44_null\':\'4\',\'es_22_null\':\'1\',\'es_57_null\':\'0\',\'es_29_null\':\'5\',\'es_55_null\':\'0\'}',132,'2015-10-22 14:24:36','127.0.0.1'),(15,'df48037c-c85a-43cf-89ee-9f175be022e7',4,'dfgf','123123','{\'es_40_null\':\'4\',\'es_56_null\':\'0\',\'es_23_null\':\'5\',\'es_46_null\':\'2\',\'es_37_null\':\'4\',\'es_19_null\':\'3\',\'es_49_null\':\'4\',\'es_38_null\':\'2\',\'es_11_key11\':\'4\',\'es_27_null\':\'1\',\'es_18_null\':\'4\',\'es_14_key11\':\'1\',\'es_34_null\':\'1\',\'es_20_null\':\'4\',\'es_15_null\':\'1\',\'es_21_null\':\'5\',\'es_30_null\':\'2\',\'es_50_null\':\'2\',\'es_52_null\':\'5\',\'es_43_null\':\'4\',\'es_25_null\':\'1\',\'es_26_null\':\'5\',\'es_28_null\':\'1\',\'es_13_key11\':\'4\',\'es_33_null\':\'4\',\'es_36_null\':\'1\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'1\',\'es_42_null\':\'4\',\'es_17_null\':\'1\',\'es_24_null\':\'5\',\'es_32_null\':\'2\',\'es_35_null\':\'5\',\'es_48_null\':\'2\',\'es_10_key11\':\'3\',\'es_51_null\':\'2\',\'es_41_null\':\'4\',\'es_45_null\':\'4\',\'es_47_null\':\'2\',\'es_31_null\':\'4\',\'es_39_null\':\'2\',\'es_44_null\':\'5\',\'es_22_null\':\'1\',\'es_57_null\':\'0\',\'es_29_null\':\'5\',\'es_55_null\':\'0\'}',126,'2015-10-22 14:27:33','127.0.0.1'),(16,'df48037c-c85a-43cf-89ee-9f175be022e7',4,'dfgf','123123','{\'es_40_null\':\'4\',\'es_56_null\':\'0\',\'es_23_null\':\'5\',\'es_46_null\':\'2\',\'es_37_null\':\'4\',\'es_19_null\':\'3\',\'es_49_null\':\'4\',\'es_38_null\':\'2\',\'es_11_key11\':\'4\',\'es_27_null\':\'1\',\'es_18_null\':\'4\',\'es_14_key11\':\'1\',\'es_34_null\':\'1\',\'es_20_null\':\'4\',\'es_15_null\':\'1\',\'es_21_null\':\'5\',\'es_30_null\':\'2\',\'es_50_null\':\'2\',\'es_52_null\':\'5\',\'es_43_null\':\'4\',\'es_25_null\':\'1\',\'es_26_null\':\'5\',\'es_28_null\':\'1\',\'es_13_key11\':\'4\',\'es_33_null\':\'4\',\'es_36_null\':\'1\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'1\',\'es_42_null\':\'4\',\'es_17_null\':\'1\',\'es_24_null\':\'5\',\'es_32_null\':\'2\',\'es_35_null\':\'5\',\'es_48_null\':\'2\',\'es_10_key11\':\'3\',\'es_51_null\':\'2\',\'es_41_null\':\'4\',\'es_45_null\':\'4\',\'es_47_null\':\'2\',\'es_31_null\':\'4\',\'es_39_null\':\'2\',\'es_44_null\':\'5\',\'es_22_null\':\'1\',\'es_57_null\':\'0\',\'es_29_null\':\'5\',\'es_55_null\':\'0\'}',126,'2015-10-22 14:28:35','127.0.0.1'),(17,'df48037c-c85a-43cf-89ee-9f175be022e7',4,'dfgf','123123','{\'es_40_null\':\'4\',\'es_56_null\':\'0\',\'es_23_null\':\'5\',\'es_46_null\':\'2\',\'es_37_null\':\'4\',\'es_19_null\':\'3\',\'es_49_null\':\'4\',\'es_38_null\':\'2\',\'es_11_key11\':\'4\',\'es_27_null\':\'1\',\'es_18_null\':\'4\',\'es_14_key11\':\'1\',\'es_34_null\':\'1\',\'es_20_null\':\'4\',\'es_15_null\':\'1\',\'es_21_null\':\'5\',\'es_30_null\':\'2\',\'es_50_null\':\'2\',\'es_52_null\':\'5\',\'es_43_null\':\'4\',\'es_25_null\':\'1\',\'es_26_null\':\'5\',\'es_28_null\':\'1\',\'es_13_key11\':\'4\',\'es_33_null\':\'4\',\'es_36_null\':\'1\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'1\',\'es_42_null\':\'4\',\'es_17_null\':\'1\',\'es_24_null\':\'5\',\'es_32_null\':\'2\',\'es_35_null\':\'5\',\'es_48_null\':\'2\',\'es_10_key11\':\'3\',\'es_51_null\':\'2\',\'es_41_null\':\'4\',\'es_45_null\':\'4\',\'es_47_null\':\'2\',\'es_31_null\':\'4\',\'es_39_null\':\'2\',\'es_44_null\':\'5\',\'es_22_null\':\'1\',\'es_57_null\':\'0\',\'es_29_null\':\'5\',\'es_55_null\':\'0\'}',126,'2015-10-22 14:30:51','127.0.0.1'),(18,'85785200-2a67-4209-9a5d-546d2292a0e5',4,'淡','46556321','{\'es_40_null\':\'3\',\'es_56_null\':\'0\',\'es_23_null\':\'1\',\'es_46_null\':\'1\',\'es_37_null\':\'3\',\'es_19_null\':\'1\',\'es_49_null\':\'2\',\'es_38_null\':\'1\',\'es_11_key11\':\'4\',\'es_27_null\':\'3\',\'es_18_null\':\'5\',\'es_14_key11\':\'5\',\'es_34_null\':\'3\',\'es_20_null\':\'2\',\'es_15_null\':\'5\',\'es_21_null\':\'3\',\'es_30_null\':\'3\',\'es_50_null\':\'1\',\'es_52_null\':\'5\',\'es_43_null\':\'3\',\'es_25_null\':\'5\',\'es_26_null\':\'2\',\'es_28_null\':\'1\',\'es_13_key11\':\'4\',\'es_33_null\':\'5\',\'es_36_null\':\'3\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'1\',\'es_42_null\':\'1\',\'es_17_null\':\'3\',\'es_24_null\':\'4\',\'es_32_null\':\'5\',\'es_35_null\':\'2\',\'es_48_null\':\'2\',\'es_10_key11\':\'5\',\'es_51_null\':\'1\',\'es_41_null\':\'3\',\'es_45_null\':\'1\',\'es_47_null\':\'3\',\'es_31_null\':\'3\',\'es_39_null\':\'3\',\'es_44_null\':\'3\',\'es_22_null\':\'2\',\'es_57_null\':\'0\',\'es_29_null\':\'2\',\'es_55_null\':\'0\'}',118,'2015-10-22 16:04:49','172.16.37.14'),(19,'85785200-2a67-4209-9a5d-546d2292a0e5',4,'淡','46556321','{\'es_40_null\':\'3\',\'es_56_null\':\'0\',\'es_23_null\':\'1\',\'es_46_null\':\'1\',\'es_37_null\':\'3\',\'es_19_null\':\'1\',\'es_49_null\':\'2\',\'es_38_null\':\'1\',\'es_11_key11\':\'4\',\'es_27_null\':\'3\',\'es_18_null\':\'5\',\'es_14_key11\':\'5\',\'es_34_null\':\'3\',\'es_20_null\':\'2\',\'es_15_null\':\'5\',\'es_21_null\':\'3\',\'es_30_null\':\'3\',\'es_50_null\':\'1\',\'es_52_null\':\'5\',\'es_43_null\':\'3\',\'es_25_null\':\'5\',\'es_26_null\':\'2\',\'es_28_null\':\'1\',\'es_13_key11\':\'4\',\'es_33_null\':\'5\',\'es_36_null\':\'3\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'1\',\'es_42_null\':\'1\',\'es_17_null\':\'3\',\'es_24_null\':\'4\',\'es_32_null\':\'5\',\'es_35_null\':\'2\',\'es_48_null\':\'2\',\'es_10_key11\':\'5\',\'es_51_null\':\'1\',\'es_41_null\':\'3\',\'es_45_null\':\'1\',\'es_47_null\':\'3\',\'es_31_null\':\'3\',\'es_39_null\':\'3\',\'es_44_null\':\'3\',\'es_22_null\':\'2\',\'es_57_null\':\'0\',\'es_29_null\':\'2\',\'es_55_null\':\'0\'}',118,'2015-10-22 16:06:42','172.16.37.14'),(20,'7e4595b0-9c93-4933-9335-b0e484dd4074',4,'54123','465132','{\'es_40_null\':\'5\',\'es_14_cj\':\'4\',\'es_56_null\':\'0\',\'es_23_null\':\'3\',\'es_46_null\':\'1\',\'es_37_null\':\'5\',\'es_19_null\':\'3\',\'es_49_null\':\'4\',\'es_38_null\':\'2\',\'es_27_null\':\'3\',\'es_18_null\':\'2\',\'es_11_cj\':\'5\',\'es_34_null\':\'2\',\'es_20_null\':\'2\',\'es_15_null\':\'5\',\'es_21_null\':\'3\',\'es_30_null\':\'4\',\'es_13_cj\':\'5\',\'es_50_null\':\'1\',\'es_52_null\':\'1\',\'es_43_null\':\'3\',\'es_25_null\':\'3\',\'es_26_null\':\'4\',\'es_28_null\':\'1\',\'es_10_cj\':\'5\',\'es_33_null\':\'1\',\'es_36_null\':\'4\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'2\',\'es_42_null\':\'3\',\'es_17_null\':\'5\',\'es_24_null\':\'2\',\'es_32_null\':\'5\',\'es_35_null\':\'3\',\'es_48_null\':\'3\',\'es_51_null\':\'1\',\'es_41_null\':\'3\',\'es_45_null\':\'5\',\'es_47_null\':\'4\',\'es_31_null\':\'3\',\'es_39_null\':\'1\',\'es_44_null\':\'5\',\'es_22_null\':\'4\',\'es_57_null\':\'0\',\'es_29_null\':\'3\',\'es_55_null\':\'0\'}',133,'2015-10-22 16:40:57','172.16.37.14'),(21,'80fa196e-4f95-4b9d-bfb6-a7206f87f6a0',4,'羊羊羊','4154654','{\'es_40_null\':\'5\',\'es_14_cj\':\'5\',\'es_56_null\':\'0\',\'es_23_null\':\'2\',\'es_46_null\':\'5\',\'es_37_null\':\'2\',\'es_19_null\':\'1\',\'es_49_null\':\'2\',\'es_38_null\':\'4\',\'es_27_null\':\'2\',\'es_18_null\':\'4\',\'es_11_cj\':\'2\',\'es_34_null\':\'1\',\'es_20_null\':\'4\',\'es_15_null\':\'3\',\'es_21_null\':\'2\',\'es_30_null\':\'1\',\'es_13_cj\':\'1\',\'es_50_null\':\'1\',\'es_52_null\':\'5\',\'es_43_null\':\'4\',\'es_25_null\':\'2\',\'es_26_null\':\'5\',\'es_28_null\':\'5\',\'es_10_cj\':\'4\',\'es_33_null\':\'4\',\'es_36_null\':\'1\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'2\',\'es_42_null\':\'2\',\'es_17_null\':\'3\',\'es_24_null\':\'5\',\'es_32_null\':\'3\',\'es_35_null\':\'2\',\'es_48_null\':\'4\',\'es_51_null\':\'1\',\'es_41_null\':\'4\',\'es_45_null\':\'2\',\'es_47_null\':\'2\',\'es_31_null\':\'2\',\'es_39_null\':\'4\',\'es_44_null\':\'4\',\'es_22_null\':\'5\',\'es_57_null\':\'0\',\'es_29_null\':\'5\',\'es_55_null\':\'0\'}',127,'2015-10-22 16:41:25','172.16.37.16'),(22,'72a4de4f-72d0-4b14-9d20-ad85bb521689',4,'问问','2345','{\'es_40_null\':\'5\',\'es_14_cj\':\'1\',\'es_56_null\':\'0\',\'es_23_null\':\'4\',\'es_46_null\':\'4\',\'es_37_null\':\'2\',\'es_19_null\':\'1\',\'es_49_null\':\'5\',\'es_38_null\':\'2\',\'es_27_null\':\'5\',\'es_18_null\':\'4\',\'es_11_cj\':\'3\',\'es_34_null\':\'5\',\'es_20_null\':\'5\',\'es_15_null\':\'4\',\'es_21_null\':\'2\',\'es_30_null\':\'2\',\'es_13_cj\':\'3\',\'es_50_null\':\'1\',\'es_52_null\':\'2\',\'es_43_null\':\'5\',\'es_25_null\':\'2\',\'es_26_null\':\'5\',\'es_28_null\':\'2\',\'es_10_cj\':\'2\',\'es_33_null\':\'1\',\'es_36_null\':\'5\',\'es_58_null\':\'0\',\'es_54_null\':\'0\',\'es_16_null\':\'5\',\'es_42_null\':\'1\',\'es_17_null\':\'1\',\'es_24_null\':\'4\',\'es_32_null\':\'4\',\'es_35_null\':\'4\',\'es_48_null\':\'2\',\'es_51_null\':\'2\',\'es_41_null\':\'4\',\'es_45_null\':\'4\',\'es_47_null\':\'4\',\'es_31_null\':\'1\',\'es_39_null\':\'1\',\'es_44_null\':\'4\',\'es_22_null\':\'1\',\'es_57_null\':\'0\',\'es_29_null\':\'5\',\'es_55_null\':\'0\'}',129,'2015-10-22 16:41:52','172.16.37.12');
+/*!40000 ALTER TABLE `escape_result` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `escape_score_section`
+--
+
+DROP TABLE IF EXISTS `escape_score_section`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `escape_score_section` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lower_value` int(11) DEFAULT NULL,
+  `upper_value` int(11) DEFAULT NULL,
+  `caption` varchar(255) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='逆袭指数评估系列分值段设置表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `escape_score_section`
+--
+
+LOCK TABLES `escape_score_section` WRITE;
+/*!40000 ALTER TABLE `escape_score_section` DISABLE KEYS */;
+INSERT INTO `escape_score_section` VALUES (1,10,100,'分值段11',1),(2,0,190,'50分值段',4);
+/*!40000 ALTER TABLE `escape_score_section` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `escape_template`
+--
+
+DROP TABLE IF EXISTS `escape_template`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `escape_template` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` text COMMENT '模板内容',
+  `score_section_id` int(11) DEFAULT NULL COMMENT '对应的分值段编号',
+  `memo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='报告模板表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `escape_template`
+--
+
+LOCK TABLES `escape_template` WRITE;
+/*!40000 ALTER TABLE `escape_template` DISABLE KEYS */;
+INSERT INTO `escape_template` VALUES (2,'这是我的第一个模板，我的总分是#{totalScore}',3,''),(3,'<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\">\n\n<link href=\"http://118.144.130.10:8099/study/bootstrap/css/bootstrap.css\" rel=\"stylesheet\">\n\n<title>你能娶到这样的妹纸</title>\n\n\n</head>\n<body>\n<h3 class=\"text-center\">#{totalScore}分！哎哟！不错哦！#{totalScore}</h3>\n<h6 >你能娶到这样的妹纸：</h6>\n<img src=\"ng1.jpg\" class=\"img-responsive center-block\" alt=\"Cinque Terre\" >\n<div class=\"bs-example\" data-example-id=\"simple-dl\">\n<p><h4>【年龄】豆蔻年华</h4></p>\n<p><h4>【颜值】爆表！</h4></p>     \n<p><h4>【身材】鼻血已决堤！</h4></p>   \n<p><h4>【性格】伦家是个软妹子啦~！</h4></p> \n</div>\n<div class=\"col-md-12\" style=\"background-color: #f0f0f0; padding:5px;\">\n         <h4><p>　　哎哟，不错哦骚年！我看你骨骼惊奇,智商超高，像是万中无一的IT奇才,后天稍加努力的话，娶到心仪的妹子指日可待！</p>\n			 <p>　　小泛泛这有诸多把妹秘籍——见与你有缘，免费赠予你吧！</p></h4>\n             <p><a href=\"/study/common/apply.do?evId=384c0412-64b1-4e01-8a7e-b8d1843212bb\" class=\"btn btn-primary btn-lg active center-block\" role=\"button\">戳我！戳我！</a>\n	</div></p>\n</div>    \n\n</body>\n</html>',2,'男最高分'),(4,'<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\">\n\n<link href=\"http://118.144.130.10:8099/study/bootstrap/css/bootstrap.css\" rel=\"stylesheet\">\n\n<title>你能娶到这样的妹纸</title>\n\n\n</head>\n<body>\n<h3 class=\"text-center\">得分：#{totalScore}！差点沦为4000万分之一！</h3>\n<h6 >你能娶到这样的妹纸：</h6>\n<img src=\"ng1.jpg\" class=\"img-responsive center-block\" alt=\"Cinque Terre\" >\n<div class=\"bs-example\" data-example-id=\"simple-dl\">\n<p><h4>【年龄】才大你三岁五岁的无所谓啦</h4></p>\n<p><h4>【颜值】颜值为何物？</h4></p>     \n<p><h4>【身材】还身材？你想太多了</h4></p>   \n<p><h4>【性格】那么多骚年娶不上媳妇，老娘肯嫁你就不错了好伐？！</h4></p> \n</div>\n<div class=\"col-md-12\" style=\"background-color: #f0f0f0; padding:5px;\">\n         <h4><p>　　噢漏！以你现在的状态，勉强有个姑娘愿意跟你已经很难得了，遇到这样的姑娘就娶了吧，颜值身材神马的不要想太多啦！</p>\n			 <p>　　不甘心？！那就要努力提升自己！！来来来，小泛泛（社团是否有虚拟形象？）免费给你指一条阳关道，带你把妹带你飞！</p></h4>\n             <p><a href=\"/study/common/apply.do?evId=384c0412-64b1-4e01-8a7e-b8d1843212bb\" class=\"btn btn-primary btn-lg active center-block\" role=\"button\">戳我！戳我！</a>\n	</div></p>\n</div>    \n\n</body>\n</html>',2,'男中等1');
+/*!40000 ALTER TABLE `escape_template` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `eval_apply`
+--
+
+DROP TABLE IF EXISTS `eval_apply`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `eval_apply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `eval_id` varchar(255) DEFAULT NULL COMMENT '评估编号',
+  `name` varchar(255) DEFAULT NULL COMMENT '申请人姓名',
+  `qq` varchar(255) DEFAULT NULL,
+  `profession` varchar(255) DEFAULT NULL COMMENT '专业',
+  `school_year` varchar(255) DEFAULT NULL COMMENT '入学年份',
+  `career` varchar(255) DEFAULT NULL COMMENT '职业',
+  `education` int(11) DEFAULT NULL COMMENT '学历',
+  `ip` varchar(255) DEFAULT NULL,
+  `memo` varchar(1000) DEFAULT NULL,
+  `is_processed` bit(1) DEFAULT b'0' COMMENT '是否已处理',
+  `process_result` varchar(2000) DEFAULT NULL COMMENT '处理结果',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `eval_id` (`eval_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `eval_apply`
+--
+
+LOCK TABLES `eval_apply` WRITE;
+/*!40000 ALTER TABLE `eval_apply` DISABLE KEYS */;
+INSERT INTO `eval_apply` VALUES (12,'83ad4064-cc90-46f9-a19f-9c7683d1ad2e','胡欣','123213','sdf','fdg','dfg',2,'127.0.0.1','dfgfd','',''),(13,'3dcaab77-5d53-4b2e-95a5-f7d0e81ebfeb','琸卓','54454554','','','',0,'127.0.0.1','','\0',NULL);
+/*!40000 ALTER TABLE `eval_apply` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `holland_result`
+--
+
+DROP TABLE IF EXISTS `holland_result`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `holland_result` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `eval_id` varchar(255) DEFAULT NULL COMMENT '评测编号',
+  `eval_name` varchar(255) DEFAULT NULL COMMENT '评测姓名',
+  `eval_qq` varchar(255) DEFAULT NULL COMMENT '评测QQ',
+  `eval_content` text COMMENT '测评内容',
+  `talents_type` varchar(255) DEFAULT NULL COMMENT '人才类型',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `r_value` int(11) DEFAULT NULL,
+  `s_value` int(11) DEFAULT NULL,
+  `i_value` int(11) DEFAULT NULL,
+  `e_value` int(11) DEFAULT NULL,
+  `a_value` int(11) DEFAULT NULL,
+  `c_value` int(11) DEFAULT NULL,
+  `eval_ip` varchar(255) DEFAULT NULL COMMENT '评估的IP地址',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_holland_result_eval_Id` (`eval_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `holland_result`
+--
+
+LOCK TABLES `holland_result` WRITE;
+/*!40000 ALTER TABLE `holland_result` DISABLE KEYS */;
+INSERT INTO `holland_result` VALUES (42,'83ad4064-cc90-46f9-a19f-9c7683d1ad2e','胡欣','123213','{\'h_r2_8\':\'false\',\'h_i2_7\':\'false\',\'h_e2_5\':\'true\',\'h_e2_6\':\'true\',\'h_a2_1\':\'true\',\'h_c3_6\':\'true\',\'h_s2_1\':\'true\',\'h_e4_1\':\'a\',\'h_i2_5\':\'false\',\'h_i3_8\':\'false\',\'h_e1_6\':\'true\',\'h_a3_4\':\'false\',\'h_i3_4\':\'false\',\'h_a3_3\':\'true\',\'h_e1_5\':\'true\',\'h_s4_1\':\'b\',\'h_a2_3\':\'true\',\'h_e2_8\':\'true\',\'h_s1_8\':\'true\',\'h_c3_3\':\'true\',\'h_s2_2\':\'true\',\'h_c2_2\':\'true\',\'h_e2_4\':\'true\',\'h_r1_4\':\'true\',\'h_c1_2\':\'true\',\'h_r4_2\':\'a\',\'h_s2_4\':\'true\',\'83ad4064-cc90-46f9-a19f-9c7683d1ad2e\':\'83ad4064-cc90-46f9-a19f-9c7683d1ad2e\',\'h_i3_6\':\'false\',\'h_r2_4\':\'true\',\'h_i3_7\':\'false\',\'h_s3_1\':\'true\',\'h_a2_4\':\'true\',\'h_a1_7\':\'true\',\'h_r3_2\':\'true\',\'h_c1_8\':\'false\',\'h_c3_8\':\'true\',\'h_s1_4\':\'true\',\'h_r1_6\':\'false\',\'h_i2_8\':\'false\',\'h_e2_3\':\'true\',\'h_r3_7\':\'true\',\'h_s1_3\':\'true\',\'h_s2_6\':\'true\',\'h_r2_2\':\'true\',\'h_e1_4\':\'true\',\'h_e2_2\':\'true\',\'h_a4_2\':\'d\',\'h_e4_2\':\'a\',\'h_s2_5\':\'true\',\'h_r2_5\':\'true\',\'h_r3_1\':\'true\',\'h_a1_8\':\'true\',\'h_a4_1\':\'d\',\'h_e2_1\':\'true\',\'h_a3_1\':\'true\',\'h_i1_5\':\'false\',\'h_c2_8\':\'false\',\'h_a1_6\':\'false\',\'h_a3_5\':\'true\',\'h_i3_3\':\'true\',\'h_c1_4\':\'false\',\'h_s2_7\':\'true\',\'h_i2_4\':\'true\',\'h_c2_4\':\'true\',\'h_s1_6\':\'true\',\'h_i3_2\':\'true\',\'h_c4_1\':\'b\',\'h_c1_3\':\'false\',\'h_s3_3\':\'true\',\'h_c2_1\':\'true\',\'h_a3_8\':\'false\',\'h_e1_8\':\'false\',\'h_e1_3\':\'true\',\'h_i1_3\':\'true\',\'h_e1_7\':\'true\',\'h_s1_7\':\'true\',\'h_c3_2\':\'true\',\'h_i1_8\':\'true\',\'h_s1_5\':\'true\',\'h_e2_7\':\'true\',\'h_i1_2\':\'true\',\'h_a3_7\':\'true\',\'h_r3_6\':\'true\',\'h_s2_8\':\'true\',\'h_c3_1\':\'true\',\'h_c2_7\':\'false\',\'h_a1_4\':\'false\',\'h_a1_2\':\'true\',\'h_i3_1\':\'true\',\'h_i4_2\':\'c\',\'h_c1_7\':\'false\',\'h_r2_7\':\'false\',\'h_i2_3\':\'true\',\'h_e3_6\':\'true\',\'h_e3_2\':\'true\',\'h_r2_3\':\'true\',\'h_s3_5\':\'true\',\'h_c1_5\':\'true\',\'h_a2_6\':\'false\',\'h_a2_5\':\'true\',\'h_a3_2\':\'false\',\'h_a2_8\':\'false\',\'h_i2_2\':\'true\',\'h_s3_7\':\'false\',\'h_r2_1\':\'true\',\'h_e3_7\':\'true\',\'h_c3_4\':\'true\',\'h_e1_2\':\'false\',\'h_e1_1\':\'false\',\'h_r3_5\':\'true\',\'h_s1_1\':\'true\',\'h_c2_3\':\'true\',\'h_c1_1\':\'true\',\'h_e3_8\':\'true\',\'h_c3_5\':\'true\',\'h_c1_6\':\'true\',\'h_r3_4\':\'true\',\'h_i4_1\':\'c\',\'h_s3_8\':\'false\',\'h_s1_2\':\'true\',\'h_r1_3\':\'true\',\'h_r2_6\':\'false\',\'h_r3_8\':\'true\',\'h_s3_6\':\'false\',\'h_r1_8\':\'false\',\'h_r1_2\':\'true\',\'h_c2_5\':\'true\',\'h_e3_3\':\'true\',\'h_a3_6\':\'false\',\'h_c2_6\':\'true\',\'h_a2_2\':\'true\',\'h_r1_1\':\'true\',\'h_a1_1\':\'true\',\'h_i3_5\':\'false\',\'h_i2_6\':\'false\',\'h_i2_1\':\'true\',\'h_r1_5\':\'true\',\'h_s2_3\':\'true\',\'h_s3_2\':\'true\',\'h_r4_1\':\'a\',\'h_s3_4\':\'true\',\'h_e3_1\':\'true\',\'h_r1_7\':\'false\',\'h_r3_3\':\'true\',\'h_a1_3\':\'true\',\'h_s4_2\':\'b\',\'h_c3_7\':\'true\',\'h_e3_4\':\'true\',\'h_i1_6\':\'false\',\'h_i1_7\':\'false\',\'h_i1_4\':\'true\',\'h_i1_1\':\'true\',\'h_a1_5\':\'false\',\'h_a2_7\':\'false\',\'h_c4_2\':\'b\',\'h_e3_5\':\'true\'}','S','2015-10-13 16:16:22',92,109,66,107,78,94,'127.0.0.1'),(43,'bfd62185-0874-41a7-925f-a455b0e4e093','胡欣1','123231231','{\'h_s1_6\':\'true\',\'h_a3_3\':\'true\',\'h_i1_1\':\'true\',\'h_c1_4\':\'true\',\'h_e3_8\':\'false\',\'h_c3_8\':\'true\',\'h_i2_6\':\'true\',\'h_e2_3\':\'true\',\'h_a1_3\':\'true\',\'h_a1_1\':\'true\',\'h_s2_6\':\'true\',\'h_e2_2\':\'true\',\'h_i4_1\':\'a\',\'h_i4_2\':\'a\',\'h_c3_7\':\'true\',\'h_e1_6\':\'true\',\'h_i3_6\':\'true\',\'h_e1_5\':\'true\',\'h_s2_3\':\'true\',\'h_s3_4\':\'true\',\'h_s4_2\':\'b\',\'h_r1_3\':\'false\',\'h_s2_7\':\'true\',\'h_e3_2\':\'true\',\'h_a3_4\':\'false\',\'h_e2_6\':\'true\',\'h_r1_5\':\'false\',\'h_a2_1\':\'true\',\'h_a2_6\':\'true\',\'h_s3_3\':\'true\',\'h_s3_5\':\'true\',\'h_i2_3\':\'false\',\'h_i1_7\':\'true\',\'h_a2_8\':\'false\',\'h_r2_1\':\'false\',\'h_i2_7\':\'true\',\'h_i1_8\':\'false\',\'h_c3_6\':\'true\',\'h_e3_3\':\'false\',\'h_s4_1\':\'b\',\'h_c2_3\':\'true\',\'h_a3_5\':\'false\',\'h_i2_2\':\'true\',\'h_a2_4\':\'true\',\'h_r1_8\':\'false\',\'h_s3_8\':\'false\',\'h_s1_3\':\'true\',\'h_i3_1\':\'true\',\'h_s3_1\':\'true\',\'h_r3_4\':\'false\',\'h_a3_2\':\'true\',\'h_s2_1\':\'true\',\'h_r3_6\':\'false\',\'h_c2_2\':\'true\',\'h_s2_2\':\'true\',\'h_r1_2\':\'true\',\'h_r2_6\':\'true\',\'h_c3_3\':\'false\',\'h_a3_8\':\'true\',\'h_i1_5\':\'true\',\'h_c2_8\':\'false\',\'h_e2_4\':\'false\',\'h_i3_3\':\'true\',\'h_a3_1\':\'true\',\'h_i2_4\':\'false\',\'h_r3_1\':\'true\',\'h_a1_8\':\'false\',\'h_r3_2\':\'true\',\'h_e1_3\':\'true\',\'h_r1_1\':\'true\',\'h_a4_2\':\'b\',\'h_a2_7\':\'true\',\'h_a3_7\':\'false\',\'h_a1_4\':\'true\',\'h_c2_1\':\'true\',\'h_c3_4\':\'false\',\'h_a1_2\':\'true\',\'h_s1_8\':\'false\',\'h_c1_2\':\'true\',\'h_s1_4\':\'true\',\'h_a1_5\':\'true\',\'h_s1_1\':\'true\',\'h_e3_1\':\'true\',\'h_c1_7\':\'true\',\'h_a2_2\':\'true\',\'h_i1_2\':\'true\',\'h_c3_2\':\'true\',\'h_s3_7\':\'false\',\'h_e3_6\':\'true\',\'bfd62185-0874-41a7-925f-a455b0e4e093\':\'bfd62185-0874-41a7-925f-a455b0e4e093\',\'h_c4_1\':\'a\',\'h_s2_5\':\'true\',\'h_e3_7\':\'true\',\'h_c4_2\':\'a\',\'h_s3_2\':\'true\',\'h_c1_3\':\'true\',\'h_i2_5\':\'true\',\'h_s1_7\':\'true\',\'h_r3_5\':\'false\',\'h_i3_5\':\'true\',\'h_r2_8\':\'true\',\'h_r2_3\':\'false\',\'h_a4_1\':\'b\',\'h_i1_3\':\'true\',\'h_r2_7\':\'true\',\'h_e3_5\':\'true\',\'h_s2_4\':\'true\',\'h_e4_1\':\'b\',\'h_c1_5\':\'true\',\'h_e3_4\':\'false\',\'h_r1_4\':\'false\',\'h_c2_6\':\'true\',\'h_e1_8\':\'true\',\'h_e1_7\':\'true\',\'h_e2_7\':\'true\',\'h_a2_3\':\'true\',\'h_e4_2\':\'b\',\'h_c2_4\':\'true\',\'h_i3_8\':\'true\',\'h_i1_4\':\'true\',\'h_i2_1\':\'true\',\'h_r3_7\':\'false\',\'h_e2_1\':\'true\',\'h_c1_1\':\'true\',\'h_i1_6\':\'true\',\'h_r3_3\':\'true\',\'h_r2_5\':\'false\',\'h_c1_6\':\'true\',\'h_i3_7\':\'true\',\'h_a2_5\':\'true\',\'h_e1_1\':\'true\',\'h_r4_2\':\'a\',\'h_r3_8\':\'false\',\'h_s3_6\':\'false\',\'h_i3_4\':\'true\',\'h_s1_2\':\'true\',\'h_r4_1\':\'a\',\'h_a1_7\':\'true\',\'h_s1_5\':\'true\',\'h_c2_5\':\'true\',\'h_c2_7\':\'true\',\'h_a3_6\':\'false\',\'h_e2_8\':\'false\',\'h_e1_4\':\'true\',\'h_i2_8\':\'false\',\'h_r2_2\':\'false\',\'h_c1_8\':\'true\',\'h_s2_8\':\'false\',\'h_e2_5\':\'true\',\'h_c3_1\':\'true\',\'h_a1_6\':\'true\',\'h_c3_5\':\'false\',\'h_r1_6\':\'false\',\'h_i3_2\':\'true\',\'h_e1_2\':\'true\',\'h_r2_4\':\'false\',\'h_r1_7\':\'false\'}','C','2015-10-13 16:30:46',42,99,102,99,94,102,'127.0.0.1'),(44,'ddddd','胡欣','33324324','dddddddddddddddd',NULL,'2015-10-13 17:08:42',NULL,NULL,NULL,NULL,NULL,NULL,NULL),(46,'5bc03d25-333c-4de1-9a3e-fd926ada407e','胡欣3','2134324','{\'h_i1_7\':\'true\',\'h_c3_4\':\'true\',\'h_r1_7\':\'true\',\'h_s3_8\':\'false\',\'h_a2_8\':\'false\',\'h_c2_3\':\'true\',\'h_i2_7\':\'true\',\'h_a2_5\':\'true\',\'h_r3_3\':\'true\',\'h_a1_2\':\'true\',\'h_i1_6\':\'true\',\'h_e3_6\':\'true\',\'h_s2_7\':\'true\',\'h_i3_2\':\'true\',\'h_c3_5\':\'true\',\'h_s4_1\':\'b\',\'h_a2_4\':\'true\',\'h_s3_6\':\'false\',\'h_e3_4\':\'true\',\'h_e2_7\':\'true\',\'h_c3_8\':\'true\',\'h_i3_1\':\'true\',\'h_e1_5\':\'true\',\'h_i2_3\':\'true\',\'h_r1_3\':\'true\',\'h_s1_7\':\'false\',\'h_r2_4\':\'false\',\'h_e3_2\':\'true\',\'h_i3_8\':\'false\',\'h_i2_2\':\'true\',\'h_r2_7\':\'false\',\'h_a4_2\':\'c\',\'h_s2_5\':\'true\',\'h_r1_6\':\'true\',\'h_a1_4\':\'true\',\'h_s3_5\':\'false\',\'h_i2_5\':\'true\',\'h_a1_5\':\'true\',\'h_a1_6\':\'true\',\'h_a2_6\':\'true\',\'h_a3_5\':\'true\',\'h_i1_3\':\'true\',\'h_c2_8\':\'true\',\'h_s2_3\':\'true\',\'h_c2_1\':\'true\',\'h_s1_8\':\'false\',\'h_c2_6\':\'true\',\'h_a3_6\':\'true\',\'h_i3_3\':\'true\',\'h_i3_4\':\'true\',\'h_r3_2\':\'false\',\'h_s2_4\':\'true\',\'h_c3_3\':\'true\',\'h_a3_3\':\'true\',\'h_a1_1\':\'true\',\'h_e1_2\':\'true\',\'h_a2_7\':\'true\',\'h_e3_5\':\'true\',\'h_e3_8\':\'true\',\'h_a2_1\':\'true\',\'h_a1_7\':\'true\',\'h_e2_6\':\'true\',\'h_s3_7\':\'false\',\'h_i4_2\':\'c\',\'h_r1_4\':\'true\',\'h_c2_4\':\'true\',\'h_r3_6\':\'true\',\'h_i4_1\':\'c\',\'h_a3_2\':\'false\',\'h_i2_4\':\'true\',\'h_s3_3\':\'false\',\'h_r3_4\':\'true\',\'h_e2_2\':\'true\',\'h_a2_2\':\'true\',\'h_c1_4\':\'true\',\'h_s1_5\':\'false\',\'h_c2_5\':\'true\',\'h_r1_8\':\'true\',\'h_s1_6\':\'false\',\'5bc03d25-333c-4de1-9a3e-fd926ada407e\':\'5bc03d25-333c-4de1-9a3e-fd926ada407e\',\'h_s1_1\':\'true\',\'h_e1_4\':\'true\',\'h_i2_6\':\'true\',\'h_s1_2\':\'true\',\'h_s1_3\':\'true\',\'h_i1_5\':\'true\',\'h_e1_6\':\'false\',\'h_e2_3\':\'true\',\'h_a3_7\':\'true\',\'h_s3_1\':\'false\',\'h_r3_5\':\'true\',\'h_a3_1\':\'false\',\'h_a4_1\':\'c\',\'h_i2_1\':\'true\',\'h_s3_2\':\'false\',\'h_a1_3\':\'true\',\'h_i1_2\':\'true\',\'h_c1_6\':\'true\',\'h_s2_1\':\'true\',\'h_a3_4\':\'true\',\'h_s3_4\':\'false\',\'h_r2_8\':\'false\',\'h_i2_8\':\'true\',\'h_s2_6\':\'true\',\'h_c1_7\':\'true\',\'h_i3_5\':\'true\',\'h_r2_3\':\'false\',\'h_a2_3\':\'true\',\'h_s4_2\':\'b\',\'h_e1_8\':\'false\',\'h_e3_3\':\'true\',\'h_c3_6\':\'true\',\'h_c1_1\':\'true\',\'h_c1_5\':\'true\',\'h_r2_5\':\'false\',\'h_e2_8\':\'true\',\'h_e3_1\':\'true\',\'h_s2_2\':\'true\',\'h_s2_8\':\'true\',\'h_c3_7\':\'true\',\'h_e4_2\':\'c\',\'h_i3_6\':\'true\',\'h_e3_7\':\'true\',\'h_c1_8\':\'true\',\'h_r1_1\':\'true\',\'h_i1_8\':\'true\',\'h_r4_1\':\'b\',\'h_r1_5\':\'true\',\'h_s1_4\':\'true\',\'h_r1_2\':\'true\',\'h_i3_7\':\'true\',\'h_i1_4\':\'true\',\'h_c1_2\':\'true\',\'h_c3_1\':\'true\',\'h_a3_8\':\'true\',\'h_c4_1\':\'a\',\'h_r3_7\':\'true\',\'h_i1_1\':\'true\',\'h_c2_7\':\'true\',\'h_r3_8\':\'true\',\'h_e1_3\':\'true\',\'h_a1_8\':\'true\',\'h_r4_2\':\'b\',\'h_r3_1\':\'false\',\'h_r2_6\':\'false\',\'h_e1_1\':\'true\',\'h_e2_5\':\'true\',\'h_c3_2\':\'true\',\'h_e1_7\':\'false\',\'h_c2_2\':\'true\',\'h_r2_2\':\'false\',\'h_r2_1\':\'false\',\'h_e2_4\':\'true\',\'h_c1_3\':\'true\',\'h_c4_2\':\'a\',\'h_e2_1\':\'true\',\'h_e4_1\':\'c\'}','C','2015-10-13 17:54:45',74,64,121,111,111,122,'127.0.0.1'),(49,'c0174c90-c201-4e5c-a30a-c1c9e4038862','87954','34','{\'h_i2_2\':\'false\',\'h_i1_3\':\'false\',\'h_c3_8\':\'true\',\'h_s1_1\':\'true\',\'h_c3_1\':\'false\',\'h_a2_8\':\'false\',\'h_s3_7\':\'true\',\'h_a2_6\':\'false\',\'h_e2_5\':\'false\',\'h_i1_5\':\'false\',\'h_a1_7\':\'true\',\'h_c2_7\':\'true\',\'h_r2_2\':\'false\',\'h_e3_1\':\'false\',\'h_i2_3\':\'false\',\'h_r2_6\':\'true\',\'h_a2_1\':\'true\',\'h_a3_5\':\'false\',\'h_s2_7\':\'false\',\'h_s3_8\':\'true\',\'h_a1_4\':\'false\',\'h_a1_3\':\'false\',\'h_a3_3\':\'true\',\'h_e2_7\':\'false\',\'h_r1_5\':\'false\',\'h_i1_7\':\'true\',\'h_i4_1\':\'e\',\'h_e1_1\':\'true\',\'h_a2_4\':\'true\',\'h_s3_3\':\'false\',\'h_s1_7\':\'false\',\'h_s3_5\':\'true\',\'h_e1_8\':\'true\',\'h_a2_2\':\'true\',\'h_a4_1\':\'e\',\'h_s2_4\':\'true\',\'h_r4_1\':\'d\',\'h_c3_7\':\'true\',\'h_a2_7\':\'false\',\'h_i3_4\':\'true\',\'h_s1_2\':\'true\',\'h_s1_3\':\'false\',\'h_i1_1\':\'false\',\'h_e1_6\':\'false\',\'h_e2_1\':\'true\',\'h_i1_4\':\'false\',\'c0174c90-c201-4e5c-a30a-c1c9e4038862\':\'c0174c90-c201-4e5c-a30a-c1c9e4038862\',\'h_i2_5\':\'true\',\'h_r3_6\':\'true\',\'h_r3_2\':\'false\',\'h_s1_6\':\'true\',\'h_a1_5\':\'false\',\'h_i3_5\':\'true\',\'h_e3_7\':\'true\',\'h_r3_5\':\'true\',\'h_i3_6\':\'false\',\'h_c3_2\':\'false\',\'h_i2_7\':\'true\',\'h_s4_1\':\'d\',\'h_c2_3\':\'false\',\'h_e2_4\':\'true\',\'h_s1_8\':\'false\',\'h_c1_7\':\'true\',\'h_s1_4\':\'true\',\'h_i4_2\':\'d\',\'h_c2_8\':\'true\',\'h_c1_3\':\'false\',\'h_i3_3\':\'true\',\'h_r2_8\':\'false\',\'h_e2_8\':\'true\',\'h_c2_4\':\'true\',\'h_i3_8\':\'false\',\'h_i2_6\':\'true\',\'h_c1_1\':\'true\',\'h_a3_6\':\'false\',\'h_c1_4\':\'true\',\'h_s2_2\':\'false\',\'h_e2_2\':\'false\',\'h_e2_6\':\'false\',\'h_c3_4\':\'true\',\'h_c2_1\':\'false\',\'h_e3_4\':\'false\',\'h_i1_6\':\'false\',\'h_e1_5\':\'true\',\'h_r2_3\':\'false\',\'h_a4_2\':\'e\',\'h_i2_1\':\'false\',\'h_r2_4\':\'false\',\'h_a2_3\':\'false\',\'h_a3_8\':\'false\',\'h_e4_1\':\'a\',\'h_e1_3\':\'true\',\'h_e3_6\':\'true\',\'h_c1_5\':\'true\',\'h_r2_7\':\'true\',\'h_c2_6\':\'false\',\'h_e4_2\':\'c\',\'h_a1_2\':\'true\',\'h_s4_2\':\'e\',\'h_e3_3\':\'true\',\'h_e1_4\':\'true\',\'h_c4_2\':\'b\',\'h_s3_2\':\'false\',\'h_s2_5\':\'true\',\'h_r1_3\':\'false\',\'h_c1_2\':\'false\',\'h_i2_4\':\'true\',\'h_c3_6\':\'true\',\'h_e1_2\':\'true\',\'h_s2_6\':\'true\',\'h_a3_1\':\'true\',\'h_a1_8\':\'true\',\'h_s2_1\':\'false\',\'h_r1_2\':\'false\',\'h_a3_2\':\'true\',\'h_a1_6\':\'false\',\'h_c2_2\':\'false\',\'h_c1_8\':\'true\',\'h_r1_8\':\'true\',\'h_e1_7\':\'true\',\'h_c1_6\':\'true\',\'h_s2_3\':\'true\',\'h_c3_5\':\'true\',\'h_i3_7\':\'false\',\'h_i2_8\':\'true\',\'h_s2_8\':\'false\',\'h_c2_5\':\'true\',\'h_r3_4\':\'true\',\'h_e3_2\':\'true\',\'h_i3_1\':\'true\',\'h_r3_3\':\'false\',\'h_s3_6\':\'true\',\'h_i1_2\':\'false\',\'h_s3_4\':\'true\',\'h_r1_6\':\'true\',\'h_a2_5\':\'false\',\'h_a3_4\':\'true\',\'h_a3_7\':\'false\',\'h_r3_1\':\'false\',\'h_s1_5\':\'true\',\'h_e3_8\':\'true\',\'h_c4_1\':\'b\',\'h_i3_2\':\'false\',\'h_r4_2\':\'c\',\'h_c3_3\':\'false\',\'h_s3_1\':\'true\',\'h_r2_1\':\'false\',\'h_r2_5\':\'true\',\'h_r3_7\':\'false\',\'h_e2_3\':\'true\',\'h_r1_7\':\'true\',\'h_a1_1\':\'true\',\'h_i1_8\':\'true\',\'h_r3_8\':\'false\',\'h_r1_4\':\'false\',\'h_r1_1\':\'false\',\'h_e3_5\':\'true\'}','E','2015-10-13 18:00:12',52,84,64,89,65,79,'172.16.37.14'),(50,'3dcaab77-5d53-4b2e-95a5-f7d0e81ebfeb','琸卓','54454554','{\'h_e3_8\':\'true\',\'h_c1_5\':\'true\',\'h_c2_2\':\'true\',\'h_i3_2\':\'true\',\'h_r1_7\':\'true\',\'h_i2_5\':\'true\',\'h_r1_8\':\'true\',\'h_e2_4\':\'true\',\'h_a1_2\':\'true\',\'h_r2_3\':\'false\',\'h_a3_1\':\'true\',\'h_r3_5\':\'true\',\'h_a2_1\':\'true\',\'h_e4_2\':\'b\',\'h_a2_7\':\'false\',\'h_c3_1\':\'true\',\'h_c3_6\':\'true\',\'h_r1_4\':\'false\',\'h_i4_2\':\'a\',\'h_i3_1\':\'true\',\'h_r1_6\':\'true\',\'h_a3_8\':\'true\',\'h_r2_8\':\'true\',\'h_c3_8\':\'false\',\'h_c3_5\':\'true\',\'h_c2_6\':\'true\',\'h_s3_3\':\'true\',\'h_i1_2\':\'true\',\'h_c3_4\':\'true\',\'h_a3_4\':\'true\',\'h_a1_4\':\'false\',\'h_a3_6\':\'true\',\'h_e2_6\':\'true\',\'h_c1_8\':\'true\',\'h_i3_8\':\'true\',\'h_a2_8\':\'false\',\'h_c1_4\':\'true\',\'h_s2_3\':\'true\',\'h_e2_1\':\'true\',\'h_e1_7\':\'true\',\'h_e2_7\':\'true\',\'h_r1_2\':\'true\',\'h_a3_5\':\'true\',\'h_s3_4\':\'true\',\'h_s4_2\':\'b\',\'h_s2_2\':\'true\',\'h_r3_8\':\'true\',\'h_s1_5\':\'true\',\'h_a3_2\':\'true\',\'h_s1_1\':\'true\',\'h_a1_7\':\'false\',\'h_e3_2\':\'true\',\'h_a1_6\':\'false\',\'h_c2_1\':\'true\',\'h_r2_4\':\'false\',\'h_a3_3\':\'true\',\'h_c2_5\':\'true\',\'h_i2_2\':\'true\',\'h_r1_1\':\'true\',\'h_c2_7\':\'false\',\'h_e1_1\':\'true\',\'h_e3_6\':\'true\',\'h_e2_5\':\'true\',\'h_e3_1\':\'true\',\'h_s3_6\':\'true\',\'h_s2_8\':\'true\',\'h_i3_6\':\'true\',\'h_r3_7\':\'true\',\'h_a1_5\':\'false\',\'h_i3_5\':\'true\',\'h_i1_6\':\'true\',\'h_i2_1\':\'true\',\'h_c3_3\':\'true\',\'h_s2_7\':\'true\',\'h_a1_1\':\'true\',\'h_e2_8\':\'true\',\'h_s1_6\':\'true\',\'h_a4_2\':\'b\',\'h_s1_3\':\'true\',\'h_s1_4\':\'true\',\'3dcaab77-5d53-4b2e-95a5-f7d0e81ebfeb\':\'3dcaab77-5d53-4b2e-95a5-f7d0e81ebfeb\',\'h_a2_5\':\'false\',\'h_r1_5\':\'true\',\'h_e3_3\':\'true\',\'h_s2_4\':\'true\',\'h_i1_5\':\'true\',\'h_a2_3\':\'true\',\'h_i3_7\':\'true\',\'h_r4_1\':\'a\',\'h_i1_4\':\'true\',\'h_s3_5\':\'true\',\'h_r1_3\':\'true\',\'h_c3_2\':\'true\',\'h_r3_1\':\'true\',\'h_c1_6\':\'true\',\'h_i2_3\':\'true\',\'h_r4_2\':\'a\',\'h_e2_2\':\'true\',\'h_a1_3\':\'true\',\'h_a2_2\':\'true\',\'h_s1_2\':\'true\',\'h_c2_4\':\'true\',\'h_c3_7\':\'true\',\'h_s3_7\':\'true\',\'h_i1_3\':\'true\',\'h_r3_6\':\'true\',\'h_i2_6\':\'true\',\'h_r2_6\':\'false\',\'h_r2_7\':\'false\',\'h_i1_8\':\'true\',\'h_e3_5\':\'true\',\'h_r3_3\':\'true\',\'h_e1_6\':\'true\',\'h_i4_1\':\'a\',\'h_e1_8\':\'true\',\'h_i1_7\':\'true\',\'h_r2_1\':\'false\',\'h_s1_7\':\'true\',\'h_c1_2\':\'true\',\'h_i3_3\':\'true\',\'h_e4_1\':\'b\',\'h_s4_1\':\'b\',\'h_e3_4\':\'true\',\'h_s3_1\':\'true\',\'h_c2_3\':\'true\',\'h_i3_4\':\'true\',\'h_s2_1\':\'true\',\'h_i2_7\':\'true\',\'h_e1_3\':\'true\',\'h_e1_5\':\'true\',\'h_i1_1\':\'true\',\'h_e2_3\':\'true\',\'h_r2_5\':\'false\',\'h_e1_4\':\'true\',\'h_r2_2\':\'false\',\'h_i2_4\':\'false\',\'h_a2_4\':\'true\',\'h_s2_6\':\'true\',\'h_a3_7\':\'true\',\'h_c4_1\':\'a\',\'h_s1_8\':\'true\',\'h_i2_8\':\'true\',\'h_s3_8\':\'true\',\'h_e1_2\':\'true\',\'h_c1_1\':\'true\',\'h_a1_8\':\'false\',\'h_a4_1\':\'b\',\'h_r3_2\':\'true\',\'h_c4_2\':\'a\',\'h_a2_6\':\'false\',\'h_e3_7\':\'true\',\'h_s2_5\':\'true\',\'h_c1_7\':\'true\',\'h_r3_4\':\'true\',\'h_s3_2\':\'true\',\'h_c1_3\':\'true\',\'h_c2_8\':\'false\'}','E','2015-10-14 10:09:07',82,124,117,124,79,107,'127.0.0.1');
+/*!40000 ALTER TABLE `holland_result` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `manage_user`
+--
+
+DROP TABLE IF EXISTS `manage_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `manage_user` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `manage_user`
+--
+
+LOCK TABLES `manage_user` WRITE;
+/*!40000 ALTER TABLE `manage_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `manage_user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-10-23 10:04:25
