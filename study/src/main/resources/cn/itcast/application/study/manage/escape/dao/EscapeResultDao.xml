@@ -11,16 +11,23 @@
 		<result property="evalId" column="eval_id"/>
 		<result property="createDate" column="create_date"/>
 		<result property="ip" column="eval_ip"/>
+		<result property="content" column="eval_content"/>
+		<result property="templateId" column="template_id"/>
 	</resultMap>
 	
 	<insert id="add" parameterType="cn.itcast.application.study.manage.escape.domain.EscapeResult">
-		insert into escape_result(eval_id,category_id,eval_username,eval_qq,eval_content,total_score,eval_ip)
-			values(#{evalId},#{categoryId},#{userName},#{qq},#{content},#{totalScore},#{ip})
+		insert into escape_result(eval_id,category_id,eval_username,eval_qq,eval_content,total_score,eval_ip,template_id)
+			values(#{evalId},#{categoryId},#{userName},#{qq},#{content},#{totalScore},#{ip},#{templateId})
 	</insert>
 	  
 	<select id="findById"  parameterType="int" resultMap="escapeResultMap">
-	    select id,eval_id,category_id,eval_username,eval_qq,eval_content,total_score
+	    select id,eval_id,category_id,eval_username,eval_qq,eval_content,total_score,template_id
 			from escape_result where id = #{id}
+	</select>
+	
+	<select id="findByEvalId" parameterType="string" resultMap="escapeResultMap">
+	    select id,eval_id,category_id,eval_username,eval_qq,eval_content,total_score,template_id
+			from escape_result where eval_id = #{evalId}
 	</select>
 	
 	<select id="findForList" parameterType="int" resultMap="escapeResultMap">
@@ -33,7 +40,7 @@
 	</delete>
 	 
 	<select id="findForPageList" parameterType="cn.itcast.application.study.manage.escape.dto.EscapeResultQuery" resultMap="escapeResultMap">
-		select e.id,e.eval_id,e.eval_username,e.eval_qq,e.create_date,e.eval_ip,a.id as 'apply_id',a.is_processed,e.total_score
+		select e.id,e.eval_id,e.eval_username,e.template_id,e.eval_qq,e.create_date,e.eval_ip,a.id as 'apply_id',a.is_processed,e.total_score
         from escape_result e left join  eval_apply a on e.eval_id=a.eval_id    
 			   <where>
 			    <if test="categoryId != null">

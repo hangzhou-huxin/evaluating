@@ -146,17 +146,8 @@ public class EscapeEvaluationController {
 		   
 		   Map<String,Integer> result = EvaluationUtils.getEscapeEvaluationResult(data) ;
 		   
-		   EscapeResult escapeResult = new EscapeResult() ;
-		   escapeResult.setCategoryId(categoryId);
-		   escapeResult.setEvalId(evid);
-		   escapeResult.setQq(qq);
-		   escapeResult.setUserName(userName);
-		   escapeResult.setIp(ip);
 		   Integer totalScore = result.get(Constant.ESCAPE_TOTAL_SCORE) ;
-		   escapeResult.setTotalScore(totalScore);
-		   String cacheJson = EvaluationUtils.cacheDataToJSON(data ,Constant.ESCAPE_PREFIX) ;
-		   escapeResult.setContent(cacheJson);
-		   escapeResultService.save(escapeResult);
+		   
 		   mv.addObject("result",  result) ;
 		   
 		   String viewName = "escape/default-report";
@@ -178,12 +169,13 @@ public class EscapeEvaluationController {
 		   Map<String,String> replateMap = new HashMap<String,String>() ;
 		   replateMap.put("totalScore", result.get(Constant.ESCAPE_TOTAL_SCORE).toString()) ;
 		   
+		   Template template = null ;
 		   if(myScoreSection != null){
 			   List<Template> templateList = templateService.findForList(myScoreSection.getId()) ;
 			   if(templateList != null && templateList.size()>0){
 				   int size = templateList.size() ;
 				   int index = RandomUtil.getNumber(size) ;
-				   Template template = templateList.get(index) ;
+				   template = templateList.get(index) ;
 				   if(template != null){
 					   String templateContent = template.getContent() ;
 					   String replatedContent = EvaluationUtils.replateTemplateVars(Constant.TEMPLATE_VARS, templateContent, replateMap) ;
@@ -193,7 +185,21 @@ public class EscapeEvaluationController {
 			   }
 			   
 		   }
-		   
+		   EscapeResult escapeResult = new EscapeResult() ;
+		   escapeResult.setCategoryId(categoryId);
+		   escapeResult.setEvalId(evid);
+		   escapeResult.setQq(qq);
+		   escapeResult.setUserName(userName);
+		   escapeResult.setIp(ip);
+		   escapeResult.setTotalScore(totalScore);
+		   escapeResult.setTemplateId(template.getId());
+		   String cacheJson = EvaluationUtils.cacheDataToJSON(data ,Constant.ESCAPE_PREFIX) ;
+		   escapeResult.setContent(cacheJson);
+		   try{
+			   escapeResultService.save(escapeResult);
+		   }catch(Exception e){
+			   
+		   }
 		   mv.setViewName(viewName);
 		   return mv ;
 	}

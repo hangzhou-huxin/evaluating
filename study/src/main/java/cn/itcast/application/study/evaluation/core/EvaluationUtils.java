@@ -203,16 +203,18 @@ public class EvaluationUtils {
 		for (Map.Entry<String, String> entry : data.entrySet()) {
 			String key = entry.getKey() ;
 			String value = entry.getValue() ;
+			
 			if( key.startsWith(prefix)){
+				Integer ivalue = Integer.parseInt(value.split("-")[1]) ;
 				String[] keys = key.split("_") ;
 				String dimension = keys[2] ;
 				Integer dimensionScore = result.get(dimension) ;
 				if(dimensionScore == null){
-					result.put(dimension, Integer.parseInt(value)) ;
+					result.put(dimension,  ivalue) ;
 				}else{
-					result.put(dimension, dimensionScore + Integer.parseInt(value)) ;
+					result.put(dimension, dimensionScore + ivalue) ;
 				}
-				totalScore += Integer.parseInt(value) ;
+				totalScore += ivalue ;
 			} 
 		}
 		result.put(Constant.ESCAPE_TOTAL_SCORE , totalScore) ;

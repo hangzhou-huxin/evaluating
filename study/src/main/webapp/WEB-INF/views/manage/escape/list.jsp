@@ -24,7 +24,7 @@
     
     var renderDetail = function(value,cellmeta,record,rowIndex,columnIndex,store){
     	//alert(Ext.util.Format.date(new Date(parseInt(record.data.deployDate)),'Y-m-d')) ;
-        var s = "<a  href='<%=request.getContextPath()%>/manage/escape/step.do?evId=" + record.data['evalId'] +"' target='_blank' onclick=''>查看</a>";
+        var s = "<a  href='<%=request.getContextPath()%>/manage/escape/result/viewDetail.do?id=" + record.data['id'] +"' target='_blank' onclick=''>查看</a>";
          return s;
     }; 
     
@@ -84,8 +84,7 @@
    	      										{header:'总得分',dataIndex:'totalScore',sortable:false},
    	      										{header:'ip地址',dataIndex:'ip',sortable:false},
    	      										{header:'评测时间',dataIndex:'createDate',sortable:false},
-   	      										{header:'评测报告',dataIndex:'id',renderer:renderReport,sortable:false},
-   	      										{header:'评测明细',dataIndex:'id',renderer:renderDetail,sortable:false},
+   	      										{header:'评测明细和报告',dataIndex:'id',renderer:renderDetail,sortable:false},
    	      										{header:'处理意见',dataIndex:'id',renderer:renderProcess,sortable:false},
    	      										{header:'常规操作',dataIndex:'id',renderer:renderEdit,sortable:false}
    	      										]);

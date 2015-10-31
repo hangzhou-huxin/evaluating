@@ -15,7 +15,7 @@ function createTrueFalseQuestion(subitemObj , questions  , cacheData){
 			 var inputStr = "" ;
 			 var cacheValue = cacheData[q.qid] ;
 		     if( cacheValue && cacheValue == option.value	){
-		    	 inputStr = '<input type="radio"  checked required="required" value="' + option.value + '" name="' + q.qid +'" id="' + q.id + '"/>';
+		    	 inputStr = '<input type="radio"  checked required="required" value="'  + option.value + '" name="' + q.qid +'" id="' + q.id + '"/>';
 		     }else{
 		    	 inputStr = '<input type="radio"   required="required" value="' + option.value + '" name="' + q.qid +'" id="' + q.id + '"/>';
 		     }

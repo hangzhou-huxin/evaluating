@@ -27,6 +27,9 @@ public class EscapeResult {
 	
 	
 	private String	createDate ;
+	
+	
+	private Integer templateId ;
 
 
 	public Integer getId() {
@@ -118,7 +121,13 @@ public class EscapeResult {
 		this.createDate = createDate;
 	}
 	
-	
+	public Integer getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(Integer templateId) {
+		this.templateId = templateId;
+	}
 	
 
 }

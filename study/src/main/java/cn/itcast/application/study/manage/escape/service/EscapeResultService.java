@@ -37,6 +37,12 @@ public class EscapeResultService {
 	}
 	
 	
+	public EscapeResult findByEvalId(String evalId){
+		return escapeResultDao.findByEvalId(evalId) ;
+	}
+	
+	
+	
 	public void delete(Integer id){
 		escapeResultDao.delete(id);
 	}

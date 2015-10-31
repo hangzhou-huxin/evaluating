@@ -18,6 +18,9 @@ public interface EscapeResultDao {
 	public EscapeResult findById(Integer id) ;
 	
 	
+	public EscapeResult findByEvalId(String evalId) ;
+	
+	
 	public List<EscapeResult> findForList(Integer categoryId) ;
 	
 	

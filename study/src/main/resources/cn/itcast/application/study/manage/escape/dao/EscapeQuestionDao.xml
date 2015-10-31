@@ -46,7 +46,7 @@
 	select q.id,q.question_index,q.title,q.content,q.dimension_id,d.name as 'dimension_name',d.key_name as 'dimension_key',
         o.id as 'option_id', o.option_index as 'option_index',o.content as 'option_content',o.value as 'option_value'
 			from escape_questions q left join escape_dimension d  on(q.dimension_id=d.id) left join escape_question_options o  on o.question_id=q.id
-             where  q.category_id=#{categoryId}  order by q.question_index
+             where  q.category_id=#{categoryId}  order by q.question_index,o.option_index
 	</select>
 	
 	

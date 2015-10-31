@@ -37,6 +37,9 @@ public class EvaluationResult {
 	
 	
 	private String	createDate ;
+	
+	
+	
 
 	public Integer getId() {
 		return id;
@@ -167,6 +170,8 @@ public class EvaluationResult {
 	public void setIsProcessed(Boolean isProcessed) {
 		this.isProcessed = isProcessed;
 	}
+
+	
 	
 	
 	

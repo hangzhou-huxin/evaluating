@@ -13,11 +13,17 @@ function createQuestion( containerObj , questionList  , cacheData){
 		 for(var j=0 ; j<options.length ;j++){
 			 var option = options[j] ;
 			 var inputStr = "" ;
-			 var cacheValue = cacheData[q.id] ;
-		     if( cacheValue && cacheValue == option.value	){
-		    	 inputStr = '<div class="row"><div class="col-xs-12" >&nbsp;&nbsp;<input type="radio"  checked required="required" value="' + option.value + '" name="' + prefix + q.id +"_"+q.dimensionKey +'" id="' + q.id + '"/>&nbsp;&nbsp;'+option.content+'</div></div>';
+			 var cacheValue = cacheData[prefix  + q.id + "_" + q.dimensionKey] ;
+			 var cacheOptionId = "" ;
+			 if(cacheValue){
+				 var str = cacheValue.split("-") ;
+				 var cacheOptionId = str[0] ;
+			 }
+			 
+		     if( cacheValue && cacheOptionId == option.id	){
+		    	 inputStr = '<div class="row"><div class="col-xs-12" >&nbsp;&nbsp;<input type="radio"  checked required="required" value="' + option.id + "-" + option.value + '" name="' + prefix + q.id +"_"+q.dimensionKey +'" id="' + q.id + '"/>&nbsp;&nbsp;'+option.content+'</div></div>';
 		     }else{
-		    	 inputStr = '<div class="row"><div class="col-xs-12" >&nbsp;&nbsp;<input type="radio"   required="required" value="' + option.value + '" name="' + prefix + q.id +"_"+q.dimensionKey +'" id="' + q.id + '"/>&nbsp;&nbsp;'+option.content+'</div></div>';
+		    	 inputStr = '<div class="row"><div class="col-xs-12" >&nbsp;&nbsp;<input type="radio"   required="required" value="' + option.id + "-" + option.value + '" name="' + prefix + q.id +"_"+q.dimensionKey +'" id="' + q.id + '"/>&nbsp;&nbsp;'+option.content+'</div></div>';
 		     }
 		     var optionObj=$(inputStr) ;
 			 questionObj.append( optionObj) ;
