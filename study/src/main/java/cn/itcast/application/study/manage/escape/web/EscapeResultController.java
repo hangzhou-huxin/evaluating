@@ -107,7 +107,7 @@ public class EscapeResultController {
 		   //获取相应的模板
 		  Map<String,String> replateMap = new HashMap<String,String>() ;
 		   replateMap.put("totalScore", result.get(Constant.ESCAPE_TOTAL_SCORE).toString()) ;
-		   
+		   replateMap.put("applyUrl", "#") ;
 		   Template template = templateService.findById( escapeResult.getTemplateId()) ;
 		   if(template != null){
 			   String templateContent = template.getContent() ;

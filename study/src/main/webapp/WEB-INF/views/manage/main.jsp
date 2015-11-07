@@ -171,7 +171,8 @@
 									},
 									{
 									    text: '深度报告申请处理',
-									    leaf: true
+									    leaf: true,
+									    url:'<%=request.getContextPath()%>/manage/escape/apply/main.do'
 									}
 			            ]
 		            }]

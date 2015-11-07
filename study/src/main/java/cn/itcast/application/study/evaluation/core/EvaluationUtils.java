@@ -229,7 +229,7 @@ public class EvaluationUtils {
 			String var = "#{" + vars[i] + "}"; 
 			int start = buffer.indexOf( var ) ;
 			if(start == -1){
-				break ;
+				continue ;
 			}
 			int end = start + var.length() ;
 			buffer.replace(start, end, replateMap.get(vars[i])) ;

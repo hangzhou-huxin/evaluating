@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import cn.itcast.application.study.common.domain.ApplyInfo;
 import cn.itcast.application.study.evaluation.core.Constant;
 import cn.itcast.application.study.evaluation.core.EvaluationUtils;
+import cn.itcast.application.study.evaluation.escape.domain.EscapeApplyInfo;
+import cn.itcast.application.study.evaluation.escape.service.EscapeApplyInfoService;
 import cn.itcast.application.study.evaluation.utils.JsonUtils;
 import cn.itcast.application.study.evaluation.utils.RandomUtil;
 import cn.itcast.application.study.evaluation.utils.WebUtil;
@@ -61,6 +64,12 @@ public class EscapeEvaluationController {
 	@Autowired
 	private TemplateService templateService ;
 	
+	@Autowired
+	private EscapeApplyInfoService escapeApplyInfoService ;
+	
+	@Autowired
+	private DimensionService  dimensionService ;
+	
 	@RequestMapping("/index.do")
 	public ModelAndView index(){
 		List<EscapeCategory> categoryList = escapeCategoryService.findForList() ;
@@ -70,9 +79,12 @@ public class EscapeEvaluationController {
 	}
 	
 	
-	public ModelAndView apply(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evid){
-		ModelAndView mv = new ModelAndView("apply") ;
+	@RequestMapping("/apply.do")
+	public ModelAndView apply(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evid,
+					@RequestParam("categoryId") Integer categoryId){
+		ModelAndView mv = new ModelAndView("escape/apply") ;
 		mv.addObject(Constant.EVALUATION_ID_PARAM_NAME , evid) ;
+		mv.addObject("categoryId", categoryId) ;
 		return mv ;
 	}
 	
@@ -151,6 +163,17 @@ public class EscapeEvaluationController {
 		   mv.addObject("result",  result) ;
 		   
 		   String viewName = "escape/default-report";
+		   //获取相应的维度
+		   List<Dimension> dimensionList = dimensionService.findForList(categoryId) ;
+		   String[] dimensionVars = new String[dimensionList.size()];
+		   Map<String,String> dimensionMap = new HashMap<String,String>() ;
+		   for(int i=0;i<dimensionList.size();i++){
+			   Dimension dimension = dimensionList.get(i) ;
+			   dimensionVars[i] = dimension.getKey() ;
+			   if( result.get(dimension.getKey()) != null){
+				   dimensionMap.put(dimension.getKey(), result.get(dimension.getKey()).toString()) ;
+			   }
+		   }
 		   
 		   //获取相应的分值段
 		   ScoreSection  myScoreSection = null ;
@@ -168,6 +191,8 @@ public class EscapeEvaluationController {
 		   //获取相应的模板
 		   Map<String,String> replateMap = new HashMap<String,String>() ;
 		   replateMap.put("totalScore", result.get(Constant.ESCAPE_TOTAL_SCORE).toString()) ;
+		   replateMap.put("applyUrl", request.getContextPath() + "/escape/evaluation/apply.do?" + Constant.EVALUATION_ID_PARAM_NAME + "=" + evid
+				   + "&categoryId=" + categoryId) ;
 		   
 		   Template template = null ;
 		   if(myScoreSection != null){
@@ -179,6 +204,7 @@ public class EscapeEvaluationController {
 				   if(template != null){
 					   String templateContent = template.getContent() ;
 					   String replatedContent = EvaluationUtils.replateTemplateVars(Constant.TEMPLATE_VARS, templateContent, replateMap) ;
+					   replatedContent = EvaluationUtils.replateTemplateVars(dimensionVars, replatedContent,dimensionMap) ;
 					   viewName = "escape/report" ;
 					   mv.addObject("templateContent", replatedContent) ;
 				   }
@@ -205,6 +231,73 @@ public class EscapeEvaluationController {
 	}
 	
 	
+	@RequestMapping("/apply/save.do")
+	public ModelAndView saveApply(@ModelAttribute("applyInfo") EscapeApplyInfo applyInfo){
+		String ip = request.getRemoteAddr() ;
+		applyInfo.setIp(ip);
+		String viewName = "escape/apply-success" ;
+		try{
+			escapeApplyInfoService.saveApplyInfo(applyInfo);
+		}catch(Exception e){
+			viewName = "escape/apply-fail" ;
+		}
+		
+		
+		ModelAndView mv = new ModelAndView(viewName);
+		mv.addObject(Constant.EVALUATION_ID_PARAM_NAME, applyInfo.getEvId()) ;
+		mv.addObject("categoryId", applyInfo.getCategoryId()) ;
+		return mv ;
+	}
+	
+	
+	/*@RequestMapping("/viewReport.do")
+	public ModelAndView viewReport(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evid,
+				@RequestParam("categoryId") Integer categoryId){
+		
+		 EscapeResult escapeResult = escapeResultService.findByEvalId(evid) ;
+		 ModelAndView mv = null ;
+		   String ip = request.getRemoteAddr() ;
+		   
+		   Map<String,String> data = WebUtil.getParamsToMap(request);
+		   String userName = data.get(Constant.USER_NAME_PARAM_NAME);
+		   String qq = data.get(Constant.QQ_PARAM_NAME);
+		   
+		   Map<String,Integer> result = EvaluationUtils.getEscapeEvaluationResult(data) ;
+		   
+		   //获取相应的分值段
+		   ScoreSection  myScoreSection = null ;
+		   List<ScoreSection> scoreSectionList = scoreSectionService.findForList(categoryId) ;
+		   Integer totalScore = result.get(Constant.ESCAPE_TOTAL_SCORE) ;
+		   for(ScoreSection scoreSection : scoreSectionList){
+			   Integer lowerValue = scoreSection.getLowerValue() ;
+			   Integer upperValue = scoreSection.getUpperValue() ;
+			   if( totalScore >= lowerValue && totalScore <= upperValue){
+				   myScoreSection = scoreSection ;
+				   break ;
+			   }
+		   }
+		   
+		   
+		   //获取相应的模板
+		  Map<String,String> replateMap = new HashMap<String,String>() ;
+		   replateMap.put("totalScore", result.get(Constant.ESCAPE_TOTAL_SCORE).toString()) ;
+		   replateMap.put("applyUrl", "#") ;
+		   Template template = templateService.findById( escapeResult.getTemplateId()) ;
+		   if(template != null){
+			   String templateContent = template.getContent() ;
+			   String replatedContent = EvaluationUtils.replateTemplateVars(Constant.TEMPLATE_VARS, templateContent, replateMap) ;
+			   mv = new ModelAndView( "escape/report" );
+			   mv.addObject("result",  result) ;
+			   mv.addObject("scoreSection", myScoreSection) ;
+			  mv.addObject("templateContent", replatedContent) ;
+		   }else{
+			   mv = new ModelAndView("escape/default-report");
+			   mv.addObject("result",  result) ;
+		   }
+		
+		   return mv ;
+	}
+	*/
 	
 	
 	
