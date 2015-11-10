@@ -12,6 +12,7 @@
 		<result property="educationId" column="education"/>
 		<result property="ip" column="ip"/>
 		<result property="memo" column="memo"/>
+		<result property="career" column="career"/>
 		<result property="isProcessed" column="is_processed"/>
 		<result property="processInfo" column="process_result"/>
 	</resultMap>

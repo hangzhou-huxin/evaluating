@@ -46,14 +46,16 @@
    
    	var cm = new Ext.grid.ColumnModel([ //new Ext.grid.RowNumberer(),
    	      										{header:'序号',dataIndex:'id',sortable:false},
-   	      										{header:'评测编号',dataIndex:'evaluationId',sortable:false},
+   	      										{header:'评测编号',dataIndex:'evId',sortable:false},
    	      										{header:'姓名',dataIndex:'name',sortable:false },
+   	      										{header:'专业',dataIndex:'profession',sortable:false},
+   	      										{header:'入学年份',dataIndex:'schoolYear',sortable:false},
    	      										{header:'qq',dataIndex:'qq',sortable:false},
+   	      										{header:'备注',dataIndex:'memo',sortable:false},
    	      										{header:'ip地址',dataIndex:'ip',sortable:false},
-   	      										{header:'评测时间',dataIndex:'createDate',sortable:false},
-   	      										{header:'评测报告',dataIndex:'id',renderer:renderReport,sortable:false},
-   	      										{header:'评测明细',dataIndex:'id',renderer:renderDetail,sortable:false},
-   	      										{header:'处理意见',dataIndex:'id',renderer:renderProcess,sortable:false}
+   	      										{header:'职业',dataIndex:'career',sortable:false},
+   	      										{header:'查看',dataIndex:'id',renderer:renderReport,sortable:false},
+   	      										{header:'处理',dataIndex:'id',renderer:renderProcess,sortable:false}
    	      										]);
    	
       
@@ -65,13 +67,17 @@
       			root:'data'
           },[
              	{name:'id'},
-          		{name:'evaluationId'},
+          		{name:'evId'},
           		{name:'name'},
+          		{name:'profession'},
+          		{name:'schoolYear'},
           		{name:'qq'},
           		{name:'createDate'},
           		{name:'ip'},
           		{name:'applyId'},
-          		{name:'isProcessed'}
+          		{name:'isProcessed'},
+          		{name:'memo'},
+          		{name:'career'}
           	  ]),
       	  remoteSort:true
       });

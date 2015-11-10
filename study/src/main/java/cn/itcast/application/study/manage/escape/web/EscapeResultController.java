@@ -19,6 +19,7 @@ import cn.itcast.application.study.evaluation.core.EvaluationUtils;
 import cn.itcast.application.study.evaluation.utils.JsonUtils;
 import cn.itcast.application.study.evaluation.utils.RandomUtil;
 import cn.itcast.application.study.evaluation.utils.WebUtil;
+import cn.itcast.application.study.manage.escape.domain.Dimension;
 import cn.itcast.application.study.manage.escape.domain.EscapeCategory;
 import cn.itcast.application.study.manage.escape.domain.EscapeQuestion;
 import cn.itcast.application.study.manage.escape.domain.EscapeQuestionOption;
@@ -26,6 +27,7 @@ import cn.itcast.application.study.manage.escape.domain.EscapeResult;
 import cn.itcast.application.study.manage.escape.domain.ScoreSection;
 import cn.itcast.application.study.manage.escape.domain.Template;
 import cn.itcast.application.study.manage.escape.dto.EscapeResultQuery;
+import cn.itcast.application.study.manage.escape.service.DimensionService;
 import cn.itcast.application.study.manage.escape.service.EscapeCategoryService;
 import cn.itcast.application.study.manage.escape.service.EscapeQuestionOptionService;
 import cn.itcast.application.study.manage.escape.service.EscapeQuestionService;
@@ -72,6 +74,9 @@ public class EscapeResultController {
 	@Autowired
 	private TemplateService templateService ;
 	
+	@Autowired
+	private DimensionService  dimensionService ;
+	
 	
 	@RequestMapping("/viewReport.do")
 	public ModelAndView viewReport(@RequestParam(Constant.EVALUATION_ID_PARAM_NAME) String evid,
@@ -103,6 +108,17 @@ public class EscapeResultController {
 			   }
 		   }
 		   
+		 //获取相应的维度
+		   List<Dimension> dimensionList = dimensionService.findForList(categoryId) ;
+		   String[] dimensionVars = new String[dimensionList.size()];
+		   Map<String,String> dimensionMap = new HashMap<String,String>() ;
+		   for(int i=0;i<dimensionList.size();i++){
+			   Dimension dimension = dimensionList.get(i) ;
+			   dimensionVars[i] = dimension.getKey() ;
+			   if( result.get(dimension.getKey()) != null){
+				   dimensionMap.put(dimension.getKey(), result.get(dimension.getKey()).toString()) ;
+			   }
+		   }
 		   
 		   //获取相应的模板
 		  Map<String,String> replateMap = new HashMap<String,String>() ;
@@ -112,6 +128,8 @@ public class EscapeResultController {
 		   if(template != null){
 			   String templateContent = template.getContent() ;
 			   String replatedContent = EvaluationUtils.replateTemplateVars(Constant.TEMPLATE_VARS, templateContent, replateMap) ;
+			   replatedContent = EvaluationUtils.replateTemplateVars(dimensionVars, replatedContent,dimensionMap) ;
+			  
 			   mv = new ModelAndView( "escape/report" );
 			   mv.addObject("result",  result) ;
 			   mv.addObject("scoreSection", myScoreSection) ;
